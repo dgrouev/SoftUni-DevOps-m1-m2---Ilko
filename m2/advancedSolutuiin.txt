@@ -1,0 +1,15 @@
+working solution
+FROM centos
+
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org/%7Cbaseurl=http://vault.centos.org%7Cg' /etc/yum.repos.d/CentOS-*
+
+RUN dnf update -y
+RUN dnf install -y httpd
+
+ADD html/index.html /var/www/html
+
+EXPOSE 80
+
+# Start web server
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]

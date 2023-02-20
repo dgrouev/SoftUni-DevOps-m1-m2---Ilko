@@ -1,0 +1,38 @@
+Navigating to the folder with resources 1-centos
+
+Then inspect the Vagrantfile and docker-setup.sh in VSCode
+code . 
+
+vagrant up
+
+vagrant ssh
+
+docker pull centos:7
+
+docker image ls
+
+sudo dnf install -y nano
+
+sudo yum update -y
+
+mkdir -p homework/web && cd homework
+
+echo '<h1>Hello from my first container!</h1>' > web/index.html
+
+nano Dockerfile
+
+FROM centos:7
+RUN yum -y install httpd; yum update -y
+EXPOSE 80
+COPY web/ /var/www/html
+ENTRYPOINT ["/usr/sbin/httpd","-D","FOREGROUND"]
+
+docker build -t homework2 .
+
+docker container run -d -p 8080:80 --name homework2 homework2
+
+Image uploaded to Docker Hub - ilkothetiger/homework2
+
+
+
+
