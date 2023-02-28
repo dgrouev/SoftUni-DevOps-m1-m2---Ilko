@@ -8,7 +8,7 @@ Base your actions on what is inside the practice
 -	Installs Apache web server
 -	Exposes the port of the Apache web server
 -	Copies a locally created index.html to the web root folder of the Apache installation. The file should contain the following statement: <h1>Hello from my first container!</h1>
-2. Build an image based on the Dockerfile
+2. Build an image based on the <strong>Dockerfile</strong>
 3. Create a container based on the image
 # Proof
 Prepare a document that show what you accomplished and how you did it. It can include (not limited to):
