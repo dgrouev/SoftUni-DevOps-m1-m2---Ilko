@@ -37,6 +37,8 @@ SoftUni DevOps Exercises and Homeworks
 - Installation and configuration of Elastic Stack;
 - Working with Elastic Stack.
 
+# DevOps Part 2 - Infrastructure & Configuration Management - April 2023
+
 8. Infrastructure as Code with Terraform
 - Basic principles;
 - Installation and configuration of Terraform;
