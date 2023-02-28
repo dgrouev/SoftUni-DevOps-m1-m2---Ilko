@@ -9,14 +9,14 @@ pipeline
             steps
             {
                 sh '''
-                    cd /projects
-                    if [ -d /projects/bgapp ]; then
-                      cd /projects/bgapp
-                      git pull https://github.com/shekeriev/bgapp.git
-                    else
-                      git clone https://github.com/shekeriev/bgapp.git
-                    fi
-                    '''
+                cd /projects
+                if [ -d /projects/demo-app ]; then
+                  cd /projects/demo-app
+                  git pull https://github.com/ilkothetiger/demo-app.git
+                else
+                  git clone https://github.com/ilkothetiger/demo-app.git
+                fi
+                '''
             }
         }
 
@@ -35,7 +35,7 @@ pipeline
         {
             steps
             {
-                sh 'cd /projects/bgapp && docker image build -t img-web -f Dockerfile.web .'
+                sh 'cd /projects/demo-app && docker image build -t img-web -f Dockerfile.web .'
             }
         }
         
@@ -45,7 +45,7 @@ pipeline
             {
                 sh '''
                 docker container rm -f web || true
-                docker container run -d --name web --net appnet -p 9090:80 -v /projects/bgapp/web:/var/www/html:ro img-web
+                docker container run -d --name web --net appnet -p 9090:80 -v /projects/demo-app/web:/var/www/html:ro img-web
                 '''
             }
         }
@@ -54,7 +54,7 @@ pipeline
         {
             steps
             {
-                sh 'cd /projects/bgapp && docker image build -t img-db -f Dockerfile.db .'
+                sh 'cd /projects/demo-app && docker image build -t img-db -f Dockerfile.db .'
             }
         }
 
