@@ -19,6 +19,9 @@ echo "* Starting Jenkins service ..."
 sudo systemctl start jenkins
 sudo systemctl enable jenkins
 
+echo "* Adding Jenkins user to sudoers..."
+echo "jenkins  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/jenkins
+
 echo "* Adding exclusion to the Firewall and reloading ..."
 sudo firewall-cmd --permanent --add-port=8080/tcp
 sudo firewall-cmd --permanent --add-port=80/tcp
