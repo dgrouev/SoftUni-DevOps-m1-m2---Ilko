@@ -12,9 +12,9 @@ pipeline
                 cd /projects
                 if [ -d /projects/demo-app ]; then
                   cd /projects/demo-app
-                  sudo git pull https://github.com/ilkothetiger/demo-app.git
+                  git pull https://github.com/ilkothetiger/demo-app.git
                 else
-                  sudo git clone https://github.com/ilkothetiger/demo-app.git
+                  git clone https://github.com/ilkothetiger/demo-app.git
                 fi
                 '''
             }
@@ -25,8 +25,8 @@ pipeline
             steps
             {
                 sh '''
-                sudo docker network rm appnet || true
-                sudo docker network ls | grep appnet || sudo docker network create appnet
+                docker network rm appnet || true
+                docker network ls | grep appnet || docker network create appnet
                 '''
             }
         }
@@ -35,7 +35,7 @@ pipeline
         {
             steps
             {
-                sh 'cd /projects/demo-app && sudo docker image build -t img-web -f Dockerfile.web .'
+                sh 'cd /projects/demo-app && docker image build -t img-web -f Dockerfile.web .'
             }
         }
         
@@ -44,8 +44,8 @@ pipeline
             steps
             {
                 sh '''
-                sudo docker container rm -f web || true
-                sudo docker container run -d --name web --net appnet -p 9090:80 -v /projects/demo-app/web:/var/www/html:ro img-web
+                docker container rm -f web || true
+                docker container run -d --name web --net appnet -p 9090:80 -v /projects/demo-app/web:/var/www/html:ro img-web
                 '''
             }
         }
@@ -54,7 +54,7 @@ pipeline
         {
             steps
             {
-                sh 'cd /projects/demo-app && sudo docker image build -t img-db -f Dockerfile.db .'
+                sh 'cd /projects/demo-app && docker image build -t img-db -f Dockerfile.db .'
             }
         }
 
@@ -63,8 +63,8 @@ pipeline
             steps
             {
                 sh '''
-                sudo docker container rm -f db || true
-                sudo docker container run -d --name db --net appnet -e MYSQL_ROOT_PASSWORD=12345 img-db
+                docker container rm -f db || true
+                docker container run -d --name db --net appnet -e MYSQL_ROOT_PASSWORD=12345 img-db
                 '''
             }
         }
