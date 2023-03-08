@@ -2,19 +2,19 @@
 
 ## Setting up the VMS and the SSH keys
 
-vagrant up
+1. vagrant up
 
-vagrant ssh jenkins
+2. vagrant ssh jenkins
 
-su - jenkins
+3. su - jenkins
 
-ssh-keygen -t ecdsa -b 521 -m PEM
+4. ssh-keygen -t ecdsa -b 521 -m PEM
 
-ssh-copy-id jenkins@jenkins.do1.lab
+5. ssh-copy-id jenkins@jenkins.do1.lab
 
-ssh-copy-id jenkins@docker.do1.lab
+6. ssh-copy-id jenkins@docker.do1.lab
 
-// On the host machine, open http://127.0.0.1:8080/
+## On the host machine, open http://127.0.0.1:8080/
 
 Enter initialPassword
 
@@ -68,13 +68,13 @@ ssh -l admin -p 2222 localhost help
 yes
 
 
-Importing the pipeline
+## Importing the pipeline
 
 cp /vagrant/bgapp.xml .
 
 ssh -l admin -p 2222 localhost create-job Pipeline-BGApp < bgapp.xml
 
-Setting Up Gitea
+## Setting Up Gitea
 
 cp /vagrant/docker-compose.yml .
 
@@ -86,7 +86,7 @@ Change Gitea Base URL to: http://192.168.99.102:3000/
 Register
 New Repository with default settings, repo name is bgapp
 
-Back on the Jenkins machine
+## Back on the Jenkins machine
 
 cd
 git init
@@ -105,11 +105,11 @@ One more plugin we need to install in Jenkins
 Manage Jenkins > Manage Plugins > Available Plugins > Gitea
 Restart Jenkins when installation is complete
 
-Go to Docker hub
+## Go to Docker hub
 Login > Account Settings > Security > New Access Token
 Put jenkins in description copy and close
 
-Back to Jenkins > Manage Jenkins > Manage Credentials > System > Global Credentials
+## Back to Jenkins > Manage Jenkins > Manage Credentials > System > Global Credentials
 Click Add Credentials
 username: Docker Hub username
 password: Docker Access Token
@@ -117,7 +117,7 @@ ID: docker-hub
 description: Docker Access Token
 
 
-In the jenkins machine
+## In the jenkins machine
 ssh -l admin -p 2222 localhost build Pipeline-BGApp -f -v
 
 
