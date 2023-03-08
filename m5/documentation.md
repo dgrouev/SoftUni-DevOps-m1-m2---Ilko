@@ -81,22 +81,22 @@ Save
 
 ## Back on the Jenkins machine
 
-cd
-git init
-git checkout -b main
-git remote add origin http://192.168.99.102:3000/ilia/bgapp.git
-git clone -b m5 https://github.com/ilkoTheTiger/demo-app
-cd demo-app
-git branch main
-git branch checkout main
-git push http://192.168.99.102:3000/ilia/bgapp.git
+1. cd
+2. git init
+3. git checkout -b main
+4. git remote add origin http://192.168.99.102:3000/ilia/bgapp.git
+5. git clone -b m5 https://github.com/ilkoTheTiger/demo-app
+6. cd demo-app
+7. git branch main
+8. git branch checkout main
+9. git push http://192.168.99.102:3000/ilia/bgapp.git
 
-Go to Gitea Repo > Settings > Webhooks
-Target URL: http://192.168.99.101:8080/gitea-webhook/post
+### Go to Gitea Repo > Settings > Webhooks
+1. Target URL: http://192.168.99.101:8080/gitea-webhook/post
 
-One more plugin we need to install in Jenkins
-Manage Jenkins > Manage Plugins > Available Plugins > Gitea
-Restart Jenkins when installation is complete
+### One more plugin we need to install in Jenkins
+1. Manage Jenkins > Manage Plugins > Available Plugins > Gitea
+2. Restart Jenkins when installation is complete
 
 ## Go to Docker hub
 Login > Account Settings > Security > New Access Token
