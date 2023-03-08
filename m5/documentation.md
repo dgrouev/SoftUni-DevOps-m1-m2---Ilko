@@ -66,22 +66,18 @@ Save
 2. to add teh fingerprint: yes
 
 ## Importing the pipeline
-
 1. cp /vagrant/bgapp.xml .
-
 2. ssh -l admin -p 2222 localhost create-job Pipeline-BGApp < bgapp.xml
 
 ## Setting Up Gitea
+1. cp /vagrant/docker-compose.yml .
+2. docker compose up -d
 
-cp /vagrant/docker-compose.yml .
-
-docker compose up -d
-
-When it's done, navigate to http://192.168.99.102:3000
-Change Server domain to: 192.168.99.102
-Change Gitea Base URL to: http://192.168.99.102:3000/
-Register
-New Repository with default settings, repo name is bgapp
+### When it's done, navigate to http://192.168.99.102:3000
+1. Change Server domain to: 192.168.99.102
+2. Change Gitea Base URL to: http://192.168.99.102:3000/
+3. Register
+4. New Repository with default settings, repo name is bgapp
 
 ## Back on the Jenkins machine
 
