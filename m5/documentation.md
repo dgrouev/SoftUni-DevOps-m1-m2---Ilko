@@ -67,9 +67,9 @@ Save
 
 ## Importing the pipeline
 
-cp /vagrant/bgapp.xml .
+1. cp /vagrant/bgapp.xml .
 
-ssh -l admin -p 2222 localhost create-job Pipeline-BGApp < bgapp.xml
+2. ssh -l admin -p 2222 localhost create-job Pipeline-BGApp < bgapp.xml
 
 ## Setting Up Gitea
 
