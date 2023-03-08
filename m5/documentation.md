@@ -99,15 +99,15 @@ Save
 2. Restart Jenkins when installation is complete
 
 ## Go to Docker hub
-Login > Account Settings > Security > New Access Token
-Put jenkins in description copy and close
+1. Login > Account Settings > Security > New Access Token
+2. Put jenkins in description copy and close
 
 ## Back to Jenkins > Manage Jenkins > Manage Credentials > System > Global Credentials
-Click Add Credentials
-username: Docker Hub username
-password: Docker Access Token
-ID: docker-hub
-description: Docker Access Token
+1. Click Add Credentials
+2. username: Docker Hub username
+3. password: Docker Access Token
+4. ID: docker-hub
+5. description: Docker Access Token
 
 
 ## In the jenkins machine
