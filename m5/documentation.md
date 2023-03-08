@@ -31,27 +31,27 @@
 7. Restart Jenkins
 
 ## In jenkins machine, jenkins user
-cd
-cd .ssh
-cat id_ecdsa
-copy the private SSH key
+1. cd
+2. cd .ssh
+3. cat id_ecdsa
+4. copy the private SSH key
 
-Manage Jenkins > Manage Credentials > Global > Add Credentials > SSH Username with private key
-username: jenkins
-Private key: Enter directly
-
-
-Then Manage Jenkins > Configure System > SSH remote hosts > Add
-hostname: jenkins.do1.lab
-port: 22
-credentials: Credentials from File
+### Manage Jenkins > Manage Credentials > Global > Add Credentials > SSH Username with private key
+1. username: jenkins
+2. Private key: Enter directly
 
 
-Then Manage Jenkins > Configure Global Security > SSH Server
-SSHD Port Fixed: 2222
-Save
+### Then Manage Jenkins > Configure System > SSH remote hosts > Add
+1. hostname: jenkins.do1.lab
+2. port: 22
+3. credentials: Credentials from File
 
-Exit Jenkins user
+
+### Then Manage Jenkins > Configure Global Security > SSH Server
+1. SSHD Port Fixed: 2222
+2. Save
+
+## Exit Jenkins user
 When back to the vagrant on the jenkins machine
 
 ssh-keygen
