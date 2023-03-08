@@ -111,11 +111,12 @@ Save
 
 
 ## In the jenkins machine
-ssh -l admin -p 2222 localhost build Pipeline-BGApp -f -v
+1. ssh -l admin -p 2222 localhost build Pipeline-BGApp -f -v
 
 
-Installing Gitea plugin
-Manage Jenkins > Manage Plugins
+## Installing Gitea plugin
+1. Manage Jenkins > Manage Plugins > Gitea
+2. Restart Jenkins
 
 
 
