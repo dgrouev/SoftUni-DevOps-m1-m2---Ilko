@@ -16,21 +16,21 @@
 
 ## On the host machine, open http://127.0.0.1:8080/
 
-Enter initialPassword
+1. Enter initialPassword
 
-Install Recommended plugins
+2. Install Recommended plugins
 
-Register admin user
+3. Register admin user
 
-Accept proposed url
+4. Accept proposed url
 
-Enter Jenkins
+5. Enter Jenkins
 
-Go to Plugins and download SSH
+6. Go to Plugins and download SSH
 
-Restart Jenkins
+7. Restart Jenkins
 
-In jenkins machine, jenkins user
+## In jenkins machine, jenkins user
 cd
 cd .ssh
 cat id_ecdsa
