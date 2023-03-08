@@ -50,23 +50,20 @@
 ### Then Manage Jenkins > Configure Global Security > SSH Server
 1. SSHD Port Fixed: 2222
 2. Save
+3. Exit Jenkins user
 
-## Exit Jenkins user
-When back to the vagrant on the jenkins machine
+### When back to the vagrant on the jenkins machine
 
-ssh-keygen
+1. ssh-keygen
+2. cat ~/.ssh/id_rsa.pub
 
-cat ~/.ssh/id_rsa.pub
-
-Copy the key and then Manage Jenkins > Manage Users > admin > Configure
+### Copy the key and then Manage Jenkins > Manage Users > admin > Configure
 SSH Public Keys: Paste the Vagrant SSH key we just created
 Save
 
-ssh -l admin -p 2222 localhost help
+1. ssh -l admin -p 2222 localhost help
 
-// to add teh fingerprint
-yes
-
+2. to add teh fingerprint: yes
 
 ## Importing the pipeline
 
