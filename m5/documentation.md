@@ -1,4 +1,6 @@
-Setting up the VMS and the SSH keys
+# Homework 5 - Automated Pipeline with Jenkins
+
+## Setting up the VMS and the SSH keys
 
 vagrant up
 
