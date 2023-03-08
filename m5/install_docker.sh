@@ -9,8 +9,11 @@ dnf install -y java-17-openjdk git docker-ce docker-ce-cli containerd.io
 echo "* Start the Docker service"
 systemctl enable --now docker
 
-echo "* Adjust the group membership"
-usermod -aG docker vagrant
+echo "* Add Jenkins and adjust the group membership"
+echo -e 'Password1\nPassword1' | sudo passwd jenkins
+echo "jenkins  ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/jenkins
+sudo usermod -aG docker jenkins
+sudo usermod -aG docker vagrant
 
 echo "* Adjust the firewall"
 firewall-cmd --permanent --add-port=8080/tcp
