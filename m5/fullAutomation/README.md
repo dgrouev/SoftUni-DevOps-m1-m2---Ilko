@@ -1,8 +1,8 @@
-Solution M5: Jenkins Advanced
+# Solution M5: Jenkins Advanced
 
 This is one possible and fully automated solution of the tasks included in the homework
 
-All steps that follow assume that we decided to base our solution on Debian 11 box
+All steps that follow assume that we decided to base our solution on <strong>Debian 11</strong> box
 
 Please note, that this solution is intentionally far from being an optimal one
 
@@ -10,7 +10,7 @@ Here, the emphasis is put on readability and not on optimization or speed
 
 You must adjust some values like IP addresses, image (or box) names, repository names, credentials, etc. to match your use case
 
-Default pairs user and passwords in use are – for Jenkins (admin/admin) and for Gitea (vagrant/vagrant)
+Default pairs user and passwords in use are – for <strong>Jenkins (admin/admin)</strong> and for <strong>Gitea (vagrant/vagrant)</strong>
 
 Solution
 
