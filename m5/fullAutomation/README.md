@@ -16,28 +16,27 @@ Default pairs user and passwords in use are – for <strong>Jenkins (admin/admin
 
 A pack of files is provided. It contains all the necessary files. They are as follows:
 
- 
-├── provision-scripts -> contains all provision/configuration scripts
-│ ├── add_hosts.sh -> used to set the /etc/hosts file of the machines
-│ ├── install_docker.sh -> install and configure Docker
-│ ├── install_jenkins.sh -> install Jenkins
-│ ├── setup_gitea.sh -> deploys Gitea (server + db) with Docker Compose
-│ └── setup_jenkins.sh -> setups Jenkins - credentials, slave, plugins, job, etc.
-├── shared-files -> all files that are mounted and visible to the machines
-│ ├── docker -> files for the Docker machine
-│ │ ├── docker-compose-build.yaml -> used to build the test deployment of the app
-│ │ ├── docker-compose-deploy.yaml -> used to deploy the production deployment of the app
-│ │ └── docker-compose.yml -> used to deploy Gitea
-│ └── jenkins -> files for the Jenkins machine
-│ ├── 0-url.groovy -> configure the URL
-│ ├── 1-disable-setup.groovy -> configure the Initial Setup
-│ ├── 2-admin-user.groovy -> configure Admin user (admin/admin)
-│ ├── add-jenkins-credentials.sh -> used to add credentials (referred by setup_jenkins.sh)
-│ ├── add-jenkins-job.sh -> used to add the job (referred by setup_jenkins.sh)
-│ ├── add-jenkins-slave.sh -> used to add Docker machine as slave (referred by setup_jenkins.sh)
-│ ├── job.xml -> the actual job/pipeline
-│ └── plugins.txt -> list of plugins to be installed (referred by setup_jenkins.sh)
-└── Vagrantfile -> Vagrantfile that assembles it all. Starts Docker and then Jenkins
+</br>├── provision-scripts -> contains all provision/configuration scripts
+</br>│ ├── add_hosts.sh -> used to set the /etc/hosts file of the machines
+</br>│ ├── install_docker.sh -> install and configure Docker
+</br>│ ├── install_jenkins.sh -> install Jenkins
+</br>│ ├── setup_gitea.sh -> deploys Gitea (server + db) with Docker Compose
+</br>│ └── setup_jenkins.sh -> setups Jenkins - credentials, slave, plugins, job, etc.
+</br>├── shared-files -> all files that are mounted and visible to the machines
+</br>│ ├── docker -> files for the Docker machine
+</br>│ │ ├── docker-compose-build.yaml -> used to build the test deployment of the app
+</br>│ │ ├── docker-compose-deploy.yaml -> used to deploy the production deployment of the app
+</br>│ │ └── docker-compose.yml -> used to deploy Gitea
+</br>│ └── jenkins -> files for the Jenkins machine
+</br>│ ├── 0-url.groovy -> configure the URL
+</br>│ ├── 1-disable-setup.groovy -> configure the Initial Setup
+</br>│ ├── 2-admin-user.groovy -> configure Admin user (admin/admin)
+</br>│ ├── add-jenkins-credentials.sh -> used to add credentials (referred by setup_jenkins.sh)
+</br>│ ├── add-jenkins-job.sh -> used to add the job (referred by setup_jenkins.sh)
+</br>│ ├── add-jenkins-slave.sh -> used to add Docker machine as slave (referred by setup_jenkins.sh)
+</br>│ ├── job.xml -> the actual job/pipeline
+</br>│ └── plugins.txt -> list of plugins to be installed (referred by setup_jenkins.sh)
+</br>└── Vagrantfile -> Vagrantfile that assembles it all. Starts Docker and then Jenkins
 
 You should extract the contents of the archive and navigate to the extracted folder
 
