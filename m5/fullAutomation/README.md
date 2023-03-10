@@ -12,7 +12,7 @@ You must adjust some values like IP addresses, image (or box) names, repository 
 
 Default pairs user and passwords in use are – for <strong>Jenkins (admin/admin)</strong> and for <strong>Gitea (vagrant/vagrant)</strong>
 
-Solution
+## Solution
 
 A pack of files is provided. It contains all the necessary files. They are as follows:
 
@@ -63,7 +63,7 @@ A pack of files is provided. It contains all the necessary files. They are as fo
 You should extract the contents of the archive and navigate to the extracted folder
 
 You must adjust at least the following files:
-
+<strong>
 - provision-scripts/setup_jenkins.sh
 
 - shared-files/docker/docker-compose-build.yaml
@@ -73,17 +73,19 @@ You must adjust at least the following files:
 - shared-files/jenkins/2-admin-user.groovy
 
 - shared-files/jenkins/job.xml
-
-Check and change at least <docker-hub-account-name> and <docker-hub-token> to match yours
+</strong>
+Check and change at least <strong>docker-hub-account-name</strong> and <strong>docker-hub-token</strong> to match yours
 
 You should check the rest as well
 
 Then, after the necessary adjustments, you must execute just this:
 
-vagrant up
+<strong>vagrant up</strong>
 
 And after around 10 minutes the solution will be up
 
-The infrastructure services are available here: - Jenkins – http://192.168.99.101:8080 - Gitea – http://192.168.99.102:3000
+The infrastructure services are available here: 
+- Jenkins – http://192.168.99.101:8080 
+- Gitea – http://192.168.99.102:3000
 
 No build will be run until you commit a change in the repository or trigger the build manually After a successful build and deployment, the application will be available at http://192.168.99.102
