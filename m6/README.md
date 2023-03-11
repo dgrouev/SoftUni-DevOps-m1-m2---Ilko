@@ -6,8 +6,8 @@ You are expected to create the following
 
 1. A setup with one virtual machine with Docker installed just like on the practice
 
-<italic>* You can separate the workload on two machines. Either way, adjust the parameters in order to fit within your available resources
-</italic>
+<i>* You can separate the workload on two machines. Either way, adjust the parameters in order to fit within your available resources
+</i>
 
 2. On the machine(s) run the following
 
@@ -17,7 +17,7 @@ You are expected to create the following
 
 3. In terms of measurement, do the following
 
-    - Make <strong>Docker</strong> to provide metrics, which to be consumed by <strong>Prometheus</strong>. This should result in one job. <italic>For this one, you should research <strong>Docker</strong> documentation</italic>
+    - Make <strong>Docker</strong> to provide metrics, which to be consumed by <strong>Prometheus</strong>. This should result in one job. <i>For this one, you should research <strong>Docker</strong> documentation</i>
     - Capture the metrics of the two application instances. This should result in one job with two targets
 
 4. In terms of visualization, create a simple dashboard that has
@@ -25,6 +25,6 @@ You are expected to create the following
     - A panel which shows how many containers are on the host (in all states)
     - A panel which shows how many jobs are processed by each <strong>goprom</strong> application (all result types)
 
-As usual, try to do the infrastructure part as automated as possible. Of course, using Vagrant
+As usual, try to do the infrastructure part as automated as possible. Of course, using <strong>Vagrant</strong>
 
-For the rest (Docker, Prometheus, Grafana), try to automate it as much as possible
+For the rest <strong>(Docker, Prometheus, Grafana)</strong>, try to automate it as much as possible
