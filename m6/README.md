@@ -11,19 +11,19 @@ You are expected to create the following
 
 2. On the machine(s) run the following
 
-    - Prometheus as container. One instance
-    - Grafana as container. One instance
-    - The application (goprom) used during the practice. Two instances
+    - <strong>Prometheus</strong> as container. One instance
+    - <strong>Grafana</strong> as container. One instance
+    - The application <strong>(goprom)</strong> used during the practice. Two instances
 
 3. In terms of measurement, do the following
 
-    - Make Docker to provide metrics, which to be consumed by Prometheus. This should result in one job. <italic>For this one, you should research Docker documentation</italic>
+    - Make <strong>Docker</strong> to provide metrics, which to be consumed by <strong>Prometheus</strong>. This should result in one job. <italic>For this one, you should research <strong>Docker</strong> documentation</italic>
     - Capture the metrics of the two application instances. This should result in one job with two targets
 
 4. In terms of visualization, create a simple dashboard that has
 
     - A panel which shows how many containers are on the host (in all states)
-    - A panel which shows how many jobs are processed by each goprom application (all result types)
+    - A panel which shows how many jobs are processed by each <strong>goprom</strong> application (all result types)
 
 As usual, try to do the infrastructure part as automated as possible. Of course, using Vagrant
 
