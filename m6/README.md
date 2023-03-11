@@ -6,7 +6,8 @@ You are expected to create the following
 
 - A setup with one virtual machine with Docker installed just like on the practice
 
-* You can separate the workload on two machines. Either way, adjust the parameters in order to fit within your available resources
+<italic>* You can separate the workload on two machines. Either way, adjust the parameters in order to fit within your available resources
+</italic>
 
 - On the machine(s) run the following
 
