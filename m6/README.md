@@ -1,6 +1,6 @@
-Homework M6: Prometheus and Grafana
+# Homework M6: Prometheus and Grafana
 
-Assignment
+## Assignment
 
 You are expected to create the following
 
