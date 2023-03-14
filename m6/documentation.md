@@ -65,3 +65,7 @@ docker service create --replicas 1 --name my-prometheus \
     --publish published=9090,target=9090,protocol=tcp \
     prom/prometheus
 ```
+
+## Metrics for monitoring
+1. Count of containers in all states
+    - engine_daemon_container_states_containers
