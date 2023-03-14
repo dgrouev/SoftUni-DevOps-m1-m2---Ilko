@@ -15,3 +15,12 @@ docker container run -d --name worker2 -p 8082:8080 shekeriev/goprom
 
 echo "* Starting Grafana 8.2.0 as container on port 3000"
 docker run -d -p 3000:3000 --name grafana grafana/grafana-oss:8.2.0
+
+echo "* Copying prometheus.yml to /tmp/"
+sudo cp /vagrant/prometheus.yml /tmp/prometheus.yml
+
+echo "* Starting Prometheus as a Service in the Swarm"
+docker service create --replicas 1 --name my-prometheus \
+    --mount type=bind,source=/tmp/prometheus.yml,destination=/etc/prometheus/prometheus.yml \
+    --publish published=9090,target=9090,protocol=tcp \
+    prom/prometheus
