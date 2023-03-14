@@ -82,6 +82,9 @@ scrape_configs:
     static_configs:
       - targets: ['192.168.99.101:9090']
       - targets: ['192.168.99.101:9323']
+
+  - job_name: 'goprom'
+    static_configs:
       - targets: ['192.168.99.101:8081']
       - targets: ['192.168.99.101:8082']
 
@@ -105,3 +108,15 @@ scrape_configs:
 6. URL
     - http://192.168.99.101:9090/
 7. Save & Test
+
+## Creating Dashboard with 2 panels
+    1. Dashboard -> Manage -> New Dashboard -> Add an empty panel
+    2. Choose Appropriate name
+    3. Add Panel
+    4. Metrics browser:
+        - engine_daemon_container_states_containers
+    5. Add nother Panel
+    6. Metrics browser:
+        - jobs_processed_total
+    7. Resize and adjust metrics to satisfy visualization objectives
+    
