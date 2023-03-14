@@ -7,7 +7,7 @@
 ## Setting-up Docker Swarm
 * Apparently, receiving Docker metrics requires Docker Swarm mode
 
-1. docker swarm init
+1. docker swarm init --advertise-addr 192.168.99.101
 2. sudo usermod -aG wheel vagrant
 3. vi sudo /etc/docker/daemon.json
 ``` json
