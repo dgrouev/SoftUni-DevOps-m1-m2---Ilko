@@ -9,6 +9,10 @@ usermod -aG wheel vagrant
 echo "* Copying daemon.json to /etc/docker/"
 sudo cp /vagrant/daemon.json /etc/docker/daemon.json
 
+echo "* Restarting docker to detect changes in daemon.json"
+sudo systemctl daemon-reload
+sudo systemctl restart docker 
+
 echo "* Starting 2 containers from goprom image"
 docker container run -d --name worker1 -p 8081:8080 shekeriev/goprom
 docker container run -d --name worker2 -p 8082:8080 shekeriev/goprom
