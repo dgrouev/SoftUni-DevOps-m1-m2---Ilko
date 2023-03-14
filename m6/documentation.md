@@ -69,6 +69,24 @@ docker service create --replicas 1 --name my-prometheus \
 ## Start two instances of goprom app
 1. docker container run -d --name worker1 -p 8081:8080 shekeriev/goprom
 2. docker container run -d --name worker2 -p 8082:8080 shekeriev/goprom
+3. We also need to adjust the prometheus.yml as follow:
+``` yml
+global:
+  scrape_interval:     15s 
+  evaluation_interval: 15s 
+  external_labels:
+      monitor: 'codelab-monitor'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['192.168.99.101:9090']
+      - targets: ['192.168.99.101:9323']
+      - targets: ['192.168.99.101:8081']
+      - targets: ['192.168.99.101:8082']
+
+```
+
 
 ## Metrics for monitoring
 1. Count of containers in all states
