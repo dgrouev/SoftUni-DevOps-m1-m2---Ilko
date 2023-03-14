@@ -94,4 +94,14 @@ scrape_configs:
 2. Total jobs processed (all result types)
     - jobs_processed_total
 
-## 
+## Grafana setup
+1. docker run -d -p 3000:3000 --name grafana grafana/grafana-oss:8.2.0
+2. Navigate to http://192.168.99.101:3000
+    - user: admin
+    - pass: admin
+3. Setting new password can be skipped
+4. Settings -> Data Sources -> Add Data Source -> Select 'Prometheus'
+5. Choose Name or stick with Default
+6. URL
+    - http://192.168.99.101:9090/
+7. Save & Test
