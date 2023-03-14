@@ -9,7 +9,7 @@
 
 1. docker swarm init
 2. vi sudo /etc/docker/daemon.json
-```
+``` json
 {
   "metrics-addr" : "192.168.99.101:9323",
   "experimental" : true
