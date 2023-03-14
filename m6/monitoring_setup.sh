@@ -24,4 +24,5 @@ echo "* Copying prometheus.yml to /tmp/"
 sudo cp /vagrant/prometheus.yml /tmp/prometheus.yml
 
 echo "* Starting Prometheus as a Service in the Swarm"
+sudo cp /vagrant/docker-compose.yml /vagrant/docker-compose.yml
 docker compose up -d
