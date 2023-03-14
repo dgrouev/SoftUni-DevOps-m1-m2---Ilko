@@ -24,7 +24,4 @@ echo "* Copying prometheus.yml to /tmp/"
 sudo cp /vagrant/prometheus.yml /tmp/prometheus.yml
 
 echo "* Starting Prometheus as a Service in the Swarm"
-docker service create --replicas 1 --name my-prometheus \
-    --mount type=bind,source=/tmp/prometheus.yml,destination=/etc/prometheus/prometheus.yml \
-    --publish published=9090,target=9090,protocol=tcp \
-    prom/prometheus
+docker compose up -d

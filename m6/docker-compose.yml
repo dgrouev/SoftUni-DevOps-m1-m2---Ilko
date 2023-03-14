@@ -1,0 +1,9 @@
+services:
+    my-prometheus:
+        image: prom/prometheus
+        deploy:
+            replicas: 1
+        ports:
+            - 9090:9090
+        volumes:
+            - "/tmp/prometheus.yml:/etc/prometheus/prometheus.yml"
