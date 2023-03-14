@@ -66,7 +66,7 @@ docker service create --replicas 1 --name my-prometheus \
     prom/prometheus
 ```
 
-## Start two instances of goprom app
+### Start two instances of goprom app
 1. docker container run -d --name worker1 -p 8081:8080 shekeriev/goprom
 2. docker container run -d --name worker2 -p 8082:8080 shekeriev/goprom
 3. We also need to adjust the prometheus.yml as follow:
@@ -88,6 +88,10 @@ scrape_configs:
 ```
 
 
-## Metrics for monitoring
+### Metrics for monitoring
 1. Count of containers in all states
     - engine_daemon_container_states_containers
+2. Total jobs processed (all result types)
+    - jobs_processed_total
+
+## 
