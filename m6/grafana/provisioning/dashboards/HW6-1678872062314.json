@@ -24,7 +24,7 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": "Prometheus",
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -48,7 +48,7 @@
   "liveNow": false,
   "panels": [
     {
-      "datasource": null,
+      "datasource": "Prometheus",
       "description": "This is metrics coming from Docker",
       "fieldConfig": {
         "defaults": {
@@ -108,7 +108,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "Prometheus",
       "description": "This is metrics coming from goprom containers",
       "fieldConfig": {
         "defaults": {
