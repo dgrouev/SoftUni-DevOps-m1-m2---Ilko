@@ -11,10 +11,7 @@ sudo cp /vagrant/daemon.json /etc/docker/daemon.json
 
 echo "* Restarting docker to detect changes in daemon.json"
 sudo systemctl daemon-reload
-sudo systemctl restart docker 
-
-echo "* Starting Grafana 8.2.0 as container on port 3000"
-docker run -d -p 3000:3000 --name grafana grafana/grafana-oss:8.2.0
+sudo systemctl restart docker
 
 echo "* Copying prometheus.yml to /tmp/"
 sudo cp /vagrant/prometheus.yml /tmp/prometheus.yml
@@ -26,3 +23,7 @@ docker compose up -d
 echo "* Starting 2 containers from goprom image"
 docker container run -d --name worker1 -p 8081:8080 shekeriev/goprom
 docker container run -d --name worker2 -p 8082:8080 shekeriev/goprom
+
+echo "* Starting runner scripts for goprom containers"
+/vagrant/goprom/runner.sh http://192.168.99.101:8081 &> /tmp/runner8081.log &
+/vagrant/goprom/runner.sh http://192.168.99.101:8082 &> /tmp/runner8082.log &
