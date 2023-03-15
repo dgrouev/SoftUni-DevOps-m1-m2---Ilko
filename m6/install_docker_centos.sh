@@ -17,5 +17,4 @@ firewall-cmd --add-port 8080/tcp --permanent
 firewall-cmd --add-port 8081/tcp --permanent
 firewall-cmd --add-port 8082/tcp --permanent
 firewall-cmd --add-port 9090/tcp --permanent
-firewall-cmd --add-port 9100/tcp --permanent
 firewall-cmd --reload

@@ -19,18 +19,11 @@ rule_files:
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'dockerProm'
-
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
-
     static_configs:
       - targets: ['192.168.99.101:9090']
       - targets: ['192.168.99.101:9323']
 
   - job_name: 'goprom'
-         # metrics_path defaults to '/metrics'
-         # scheme defaults to 'http'.
-
     static_configs:
       - targets: ['192.168.99.101:8081']
       - targets: ['192.168.99.101:8082']
