@@ -8,7 +8,7 @@ Utilizing what was discussed and shown during the lecture, try to do the followi
 
 1. Build an infrastructure with three machines - one server for the <strong>Elastic Stack (Elasticsearch, Logstash, and Kibana)</strong> and two clients - one with <strong>CentOS</strong> and one with <strong>Ubuntu</strong>. For the server you can use either <strong>CentOS or Ubuntu</strong>
 
-2. Install Metricbeat on the two client machines and make sure that the system module is enabled
+2. Install <strong>Metricbeat</strong> on the two client machines and make sure that the <strong>system module is enabled</strong>
 
 3. Configure the Logstash to receive data from the beats and to forward the data to Elasticsearch
 
