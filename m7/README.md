@@ -6,7 +6,7 @@ Main goal is to build further on what was demonstrated during the practice
 
 Utilizing what was discussed and shown during the lecture, try to do the following:
 
-1. Build an infrastructure with three machines - one server for the Elastic Stack (Elasticsearch, Logstash, and Kibana) and two clients - one with CentOS and one with Ubuntu. For the server you can use either CentOS or Ubuntu
+1. Build an infrastructure with three machines - one server for the <strong>Elastic Stack (Elasticsearch, Logstash, and Kibana)</strong> and two clients - one with <strong>CentOS</strong> and one with <strong>Ubuntu</strong>. For the server you can use either <strong>CentOS or Ubuntu</strong>
 
 2. Install Metricbeat on the two client machines and make sure that the system module is enabled
 
