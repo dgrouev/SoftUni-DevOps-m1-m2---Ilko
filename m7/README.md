@@ -10,7 +10,7 @@ Utilizing what was discussed and shown during the lecture, try to do the followi
 
 2. Install <strong>Metricbeat</strong> on the two client machines and make sure that the <strong>system module is enabled</strong>
 
-3. Configure the Logstash to receive data from the beats and to forward the data to Elasticsearch
+3. Configure the <strong>Logstash</strong> to receive data from the beats and to forward the data to <strong>Elasticsearch</strong>
 
 4. Using the REST API create an index pattern in Kibana
 
