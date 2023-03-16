@@ -1,8 +1,8 @@
 # Homework M7: Elastic Stack
 
-## Main goal is to build further on what was demonstrated during the practice
+Main goal is to build further on what was demonstrated during the practice
 
-Tasks
+## Tasks
 
 Utilizing what was discussed and shown during the lecture, try to do the following:
 
