@@ -1,6 +1,6 @@
-Homework M7: Elastic Stack
+# Homework M7: Elastic Stack
 
-Main goal is to build further on what was demonstrated during the practice
+## Main goal is to build further on what was demonstrated during the practice
 
 Tasks
 
@@ -16,7 +16,7 @@ Utilizing what was discussed and shown during the lecture, try to do the followi
 
 Please note that your solution should be automated to the extent possible
 
-Proof
+## Proof
 
 Prepare a document that show what you accomplished and how you did it. It can include (not limited to):
 
