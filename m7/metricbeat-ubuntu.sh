@@ -5,10 +5,10 @@ wget https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.6.2-am
 sudo dpkg -i metricbeat-8.6.2-amd64.deb
 
 echo "* Remove basic Metricbeat.yml"
-sudo sudo rm /etc/metricbeat/metricbeat.yml -f
+sudo rm /etc/metricbeat/metricbeat.yml -f
 
 echo "* Copy configured Metricbeat.yml"
-sudo sudo cp /vagrant/metricbeat.yml /etc/metricbeat/metricbeat.yml
+sudo cp /vagrant/metricbeat.yml /etc/metricbeat/metricbeat.yml
 
 echo "* Start Metricbeat service"
 sudo service metricbeat start
