@@ -20,6 +20,9 @@ echo "* Installing Logstash"
 wget https://artifacts.elastic.co/downloads/logstash/logstash-8.6.2-x86_64.rpm
 sudo rpm -Uvh logstash-*.rpm
 
+echo "* Copying beats.conf for Logstash"
+sudo cp /vagrant/beats.conf /etc/logstash/conf.d/beats.conf
+
 echo "* Start Logstash service"
 sudo systemctl daemon-reload
 sudo systemctl enable logstash
