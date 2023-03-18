@@ -52,3 +52,4 @@ It should look like this:
 ``` shell 
 sudo metricbeat setup --index-management -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["192.168.99.104:9200"]'
 ```
+10. sudo service metricbeat start
