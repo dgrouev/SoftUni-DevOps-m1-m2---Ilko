@@ -20,6 +20,10 @@ systemctl enable --now docker
 echo "* Add vagrant user to docker group"
 usermod -aG docker vagrant
 
+echo "*  Compose Elastic stack on docker machine"
+cd /vagrant/elk-on-docker
+docker compose up -d
+
 echo "* Adjust firewall rules"
 firewall-cmd --add-port 8080/tcp --permanent
 firewall-cmd --add-port 5000/tcp --permanent
