@@ -104,7 +104,7 @@ setup.kibana:
 # ------------------------------ Logstash Output -------------------------------
 output.logstash:
   # The Logstash hosts
-  hosts: ["192.168.99.101:5601"]
+  hosts: ["192.168.99.101:5044"]
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
