@@ -43,3 +43,12 @@ It should look like this:
 118
 119 # ================================= Processors =================================
 ```
+
+6. sudo metricbeat test config
+    - It should say 'Config OK'
+7. sudo metricbeat modules list
+    - system module should be enable, if not run sudo metricbeat modules enable system
+8. If this is the first Metricbeat in our Elastic Stack Execute this command:
+``` shell 
+sudo metricbeat setup --index-management -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["192.168.99.104:9200"]'
+```
