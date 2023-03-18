@@ -29,6 +29,12 @@ echo "* Installing Kibana"
 wget https://artifacts.elastic.co/downloads/kibana/kibana-8.6.2-amd64.deb
 sudo dpkg -i kibana-*.deb
 
+echo "* Remove basic kibana.yml"
+sudo sudo rm /etc/kibana/kibana.yml -f
+
+echo "* Copying Kibana Config Files"
+sudo cp /vagrant/kibana.yml /etc/kibana/kibana.yml
+
 echo "* Start Kibana service"
 sudo systemctl daemon-reload
 sudo systemctl enable kibana
