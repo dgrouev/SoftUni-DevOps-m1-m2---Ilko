@@ -20,5 +20,26 @@ curl -XPOST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H 
 
 ## Ubuntu vagrant box with Metricbeat
 1. Provision node with the image ubuntu/trusty64
-2. do-release-upgrade (after provisinoning)
-3.
+2. wget https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.6.2-amd64.deb
+3. sudo vi /etc/metricbeat/metricbeat.yml
+4. Comment line #92 and #94
+5. Uncomment lines #105 and 107, setting host 192.168.99.104 with port 5000
+It should look like this:
+``` yml
+104 # ------------------------------ Logstash Output -------------------------------
+105 output.logstash:
+106   # The Logstash hosts
+107   hosts: ["192.168.99.104:5000"]
+108
+109   # Optional SSL. By default is off.
+110   # List of root certificates for HTTPS server verifications
+111   #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
+112
+113   # Certificate for SSL client authentication
+114   #ssl.certificate: "/etc/pki/client/cert.pem"
+115
+116   # Client Certificate Key
+117   #ssl.key: "/etc/pki/client/cert.key"
+118
+119 # ================================= Processors =================================
+```
