@@ -26,8 +26,8 @@ sudo systemctl enable logstash
 sudo systemctl start logstash
 
 echo "* Installing Kibana"
-wget https://artifacts.elastic.co/downloads/kibana/kibana-8.6.2-amd64.deb
-sudo dpkg -i kibana-*.deb
+wget https://artifacts.elastic.co/downloads/kibana/kibana-8.6.2-x86_64.rpm
+sudo rpm -Uvh kibana-*.rpm
 
 echo "* Remove basic kibana.yml"
 sudo sudo rm /etc/kibana/kibana.yml -f
