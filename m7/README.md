@@ -1,5 +1,9 @@
 # Homework M7: Elastic Stack
 
+## Creating the Metricbeat.yml
+1. Taking the basic Metricbeat.yml from https://github.com/elastic/beats/blob/main/metricbeat/metricbeat.yml
+2. Make the neccessary adjusments to send data to our Logstash hosted on the Docker Machine
+
 ## REST API Index Patter Creation
 1. Send POST request with curl
 ``` shell

@@ -5,8 +5,11 @@ wget https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.6.2-am
 sudo vi /etc/metricbeat/metricbeat.yml
 
 echo "* Remove basic Metricbeat.yml"
-sudo rm /etc/metricbeat/metricbeat.yml -f
+sudo sudo rm /etc/metricbeat/metricbeat.yml -f
 
 echo "* Copy configured Metricbeat.yml"
-sudo rm /etc/metricbeat/metricbeat.yml -f
+sudo sudo cp /vagrant/metricbeat.yml /etc/metricbeat/metricbeat.yml
+
+echo "* Start Metricbeat service"
+sudo service metricbeat start
 
