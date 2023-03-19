@@ -107,6 +107,13 @@ firewall-cmd --reload
 6. #74* cluster.initial_master_nodes: ["server"]
   - Careful with line #74 as it might be auto-added at #115, which will cause error if it's declared twice
 
+## Creating the kibana.yml:
+* Refactir the following lines, where #number is the number of the line
+1. #6 server.port: 5601
+2. #11 server.host: "192.168.99.101"
+3. #32 server.name: "server"
+4. #43 elasticsearch.hosts: ["http://192.168.99.101:9200"]
+
 ## Creating the metricbeat.yml
 1. Comment lines #92 and #94 and uncomment lines #105 and #107 to look like this:
 ``` shell
@@ -138,6 +145,11 @@ curl -X POST http://192.168.99.101:5601/api/data_views/data_view -H 'kbn-xsrf: t
   }
 }'
 ```
+
+## CentOS vagrant box with Metricbeat
+1. Provision node with the image shekeriev/centos-stream-9
+2. wget https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.6.2-x86_64.rpm
+3. sudo rpm -Uvh metricbeat-8.6.2-x86_64.rpm
 
 ## Ubuntu vagrant box with Metricbeat
 1. Provision node with the image ubuntu/trusty64
