@@ -10,6 +10,9 @@ sudo rm /etc/metricbeat/metricbeat.yml -f
 echo "* Copy configured Metricbeat.yml"
 sudo cp /vagrant/metricbeat.yml /etc/metricbeat/metricbeat.yml
 
+echo "* Setup Index"
+sudo metricbeat setup --index-management -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["192.168.99.101:9200"]'
+
 echo "* Create Index Pattern via REST API"
 curl -X POST http://192.168.99.101:5601/api/data_views/data_view -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d'
 {
