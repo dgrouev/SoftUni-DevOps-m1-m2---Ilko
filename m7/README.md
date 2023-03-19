@@ -1,7 +1,32 @@
 # Homework M7: Elastic Stack
 
+## Server Setup
+1. Install Elasticsearch using the following commands:
+``` shell
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.6.2-x86_64.rpm
+
+sudo rpm -Uvh elasticsearch-*.rpm
+```
+
+2. Remove the originial elasticsearch.yml and place configured one:
+``` shell
+sudo sudo rm /etc/elasticsearch/elasticsearch.yml -f
+
+sudo cp /vagrant/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
+
+sudo cp /vagrant/jvm.options /etc/elasticsearch/jvm.options.d/
+```
+
+3. Start the elasticsearch service
+``` shell
+sudo systemctl daemon-reload
+
+sudo systemctl enable elasticsearch
+
+sudo systemctl start elasticsearch
+```
+
 ## Creating the Metricbeat.yml
-1. Taking the basic Metricbeat.yml from https://github.com/elastic/beats/blob/main/metricbeat/metricbeat.yml
 2. Make the neccessary adjusments to send data to our Logstash hosted on the Docker Machine
 
 ## REST API Index Patter Creation
@@ -15,11 +40,6 @@ curl -XPOST http://192.168.99.101:5601/api/index_patterns/index_pattern -H 'kbn-
     "timeFieldName":"@timestamp"
   }
 }'
-```
-
-* Alternative
-``` shell
-curl -XPOST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H "kbn-xsrf: true" --form file=@elastiflow.kibana.8.6.x.ndjson
 ```
 
 ## Ubuntu vagrant box with Metricbeat
