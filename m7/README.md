@@ -146,23 +146,32 @@ curl -X POST http://192.168.99.101:5601/api/data_views/data_view -H 'kbn-xsrf: t
 }'
 ```
 
-## CentOS vagrant box with Metricbeat
-1. Provision node with the image shekeriev/centos-stream-9
-2. wget https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.6.2-x86_64.rpm
-3. sudo rpm -Uvh metricbeat-8.6.2-x86_64.rpm
+## Vagrant box with Metricbeat
+1. Provision node with the image
+  - CentOS: shekeriev/centos-stream-9
+  - Ubuntu:
+2. Download and install Metricbeat:
+  - CentOS
+``` shell
+wget https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.6.2-x86_64.rpm
 
-## Ubuntu vagrant box with Metricbeat
-1. Provision node with the image ubuntu/trusty64
-2. wget https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.6.2-amd64.deb
-3. sudo vi /etc/metricbeat/metricbeat.yml
-4. Comment line #92 and #94
-5. Uncomment lines #105 and 107, setting host 192.168.99.104 with port 5000
+sudo rpm -Uvh metricbeat-8.6.2-x86_64.rpm
+```
+  - Ubuntu
+``` shell
+wget https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.6.2-amd64.deb
+
+sudo dpkg -i metricbeat-8.6.2-amd64.deb
+```
+4. Open the metricbeat.ymw with <strong>sudo vi /etc/metricbeat/metricbeat.yml</strong>
+5. Comment line #92 and #94
+6. Uncomment lines #105 and 107, setting host 192.168.99.101 with port 5044
 It should look like this:
 ``` yml
 104 # ------------------------------ Logstash Output -------------------------------
 105 output.logstash:
 106   # The Logstash hosts
-107   hosts: ["192.168.99.104:5000"]
+107   hosts: ["192.168.99.101:5044"]
 108
 109   # Optional SSL. By default is off.
 110   # List of root certificates for HTTPS server verifications
@@ -176,13 +185,24 @@ It should look like this:
 118
 119 # ================================= Processors =================================
 ```
-
-6. sudo metricbeat test config
+7. sudo metricbeat test config
     - It should say 'Config OK'
-7. sudo metricbeat modules list
+8. sudo metricbeat modules list
     - system module should be enable, if not run sudo metricbeat modules enable system
-8. If this is the first Metricbeat in our Elastic Stack Execute this command:
+9. If this is the first Metricbeat in our Elastic Stack Execute this command:
 ``` shell 
-sudo metricbeat setup --index-management -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["192.168.99.104:9200"]'
+sudo metricbeat setup --index-management -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["192.168.99.101:9200"]'
 ```
-10. sudo service metricbeat start
+10. Start the Metricbeat service:
+  - CentOS:
+``` shell
+sudo systemctl daemon-reload
+
+sudo systemctl enable metricbeat
+
+sudo systemctl start metricbeat
+```
+  - Ubuntu:
+``` shell
+sudo service metricbeat start
+```
