@@ -88,15 +88,50 @@ sudo systemctl enable kibana
 sudo systemctl start kibana
 ```
 
-## Creating the Metricbeat.yml
-2. Make the neccessary adjusments to send data to our Logstash hosted on the Docker Machine
 
-## REST API Index Patter Creation
-1. Send POST request with curl
+### Open firewall ports and reload
+``` shell
+firewall-cmd --add-port 5044/tcp --permanent
+firewall-cmd --add-port 5601/tcp --permanent
+firewall-cmd --add-port 9200/tcp --permanent
+firewall-cmd --reload
+```
+
+## Creating the elasticsearch.yml:
+* Refactir the following lines, where #number is the number of the line
+1. #17 cluster.name: mycluster
+2. #23 node.name: server
+3. #56 network.host: ["localhost", "192.168.99.101"]
+4. #61 http.port: 9200
+5. #98 xpack.security.enabled: false
+6. #74* cluster.initial_master_nodes: ["server"]
+  - Careful with line #74 as it might be auto-added at #115, which will cause error if it's declared twice
+
+## Creating the metricbeat.yml
+1. Comment lines #92 and #94 and uncomment lines #105 and #107 to look like this:
+``` shell
+output.logstash:
+  # The Logstash hosts
+  hosts: ["192.168.99.101:5044"]
+```
+
+## REST API Index Pattern Creation
+1. Send POST request with curl the old way
 ``` shell
 curl -XPOST http://192.168.99.101:5601/api/index_patterns/index_pattern -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d'
 {
   "index_pattern": {
+    "name":"Metricbeat",
+    "title":"metricbeat-8.6.2-*",
+    "timeFieldName":"@timestamp"
+  }
+}'
+```
+2. As of version 8.0.* the proper way create Index Pattern via REST API is as follows:
+``` shell
+curl -X POST http://192.168.99.101:5601/api/data_views/data_view -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d'
+{
+  "data_view": {
     "name":"Metricbeat",
     "title":"metricbeat-8.6.2-*",
     "timeFieldName":"@timestamp"
