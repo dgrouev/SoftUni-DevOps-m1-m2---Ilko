@@ -122,6 +122,13 @@ output.logstash:
   hosts: ["192.168.99.101:5044"]
 ```
 
+## Creating the jvm.options
+<i>NOTE: We should limit the heap size to 50% of the total virtual memory on the machine we host elasticsearch. This is done by editing the /etc/elasticsearch/jvm.options or placing a new jvm.options in /etc/elasticsearch/jvm.options.d/ directory that looks like this:</i>
+``` options
+-Xms2g
+-Xmx2g
+```
+
 ## REST API Index Pattern Creation
 1. Send POST request with curl the old way
 ``` shell
