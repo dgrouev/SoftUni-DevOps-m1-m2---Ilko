@@ -1,6 +1,7 @@
 # Homework M7: Elastic Stack
 
 ## Server Setup
+### 1. Elasticsearch
 1. Install Elasticsearch using the following commands:
 ``` shell
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.6.2-x86_64.rpm
@@ -17,7 +18,7 @@ sudo cp /vagrant/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 sudo cp /vagrant/jvm.options /etc/elasticsearch/jvm.options.d/
 ```
 
-3. Start the elasticsearch service
+3. Start the Elasticsearch service
 ``` shell
 sudo systemctl daemon-reload
 
@@ -25,6 +26,45 @@ sudo systemctl enable elasticsearch
 
 sudo systemctl start elasticsearch
 ```
+
+### 2. Logstash
+1. Install Logstash using the following commands:
+``` shell
+wget https://artifacts.elastic.co/downloads/logstash/logstash-8.6.2-x86_64.rpm
+
+sudo rpm -Uvh logstash-*.rpm
+```
+
+2. Configure Logstash to receive data from beats:
+``` shell
+sudo cp /vagrant/beats.conf /etc/logstash/conf.d/beats.conf
+```
+ - beats.conf:
+ ``` conf
+ input {
+  beats {
+    port => 5044
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["http://localhost:9200"]
+    index => "%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}"
+  }
+}
+ ```
+ <i>NOTE: Replace localhost in the beats.conf with the ip of the elasticsearch host, in the case they are hosted on different machines!</i>
+
+3. Start the Logstash service
+``` shell
+sudo systemctl daemon-reload
+
+sudo systemctl enable logstash
+
+sudo systemctl start logstash
+```
+
 
 ## Creating the Metricbeat.yml
 2. Make the neccessary adjusments to send data to our Logstash hosted on the Docker Machine
