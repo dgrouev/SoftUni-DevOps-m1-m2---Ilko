@@ -64,7 +64,29 @@ sudo systemctl enable logstash
 
 sudo systemctl start logstash
 ```
+### 3. Kibana
+1. Install Kibana using the following commands:
+``` shell
+wget https://artifacts.elastic.co/downloads/kibana/kibana-8.6.2-x86_64.rpm
 
+sudo rpm -Uvh kibana-*.rpm
+```
+
+2. Remove the originial kibana.yml and place configured one:
+``` shell
+sudo sudo rm /etc/kibana/kibana.yml -f
+
+sudo cp /vagrant/kibana.yml /etc/kibana/kibana.yml
+```
+
+3. Start the Kibana service
+``` shell
+sudo systemctl daemon-reload
+
+sudo systemctl enable kibana
+
+sudo systemctl start kibana
+```
 
 ## Creating the Metricbeat.yml
 2. Make the neccessary adjusments to send data to our Logstash hosted on the Docker Machine
