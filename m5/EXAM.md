@@ -67,13 +67,37 @@ cat ~/.ssh/id_rsa.pub
 15. Copy the key and then Manage Jenkins > Users > doadmin > Configure, [Proof 2.15]
     * SSH Public Keys: Paste the Vagrant SSH key we just created
     * Save
+16. Add Docker machine as a slave node in Jenkins, go to Manage Jenkins > Nodes and Clouds > New Node then, [Proof 2.16]
+    * Node name: docker-node
+    * Select Permanent Agent option
+17. Click Create and enter the following data, [Proof 2.17, Proof 2.18]:
+    * Description: Docker machine
+    * Number of Executors: 4
+    * Remote root directory: /home/jenkins
+    * Labels: docker-node
+    * Usage: Only build jobs with label expression matching this node
+    * Launch agents via SSH
+    * Host: docker.vm101.do1.exam
+    * Credentials: jenkins (Credentials from file)
+    * Host Key Verification Strategy: Known hosts file
+    * Save
+18. Click on the newly added docker machine, then log to monitor the process and make sure it's completed before running jobs on the machine, [Proof 2.19]
 
 ## Gitea Setup
 1. Open session to the docker machine in a new terminal with:
 ``` shell
 vagrant ssh docker
 ```
-2. 
+2. Copy the docker-compose.yml locally and docker compose with the following commands, [Proof 3.1, Proof 3.2]:
+``` shell
+cp /vagrant/docker-compose.yml .
+docker compose up -d
+```
+3. Navigate to http://192.168.99.101:3000 on the host and do the following. [Proof 3.3]:
+    * Change Server domain to: 192.168.99.101
+    * Change Gitea Base URL to: http://192.168.99.101:3000/
+    * Click Install Gitea (it may take a while to install)
+
 
 
 
