@@ -40,27 +40,40 @@ cat /var/lib/jenkins/secrets/initialAdminPassword
 cd
 cd .ssh
 cat id_ecdsa
-copy the private SSH key
 ```
-9. On the Jenkins web interface, Manage Jenkins > Manage Credentials > Global > Add Credentials > Select **Username with password**, enter the following data and Create [Proof 2.8]
+9. Copy the private SSH key, [Proof 2.8]
+10. On the Jenkins web interface, Manage Jenkins > Manage Credentials > Global > Add Credentials > Select **Username with password**, enter the following data and Create [Proof 2.9]
     * Scope: gloval
     * Username: vagrant
     * Password: vagrant (same as vagrant user)
     * Description: Local user with password
-10. Then again click on Add Credentials > Select **SSH Username with private key** [Proof 2.9, Proof 2.10]
+11. Then again click on Add Credentials > Select **SSH Username with private key** [Proof 2.10, Proof 2.11]
     * Scope: gloval
     * Username: jenkins
     * Private key: Enter directly (Check step 8)
     * Description: Credentials from file
-11. Then Manage Jenkins > System > SSH remote hosts > Add, [Proof 2.11]
+12. Then Manage Jenkins > System > SSH remote hosts > Add, [Proof 2.12]
     * hostname: jenkins.vm100.do1.exam
     * port: 22
     * credentials: Credentials from File
-12. Then Manage Jenkins > Security > SSH Server, [Proof 2.12]
+13. Then Manage Jenkins > Security > SSH Server, [Proof 2.13]
     * SSH Port Fixed: 2222
     * Save
+14. Back on the Jenkins machine, exit the Jenkins session going back to the **vagrant user** and exectute the following commands, (initialize ssh key with default values), [Proof 2.14]:
+``` shell
+ssh-keygen
+cat ~/.ssh/id_rsa.pub
+```
+15. Copy the key and then Manage Jenkins > Users > doadmin > Configure, [Proof 2.15]
+    * SSH Public Keys: Paste the Vagrant SSH key we just created
+    * Save
 
-
+## Gitea Setup
+1. Open session to the docker machine in a new terminal with:
+``` shell
+vagrant ssh docker
+```
+2. 
 
 
 
