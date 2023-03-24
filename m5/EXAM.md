@@ -34,7 +34,7 @@ sudo vi /etc/sudoers/
 cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
 3. Install recommended plugins, [Proof 2.2]
-4. Register with following details, [Proof 2.3]:
+4. Register with following details, [Proof*2.3]:
     * Username: doadmin
     * Password: Password1
     * Full name: DevOps Admin
@@ -187,11 +187,15 @@ Password1
 9. Save and Build now
 
 ## Elastic Stack setup
-1. Start a session on the monitor machine and make sure the Elasticsearch, Logstash and Kibana services are running by executing the following command [Proof*5.1]:
+1. Start a session on the monitor machine and make sure the Elasticsearch, Logstash and Kibana services are running by executing the following command: [Proof*5.1]:
 ``` shell
 systemctl status elasticsearch logstash kibana
 ```
-2. Ctrl + C and press Enter, if any of the services is down, make sure to import the corelating .yml file from the provided scripts, and copy-paste the its contents to /etc/*service*/*service.yml* then execute the following commands:
+2. Ctrl + C and press Enter, **if any of the services is down**, make sure to import the corelating .yml file from the provided scripts:
+    * Elasticsearch: elasticsearch.yml (/etc/elasticsearch/) and jvm.options (/etc/elasticsearch/jvm.options.d/)
+    * Logstash: beats.conf (/etc/logstash/conf.d/)
+    * Kibana: kibana.yml (/etc/kibana/)
+Copy-paste its contents to /etc/*service*/*service.yml* then execute the following commands:
 ``` shell
 sudo systemctl daemon-reload
 sudo systemctl enable *service*
