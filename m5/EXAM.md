@@ -104,6 +104,21 @@ docker compose up -d
     * Password: Password1
     * Re-type and Create
 6. You should see account was successfully created, click on the plus on the right of Repositories: 0 to add New Repository, [Proof 3.6]
+7. Create repository 'exam' with default values for all the other fields, [Proof 3.7]
+8. Go back on the Jenkins machine and execute the following commands, [Proof 3.8]:
+``` shell
+cd
+git init
+git checkout -b main
+git remote add origin http://192.168.99.101:3000/ilia/exam.git
+git clone https://github.com/shekeriev/dob-2021-04-exam-re.git
+cd dob-2021-04-exam-re
+git push http://192.168.99.101:3000/ilia/exam.git
+```
+9. When promted for password after the last command, enter following credentials. [Proof 3.9]:
+    * Username: ilia
+    * Password: Password1
+
 
 
 
