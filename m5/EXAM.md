@@ -14,13 +14,14 @@
 192.168.99.102 monitor.vm102.do1.exam monitor
 ```
 ![Proof1.3](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/1/Proof%201.3.JPG?raw=true)
-4. Enter session with user 'jenkins' to make ssh key and copy it inside the 'jenkins user' to all of the machines ![Proof1.3](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/1/Proof%201.3.JPG?raw=true) ![Proof1.4](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/1/Proof%201.4.JPG?raw=true) - this is achieved executing the following commands inline (if prompted for password enter: 'Password1', yes to add the fingerprints and default values when creating the key):
+4. Enter session with user 'jenkins' to make ssh key and copy it inside the 'jenkins user' to all of the machines executing the following commands inline (if prompted for password enter: 'Password1', yes to add the fingerprints and default values when creating the key):
 ``` shell
 su - jenkins
 ssh-keygen -t ecdsa -b 521 -m PEM
 ssh-copy-id jenkins@jenkins.vm100.do1.exam
 ssh-copy-id jenkins@docker.vm101.do1.exam
 ```
+![Proof1.3](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/1/Proof%201.3.JPG?raw=true) ![Proof1.4](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/1/Proof%201.4.JPG?raw=true)
 5. We need to add the jenkins user to the sudoers file on the Docker machine **manually**, as it's read-only and we have to override it with :wq! ![Proof1.6](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/1/Proof%201.6.JPG?raw=true) execute the following:
 ``` shell
 ssh jenkins@docker.vm101.do1.exam
@@ -43,9 +44,9 @@ cat /var/lib/jenkins/secrets/initialAdminPassword
 5. Use default address and press **Save and Continue**, , then press **Start using Jenkins**.
 ![Proof2.4](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.4.JPG?raw=true)
 6. Go to Manage Jenkins -> Plugins -> Available Plugins and SSH - with download now and install after restart option
-![Proof2.5](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.5.JPG?raw=true)![Proof2.6](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.6.JPG?raw=true)![Proof2.7](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.7.JPG?raw=true
+![Proof2.5](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.5.JPG?raw=true)![Proof2.6](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.6.JPG?raw=true)![Proof2.7](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.7.JPG?raw=true)
 7. Restart Jenkins
-8. On the jenkins machine, get the ssh key using the following commands, ):
+8. On the jenkins machine, get the ssh key using the following commands:
 ``` shell
 cd
 cd .ssh
@@ -96,7 +97,7 @@ cat ~/.ssh/id_rsa.pub
 18. Click on the newly added docker machine, then log to monitor the process and make sure it's completed before running jobs on the machine, ![Proof2.19](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.19.JPG?raw=true)
 19. Go https://hub.docker.com/ then Sign In > Account Settings > Security > New Access Token with Read, Write and Delete ![Proof2.20](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.20.JPG?raw=true)
 20. Put jenkins in description copy and close
-21. Back to Jenkins > Manage Jenkins > Manage Credentials > System > Global Credentials > Add Credentials and enter the following data: 
+21. Back to Jenkins > Manage Jenkins > Manage Credentials > System > Global Credentials > Add Credentials and enter the following data:
     * Kind: Username and password
     * Username: *Your Docker Hub username*
     * Password: *Your Docker Access Token*
@@ -126,9 +127,10 @@ docker compose up -d
     * Email Address: doadmin@do1.exam
     * Password: Password1
     * Re-type and Create
-6. You should see account was successfully created, click on the plus on the right of Repositories: 0 to add New Repository:
+6. You should see account was successfully created, click on the plus on the right of Repositories: 0 to add New Repository:</br>
 ![Proof3.6](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.6.JPG?raw=true)
-7. Create repository 'exam' with default values for all the other fields, ![Proof3.7](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.7.JPG?raw=true)
+7. Create repository 'exam' with default values for all the other fields
+![Proof3.7](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.7.JPG?raw=true)</br>
 8. Go back on the Jenkins machine and execute the following commands:
 ``` shell
 cd
@@ -154,8 +156,8 @@ git push http://192.168.99.101:3000/ilia/exam.git
 ![Proof3.13](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.13.JPG?raw=true)
 14. Click on **Download now and install after restart** option and wait (sometimes Jenkins doesn't restart on it's own, so you might have to manually refresh the browser tab)
 ![Proof3.14](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.14.JPG?raw=true)
-15. Go back to Gitea Web interface and click on our webhook, scroll down and click **Test Delivery**, you should see tick!
-[Proof3.15](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.15.JPG?raw=true)
+15. Go back to Gitea Web interface and click on our webhook, scroll down and click **Test Delivery**, you should see tick!</br>
+![Proof3.15](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.15.JPG?raw=true)
 16. If the delivery fails, double-check our url is the Jenkins machine ip at port 8080 on endpoint /gitea-webhook/post, then make sure we have the environment variable GITEA__webhook__ALLOWED_HOST_LIST present in the configuration file of Gitea, which should be configured to allow other hosts to invoke webhooks, it should be configured like this (check the docker-compose.yml)
 
 ``` yml
