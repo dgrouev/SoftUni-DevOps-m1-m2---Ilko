@@ -19,6 +19,13 @@ ssh-keygen -t ecdsa -b 521 -m PEM
 ssh-copy-id jenkins@jenkins.vm100.do1.exam
 ssh-copy-id jenkins@docker.vm101.do1.exam
 ```
+<!-- 5. We need to add the jenkins user to the sudoers file on the Docker machine **manually**, as it's read-only and we have to override it with :wq! [Proof 1.6] execute the following:
+``` shell
+ssh jenkins@docker.vm101.do1.exam
+sudo vi /etc/sudoers/
+```
+6. Then we have to add the docker group to the jenkins machine
+6. We will have to Restart Jenkins for the changes to take effect, go to Manage Jenkins -> Reload Configuration from Disk -> OK -->
 
 ## Jenkins setup
 1. Navigate to http://127.0.0.1:8080/ on the host machine
@@ -137,6 +144,46 @@ git push http://192.168.99.101:3000/ilia/exam.git
 ``` yml
       - GITEA__webhook__ALLOWED_HOST_LIST=192.168.99.0/24
 ```
-17. 
+
+## Creating the pipeline
+1. Inside the cloned repo folder, create docker-compose.yml file with the following content:
+``` yml
+```
+
+2. Create Jenkisfile with the following content:
+``` groovy
+...
+```
+
+3. Create folder deploy and inside it create another docker-compose.yml file with the following content:
+``` yml
+```
+
+4. Publish the changes to the Gitea repository with the following commands:
+``` shell
+cd ..
+git add .
+git status .
+git commit -m'Pipeline files'
+git push http://192.168.99.101:3000/ilia/exam.git
+ilia
+Password1
+```
+
+5. Go to Jenkins Web Interface Dashboard and click on New Item, select Pipeline and name it Pipeline-exam [Proof 4.1]
+6. Create the pipeline with following settings: [Proof 4.1, Proof 4.2, Proof 4.3]
+    * Description: Pipeline for exam
+    * 
+    * Built Triggers: **Check GitHub hook trigger for GIT** and **Scm polling and Poll SCM**
+    * Pipeline Definition:
+        - Pipeline script from SCM
+        - SCM: Git
+        - Repository URL: http://192.168.99.101:3000/ilia/exam.git
+        - Credentials: -none-
+        - Branch Specifier: */main
+        - Repository browser: auto
+        - Script Path: Jenkinsfile
+        - Lightweight checkout: checked
+9. Save and Build now
 
 ![sample result](https://github.com/shekeriev/dob-2021-04-exam-re/blob/main/result.png?raw=true)

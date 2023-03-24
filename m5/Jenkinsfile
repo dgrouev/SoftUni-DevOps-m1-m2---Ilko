@@ -14,7 +14,7 @@ pipeline
         {
             steps
             {
-                git branch: 'main', url: 'http://192.168.99.102:3000/ilia/bgapp'
+                git branch: 'main', url: 'http://192.168.99.101:3000/ilia/exam'
             }  
         }
         stage('Create a network')
@@ -22,8 +22,8 @@ pipeline
             steps
             {
                 sh '''
-                docker network rm appnet pipeline-bgapp_appnet deploy_appnet || true
-                docker network ls | grep appnet || docker network create appnet
+                sudo docker network rm appnet pipeline-exam_appnet deploy_appnet || true
+                sudo docker network ls | grep appnet || sudo docker network create appnet
                 '''
             }
         }
@@ -31,74 +31,52 @@ pipeline
         {
             steps
             {
-                sh 'docker image rm -f pipeline-bgapp-web pipeline-bgapp-db || true'
-                sh 'docker compose build'
+                sh 'sudo docker image rm -f pipeline-exam-producer pipeline-exam-storage pipeline-exam-consumer || true'
+                sh 'sudo docker compose build'
             }
         }
         stage('Run the Containers')
         {
             steps
             {
-                sh 'docker container rm -f deploy-web-1 deploy-db-1 || true'
-                sh 'docker volume prune -f'
-                sh 'docker compose up -d'
-            }
-        }
-        stage('Test')
-        {
-            steps
-            {
-                script
-                {
-                    echo 'Test #1 - Reachability'
-                    sh 'echo $(curl --write-out "%{http_code}" --silent --output /dev/null http://localhost:8080) | grep 200 || true'
-
-                    echo 'Test #2 - Check if Sofia Appears'
-                    sh "curl --silent http://localhost:8080 | grep София || true"  
-                    
-                    echo 'Test #3 - Sofia Population Appears'
-                    sh "sleep 10 && curl --silent http://192.168.99.102:8080 | grep 1236047"
-
-                    echo 'Test #4 - Check if Plovdiv Appears'
-                    sh "curl --silent http://localhost:8080 | grep Пловдив || true"
-
-                    echo 'Test #5 - Plovdiv Population Appears'
-                    sh "curl --silent http://localhost:8080 | grep 343424 || true"          
-                }
+                sh 'sudo docker container rm -f dob-producer dob-storage dob-consumer || true'
+                sh 'sudo docker container rm -f pipeline-exam-producer-1 pipeline-exam-storage-1 pipeline-exam-consumer-1  || true'
+                sh 'sudo docker compose up -d'
             }
         }
         stage('CleanUp')
         {
             steps
             {
-                sh 'docker container rm -f pipeline-bgapp-web-1 pipeline-bgapp-db-1 || true'
-                sh 'docker volume prune -f'
+                sh 'sudo docker container rm -f pipeline-exam-producer pipeline-exam-storage pipeline-exam-consumer || true'
             }
         }
         stage('Login')
         {
             steps
             {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
         stage('Push')
         {
             steps
             {
-                sh 'docker image rm ilkothetiger/bgapp-web ilkothetiger/bgapp-db || true'
-                sh 'docker image tag pipeline-bgapp-web ilkothetiger/bgapp-web'
-                sh 'docker image tag pipeline-bgapp-db ilkothetiger/bgapp-db'
-                sh 'docker push ilkothetiger/bgapp-web'
-                sh 'docker push ilkothetiger/bgapp-db'
+                sh 'sudo docker image rm ilkothetiger/exam-producer ilkothetiger/exam-storage ilkothetiger/exam-consumer || true'
+                sh 'sudo docker image tag pipeline-exam-producer ilkothetiger/exam-producer'
+                sh 'sudo docker image tag pipeline-exam-storage ilkothetiger/exam-storage'
+                sh 'sudo docker image tag pipeline-exam-consumer ilkothetiger/exam-consumer'
+                sh 'sudo docker push ilkothetiger/exam-producer'
+                sh 'sudo docker push ilkothetiger/exam-storage'
+                sh 'sudo docker push ilkothetiger/exam-consumer'
             }
         }
         stage('Deploy')
         {
             steps
             {
-                sh 'docker image rm -f pipeline-bgapp-web pipeline-bgapp-db || true'
-                sh 'cd deploy && docker compose up -d'
+                sh 'sudo docker image rm -f pipeline-exam-producer-1 pipeline-exam-storage-1 pipeline-exam-consumer-1 || true'
+                sh 'cd deploy && sudo docker compose up -d'
             }
         }
     }

@@ -1,0 +1,22 @@
+services:
+    producer:
+        image: ilkothetiger/exam-producer
+        container_name: dob-producer
+        networks:
+            - appnet
+    storage:
+        image: ilkothetiger/exam-storage
+        container_name: dob-storage
+        networks:
+            - appnet
+        environment:
+            MYSQL_ROOT_PASSWORD: "Exam-2021"
+    consumer:
+        image: ilkothetiger/exam-consumer
+        container_name: dob-consumer
+        ports:
+            - 8080:5000
+        networks:
+            - appnet
+networks:
+    appnet:
