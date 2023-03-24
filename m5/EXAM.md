@@ -82,6 +82,14 @@ cat ~/.ssh/id_rsa.pub
     * Host Key Verification Strategy: Known hosts file
     * Save
 18. Click on the newly added docker machine, then log to monitor the process and make sure it's completed before running jobs on the machine, [Proof 2.19]
+19. Go https://hub.docker.com/ then Sign In > Account Settings > Security > New Access Token with Read, Write and Delete [Proof 2.20]
+20. Put jenkins in description copy and close
+21. Back to Jenkins > Manage Jenkins > Manage Credentials > System > Global Credentials > Add Credentials and enter the following data: [Proof 2.21]
+    * Kind: Username and password
+    * Username: *Your Docker Hub username*
+    * Password: *Your Docker Access Token*
+    * ID: docker-hub
+    * Description: Docker Access Token
 
 ## Gitea Setup
 1. Open session to the docker machine in a new terminal with:
@@ -129,6 +137,6 @@ git push http://192.168.99.101:3000/ilia/exam.git
 ``` yml
       - GITEA__webhook__ALLOWED_HOST_LIST=192.168.99.0/24
 ```
-
+17. 
 
 ![sample result](https://github.com/shekeriev/dob-2021-04-exam-re/blob/main/result.png?raw=true)
