@@ -48,7 +48,7 @@ pipeline
         {
             steps
             {
-                sh 'sudo docker container rm -f pipeline-exam-producer pipeline-exam-storage pipeline-exam-consumer || true'
+                sh 'sudo docker container rm -f pipeline-exam-producer-1 pipeline-exam-storage-1 pipeline-exam-consumer-1 || true'
             }
         }
         stage('Login')

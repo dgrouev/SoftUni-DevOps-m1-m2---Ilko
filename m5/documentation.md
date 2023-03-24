@@ -48,7 +48,7 @@
 
 
 ### Then Manage Jenkins > Configure Global Security > SSH Server
-1. SSHD Port Fixed: 2222
+1. SSHD Port Fixed:     
 2. Save
 3. Exit Jenkins user
 
