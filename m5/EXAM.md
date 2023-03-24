@@ -21,7 +21,7 @@ ssh-keygen -t ecdsa -b 521 -m PEM
 ssh-copy-id jenkins@jenkins.vm100.do1.exam
 ssh-copy-id jenkins@docker.vm101.do1.exam
 ```
-![Proof1.3](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/1/Proof%201.3.JPG?raw=true) ![Proof1.4](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/1/Proof%201.4.JPG?raw=true)
+![Proof1.4](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/1/Proof%201.4.JPG?raw=true)
 5. We need to add the jenkins user to the sudoers file on the Docker machine **manually**, as it's read-only and we have to override it with :wq!  execute the following:
 ``` shell
 ssh jenkins@docker.vm101.do1.exam
@@ -37,18 +37,18 @@ cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
 ![Proof2.1](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.1.JPG?raw=true)
 3. Install recommended plugins 
-![Proof2.2](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.2.JPG?raw=true)
+![Proof2.2](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.2.JPG?raw=true)</br>
 4. Register with following details, :
     * Username: doadmin
     * Password: Password1
     * Full name: DevOps Admin
     * E-mail address: doadmin@do1.exam
-![Proof2.3*](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.3.JPG?raw=true)
+![Proof2.3*](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.3.JPG?raw=true)</br>
 5. Use default address and press **Save and Continue**, , then press **Start using Jenkins**.
-![Proof2.4](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.4.JPG?raw=true)
+![Proof2.4](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.4.JPG?raw=true)</br>
 6. Go to Manage Jenkins -> Plugins -> Available Plugins and SSH - with download now and install after restart option
 ![Proof2.5](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.5.JPG?raw=true)![Proof2.6](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.6.JPG?raw=true)![Proof2.7](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.7.JPG?raw=true)
-7. Restart Jenkins
+7. Restart Jenkins</br>
 8. On the jenkins machine, get the ssh key using the following commands:
 ``` shell
 cd
@@ -128,10 +128,11 @@ docker compose up -d
 ```
 ![Proof3.1](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.1.JPG?raw=true)
 ![Proof3.2](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.2.JPG?raw=true)
-3. Navigate to http://192.168.99.101:3000 on the host and do the following:
+3. Navigate to http://192.168.99.101:3000 on the host and do the following
     * Change Server domain to: 192.168.99.101
     * Change Gitea Base URL to: http://192.168.99.101:3000/
     * Click Install Gitea (it may take a while to install)
+
 ![Proof3.3](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.3.JPG?raw=true)
 4. Once installed, create an account by clicking **Need an account? Registor now.** under the Sign In form 
 ![Proof3.4](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.4.JPG?raw=true)
