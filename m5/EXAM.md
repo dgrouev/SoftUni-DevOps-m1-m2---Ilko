@@ -19,12 +19,12 @@ ssh-keygen -t ecdsa -b 521 -m PEM
 ssh-copy-id jenkins@jenkins.vm100.do1.exam
 ssh-copy-id jenkins@docker.vm101.do1.exam
 ```
-<!-- 5. We need to add the jenkins user to the sudoers file on the Docker machine **manually**, as it's read-only and we have to override it with :wq! [Proof 1.6] execute the following:
+5. We need to add the jenkins user to the sudoers file on the Docker machine **manually**, as it's read-only and we have to override it with :wq! [Proof 1.6] execute the following:
 ``` shell
 ssh jenkins@docker.vm101.do1.exam
 sudo vi /etc/sudoers/
 ```
-6. Then we have to add the docker group to the jenkins machine
+<!-- 6. Then we have to add the docker group to the jenkins machine
 6. We will have to Restart Jenkins for the changes to take effect, go to Manage Jenkins -> Reload Configuration from Disk -> OK -->
 
 ## Jenkins setup
@@ -185,5 +185,48 @@ Password1
         - Script Path: Jenkinsfile
         - Lightweight checkout: checked
 9. Save and Build now
+
+## Elastic Stack setup
+1. Start a session on the monitor machine and make sure the Elasticsearch, Logstash and Kibana services are running by executing the following command [Proof*5.1]:
+``` shell
+systemctl status elasticsearch logstash kibana
+```
+2. Ctrl + C and press Enter, if any of the services is down, make sure to import the corelating .yml file from the provided scripts, and copy-paste the its contents to /etc/*service*/*service.yml* then execute the following commands:
+``` shell
+sudo systemctl daemon-reload
+sudo systemctl enable *service*
+sudo systemctl start *service*
+```
+3. Once we got all of the 3 active and running, we can go to our jenkins machine and execute this command: [Proof 5.2]
+``` shell
+sudo metricbeat setup --index-management -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["192.168.99.102:9200"]'
+```
+4. Execute the following command to create the Data View with the REST API, [Proof 5.3]
+``` shell
+curl -X POST http://192.168.99.102:5601/api/data_views/data_view -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d'
+{
+  "data_view": {
+    "name":"Metricbeat",
+    "title":"metricbeat-8.6.2-*",
+    "timeFieldName":"@timestamp"
+  }
+}'
+```
+5. Navigate to http://192.168.99.102:5601/ on the host machine, click on the drop-down menu and scroll all the way down then click on Stack Management, check if we got the Index and the Data View added successfully:
+    * Under Data click on Index Management, there should be something like *metricbeat-8.6.2-2023.03.24* [Proof*5.4]
+    * Under Kibana click on Data Views, there should be our **Metricbeat** [Proof 5.5]
+6. If the Metricbeat is missing, add it manually with the following instructions: [Proof*5.6]
+    * Name: Metricbeat
+    * Index Pattern: metricbeat-8.6.2-*
+    * Timestamp field: @timestamp
+7. From the drop-down menu go to Dashboard, click on Create Dashboard, click on Add Visualization, create one visualization with the following details: [Proof*5.7]
+    * Horizontal axis: @timestamp
+    * Vertical axis: host.cpu.usage
+    * Breakdown: agent.name.keyword
+8. Click on **Save and Return** then click on **Create Visualization** again to add one more with: [Proof*5.8]
+    * Horizontal axis: @timestamp
+    * Vertical axis: system.memory.used.pct
+    * Breakdown: agent.name.keyword
+9. Click again on **Save and Return**, we should see our Dashboard with 2 visualizations, click on **Save** [Proof*5.9]
 
 ![sample result](https://github.com/shekeriev/dob-2021-04-exam-re/blob/main/result.png?raw=true)
