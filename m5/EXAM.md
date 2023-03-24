@@ -37,7 +37,7 @@ cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
 ![Proof2.1](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.1.JPG?raw=true)
 3. Install recommended plugins 
-![Proof2.2](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.2.JPG?raw=true)
+![Proof2.2](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.2.JPG?raw=true)</br>
 4. Register with following details:
 ```
 Username: doadmin
@@ -45,9 +45,9 @@ Password: Password1
 Full name: DevOps Admin
 E-mail address: doadmin@do1.exam
 ```
-![Proof2.3*](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.3.JPG?raw=true)
+![Proof2.3*](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.3.JPG?raw=true)</br>
 5. Use default address and press **Save and Continue**, , then press **Start using Jenkins**.
-![Proof2.4](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.4.JPG?raw=true)
+![Proof2.4](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.4.JPG?raw=true)</br>
 6. Go to Manage Jenkins -> Plugins -> Available Plugins and SSH - with download now and install after restart option
 ![Proof2.5](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.5.JPG?raw=true)![Proof2.6](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.6.JPG?raw=true)![Proof2.7](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.7.JPG?raw=true)
 7. Restart Jenkins
@@ -168,7 +168,7 @@ Re-type and Create
 6. You should see account was successfully created, click on the plus on the right of Repositories: 0 to add New Repository:
 ![Proof3.6](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.6.JPG?raw=true)
 7. Create repository 'exam' with default values for all the other fields
-![Proof3.7](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.7.JPG?raw=true)
+![Proof3.7](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.7.JPG?raw=true)</br>
 8. Go back on the Jenkins machine and execute the following commands:
 ``` shell
 cd
@@ -195,9 +195,9 @@ Password: Password1
 13. Go back to Jenkins Web Interface and install the Gitea plugin (Manage Jenkins -> Plugins -> Available Plugins: Gitea)
 ![Proof3.13](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.13.JPG?raw=true)
 14. Click on **Download now and install after restart** option and wait (sometimes Jenkins doesn't restart on it's own, so you might have to manually refresh the browser tab)
-![Proof3.14](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.14.JPG?raw=true)
+![Proof3.14](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.14.JPG?raw=true)</br>
 15. Go back to Gitea Web interface and click on our webhook, scroll down and click **Test Delivery**, you should see tick!
-![Proof3.15](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.15.JPG?raw=true)
+![Proof3.15](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.15.JPG?raw=true)</br>
 16. If the delivery fails, double-check our url is the Jenkins machine ip at port 8080 on endpoint /gitea-webhook/post, then make sure we have the environment variable GITEA__webhook__ALLOWED_HOST_LIST present in the configuration file of Gitea, which should be configured to allow other hosts to invoke webhooks, it should be configured like this (check the docker-compose.yml)
 
 ``` yml
