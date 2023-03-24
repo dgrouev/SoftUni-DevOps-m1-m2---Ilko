@@ -122,8 +122,13 @@ git push http://192.168.99.101:3000/ilia/exam.git
 11. Click on Settings -> Select Webhooks -> Add Webhook -> Gitea [Proof 3.11]
 12. Add Gitea webhook with target URL http://192.168.99.100:8080/gitea-webhook/post
 , [Proof 3.12]:
-13. 
-
+13. Go back to Jenkins Web Interface and install the Gitea plugin (Manage Jenkins -> Plugins -> Available Plugins: Gitea), [Proof 3.13]
+14. Click on **Download now and install after restart** option and wait (sometimes Jenkins doesn't restart on it's own, so you might have to manually refresh the browser tab)[Proof 3.14]
+15. Go back to Gitea Web interface and click on our webhook, scroll down and click **Test Delivery**, you should see tick[Proof 3.15]
+16. If the delivery fails, double-check our url is the Jenkins machine ip at port 8080 on endpoint /gitea-webhook/post, then make sure we have the environment variable GITEA__webhook__ALLOWED_HOST_LIST present in the configuration file of Gitea, which should be configured to allow other hosts to invoke webhooks, it should be configured like this (check the docker-compose.yml)[Proof 3.16]
+``` yml
+      - GITEA__webhook__ALLOWED_HOST_LIST=192.168.99.0/24
+```
 
 
 ![sample result](https://github.com/shekeriev/dob-2021-04-exam-re/blob/main/result.png?raw=true)
