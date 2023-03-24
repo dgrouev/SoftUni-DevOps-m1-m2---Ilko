@@ -7,7 +7,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "jenkins" do |jenkins|
     jenkins.vm.box="shekeriev/centos-stream-9"
-    jenkins.vm.hostname = "jenkins.do1.lab"
+    jenkins.vm.hostname = "vm101.do1.exam"
     jenkins.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "3072"]
     end
@@ -19,13 +19,25 @@ Vagrant.configure(2) do |config|
   
   config.vm.define "docker" do |docker|
     docker.vm.box = "shekeriev/centos-stream-9"
-    docker.vm.hostname = "docker.do1.lab"
+    docker.vm.hostname = "vm102.do1.exam"
     docker.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "3072"]
     end
     docker.vm.network "private_network", ip: "192.168.99.102"
+    docker.vm.network "forwarded_port", guest: 8080, host: 8081
     docker.vm.provision "shell", path: "add_hosts.sh"
 	  docker.vm.provision "shell", path: "install_docker.sh"
   end
   
+  config.vm.define "monitoring" do |monitoring|
+    monitoring.vm.box = "shekeriev/centos-stream-9"
+    monitoring.vm.hostname = "vm103.do1.exam"
+    monitoring.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "3072"]
+    end
+    monitoring.vm.network "private_network", ip: "192.168.99.103"
+    monitoring.vm.network "forwarded_port", guest: 3000, host: 8082
+    monitoring.vm.provision "shell", path: "add_hosts.sh"
+  end
+
 end
