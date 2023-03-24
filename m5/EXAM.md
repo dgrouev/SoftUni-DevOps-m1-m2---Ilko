@@ -118,7 +118,11 @@ git push http://192.168.99.101:3000/ilia/exam.git
 9. When promted for password after the last command, enter following credentials. [Proof 3.9]:
     * Username: ilia
     * Password: Password1
-
+10. Back to Gitea Web Interface, we should see our cloned repo, [Proof 3.10]
+11. Click on Settings -> Select Webhooks -> Add Webhook -> Gitea [Proof 3.11]
+12. Add Gitea webhook with target URL http://192.168.99.100:8080/gitea-webhook/post
+, [Proof 3.12]:
+13. 
 
 
 
