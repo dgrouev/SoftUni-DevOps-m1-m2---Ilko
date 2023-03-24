@@ -37,18 +37,20 @@ cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
 ![Proof2.1](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.1.JPG?raw=true)
 3. Install recommended plugins 
-![Proof2.2](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.2.JPG?raw=true)</br>
-4. Register with following details, :
-    * Username: doadmin
-    * Password: Password1
-    * Full name: DevOps Admin
-    * E-mail address: doadmin@do1.exam
-![Proof2.3*](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.3.JPG?raw=true)</br>
+![Proof2.2](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.2.JPG?raw=true)
+4. Register with following details:
+```
+Username: doadmin
+Password: Password1
+Full name: DevOps Admin
+E-mail address: doadmin@do1.exam
+```
+![Proof2.3*](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.3.JPG?raw=true)
 5. Use default address and press **Save and Continue**, , then press **Start using Jenkins**.
-![Proof2.4](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.4.JPG?raw=true)</br>
+![Proof2.4](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.4.JPG?raw=true)
 6. Go to Manage Jenkins -> Plugins -> Available Plugins and SSH - with download now and install after restart option
 ![Proof2.5](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.5.JPG?raw=true)![Proof2.6](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.6.JPG?raw=true)![Proof2.7](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.7.JPG?raw=true)
-7. Restart Jenkins</br>
+7. Restart Jenkins
 8. On the jenkins machine, get the ssh key using the following commands:
 ``` shell
 cd
@@ -57,25 +59,33 @@ cat id_ecdsa
 ```
 9. Copy the private SSH key, ![Proof2.8](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.8.JPG?raw=true)
 10. On the Jenkins web interface, Manage Jenkins > Manage Credentials > Global > Add Credentials > Select **Username with password**, enter the following data and Create 
-    * Scope: global
-    * Username: vagrant
-    * Password: vagrant (same as vagrant user)
-    * Description: Local user with password
+```
+Scope: global
+Username: vagrant
+Password: vagrant (same as vagrant user)
+Description: Local user with password
+```
 ![Proof2.9](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.9.JPG?raw=true)
 11. Then again click on Add Credentials > Select **SSH Username with private key** 
-    * Scope: global
-    * Username: jenkins
-    * Private key: Enter directly (Check step 9)
-    * Description: Credentials from file
+```
+Scope: global
+Username: jenkins
+Private key: Enter directly (Check step 9)
+Description: Credentials from file
+```
 ![Proof2.10](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.10.JPG?raw=true)![Proof2.11](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.11.JPG?raw=true)
 12. Then Manage Jenkins > System > SSH remote hosts > Add:
-    * hostname: jenkins.vm100.do1.exam
-    * port: 22
-    * credentials: Credentials from File
+```
+hostname: jenkins.vm100.do1.exam
+port: 22
+credentials: Credentials from File
+```
 ![Proof2.12](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.12.JPG?raw=true)
 13. Then Manage Jenkins > Security > SSH Server:
-    * SSH Port Fixed: 2222
-    * Save
+```
+SSH Port Fixed: 2222
+Save
+```
 ![Proof2.13](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.13.JPG?raw=true)
 14. Back on the Jenkins machine, exit the Jenkins session going back to the **vagrant user** and exectute the following commands, (initialize ssh key with default values):
 ``` shell
@@ -84,24 +94,30 @@ cat ~/.ssh/id_rsa.pub
 ```
 ![Proof2.14](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.14.JPG?raw=true)
 15. Copy the key and then Manage Jenkins > Users > doadmin > Configure:
-    * SSH Public Keys: Paste the Vagrant SSH key we just created
-    * Save
+```
+SSH Public Keys: Paste the Vagrant SSH key we just created
+Save
+```
 ![Proof2.15](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.15.JPG?raw=true)
 16. Add Docker machine as a slave node in Jenkins, go to Manage Jenkins > Nodes and Clouds > New Node then:
-    * Node name: docker-node
-    * Select Permanent Agent option
+```
+Node name: docker-node
+Select Permanent Agent option
+```
 ![Proof2.16](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.16.JPG?raw=true)
 17. Click Create and enter the following data:
-    * Description: Docker machine
-    * Number of Executors: 4
-    * Remote root directory: /home/jenkins
-    * Labels: docker-node
-    * Usage: Only build jobs with label expression matching this node
-    * Launch agents via SSH
-    * Host: docker.vm101.do1.exam
-    * Credentials: jenkins (Credentials from file)
-    * Host Key Verification Strategy: Known hosts file
-    * Save
+```
+Description: Docker machine
+Number of Executors: 4
+Remote root directory: /home/jenkins
+Labels: docker-node
+Usage: Only build jobs with label expression matching this node
+Launch agents via SSH
+Host: docker.vm101.do1.exam
+Credentials: jenkins (Credentials from file)
+Host Key Verification Strategy: Known hosts file
+Save
+```
 ![Proof2.17](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.17.JPG?raw=true)![Proof2.18](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.18.JPG?raw=true)
 18. Click on the newly added docker machine, then log to monitor the process and make sure it's completed before running jobs on the machine
 ![Proof2.19](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.19.JPG?raw=true)
@@ -109,11 +125,13 @@ cat ~/.ssh/id_rsa.pub
 ![Proof2.20](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.20.JPG?raw=true)
 20. Put jenkins in description copy and close
 21. Back to Jenkins > Manage Jenkins > Manage Credentials > System > Global Credentials > Add Credentials and enter the following data:
-    * Kind: Username and password
-    * Username: *Your Docker Hub username*
-    * Password: *Your Docker Access Token*
-    * ID: docker-hub
-    * Description: Docker Access Token
+```
+Kind: Username and password
+Username: *Your Docker Hub username*
+Password: *Your Docker Access Token*
+ID: docker-hub
+Description: Docker Access Token
+```
 ![Proof2.21](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/2/Proof%202.21.JPG?raw=true)
 
 ## Gitea Setup
@@ -128,24 +146,29 @@ docker compose up -d
 ```
 ![Proof3.1](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.1.JPG?raw=true)
 ![Proof3.2](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.2.JPG?raw=true)
-3. Navigate to http://192.168.99.101:3000 on the host and do the following
-    * Change Server domain to: 192.168.99.101
-    * Change Gitea Base URL to: http://192.168.99.101:3000/
-    * Click Install Gitea (it may take a while to install)
+3. Navigate to http://192.168.99.101:3000 on the host and do the following:
+```
+Change Server domain to: 192.168.99.101
+Change Gitea Base URL to: http://192.168.99.101:3000/
+Click Install Gitea (it may take a while to install)
+ ```
 
 ![Proof3.3](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.3.JPG?raw=true)
 4. Once installed, create an account by clicking **Need an account? Registor now.** under the Sign In form 
 ![Proof3.4](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.4.JPG?raw=true)
-5. Enter the following details:
-    * Username: ilia
-    * Email Address: doadmin@do1.exam
-    * Password: Password1
-    * Re-type and Create
+5. Enter the following details
+```
+Username: ilia
+Email Address: doadmin@do1.exam
+Password: Password1
+Re-type and Create
+```
+
 ![Proof3.5](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.5.JPG?raw=true)
-6. You should see account was successfully created, click on the plus on the right of Repositories: 0 to add New Repository:</br>
+6. You should see account was successfully created, click on the plus on the right of Repositories: 0 to add New Repository:
 ![Proof3.6](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.6.JPG?raw=true)
 7. Create repository 'exam' with default values for all the other fields
-![Proof3.7](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.7.JPG?raw=true)</br>
+![Proof3.7](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.7.JPG?raw=true)
 8. Go back on the Jenkins machine and execute the following commands:
 ``` shell
 cd
@@ -158,8 +181,10 @@ git push http://192.168.99.101:3000/ilia/exam.git
 ```
 ![Proof3.8](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.8.JPG?raw=true)
 9. When promted for password after the last command, enter following credentials. 
-    * Username: ilia
-    * Password: Password1
+```
+Username: ilia
+Password: Password1
+```
 ![Proof3.9](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.9.JPG?raw=true)
 10. Back to Gitea Web Interface, we should see our cloned repo
 ![Proof3.10](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.10.JPG?raw=true)
@@ -171,7 +196,7 @@ git push http://192.168.99.101:3000/ilia/exam.git
 ![Proof3.13](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.13.JPG?raw=true)
 14. Click on **Download now and install after restart** option and wait (sometimes Jenkins doesn't restart on it's own, so you might have to manually refresh the browser tab)
 ![Proof3.14](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.14.JPG?raw=true)
-15. Go back to Gitea Web interface and click on our webhook, scroll down and click **Test Delivery**, you should see tick!</br>
+15. Go back to Gitea Web interface and click on our webhook, scroll down and click **Test Delivery**, you should see tick!
 ![Proof3.15](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.15.JPG?raw=true)
 16. If the delivery fails, double-check our url is the Jenkins machine ip at port 8080 on endpoint /gitea-webhook/post, then make sure we have the environment variable GITEA__webhook__ALLOWED_HOST_LIST present in the configuration file of Gitea, which should be configured to allow other hosts to invoke webhooks, it should be configured like this (check the docker-compose.yml)
 
