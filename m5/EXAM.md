@@ -97,7 +97,13 @@ docker compose up -d
     * Change Server domain to: 192.168.99.101
     * Change Gitea Base URL to: http://192.168.99.101:3000/
     * Click Install Gitea (it may take a while to install)
-
+4. Once installed, create an account by clicking **Need an account? Registor now.** under the Sign In form, [Proof 3.4]
+5. Enter the following details, [Proof 3.5]
+    * Username: ilia
+    * Email Address: doadmin@do1.exam
+    * Password: Password1
+    * Re-type and Create
+6. You should see account was successfully created, click on the plus on the right of Repositories: 0 to add New Repository, [Proof 3.6]
 
 
 
