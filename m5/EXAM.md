@@ -166,10 +166,10 @@ Re-type and Create
 
 ![Proof3.5](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.5.JPG?raw=true)
 6. You should see account was successfully created, click on the plus on the right of Repositories: 0 to add New Repository:
-![Proof3.6](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.6.JPG?raw=true)
+![Proof3.6](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.6.JPG?raw=true)</br>
 7. Create repository 'exam' with default values for all the other fields
 ![Proof3.7](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.7.JPG?raw=true)</br>
-8. Go back on the Jenkins machine and execute the following commands:
+8. Go back on the Docker machine and execute the following commands:
 ``` shell
 cd
 git init
@@ -191,7 +191,7 @@ Password: Password1
 11. Click on Settings -> Select Webhooks -> Add Webhook -> Gitea
 ![Proof3.11](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.11.JPG?raw=true)
 12. Add Gitea webhook with target URL http://192.168.99.100:8080/gitea-webhook/post
-![Proof3.12](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.12.JPG?raw=true)
+![Proof3.12](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.12.JPG?raw=true)</br>
 13. Go back to Jenkins Web Interface and install the Gitea plugin (Manage Jenkins -> Plugins -> Available Plugins: Gitea)
 ![Proof3.13](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.13.JPG?raw=true)
 14. Click on **Download now and install after restart** option and wait (sometimes Jenkins doesn't restart on it's own, so you might have to manually refresh the browser tab)
@@ -205,17 +205,16 @@ Password: Password1
 ```
 ![Proof3.16](https://github.com/ilkoTheTiger/DevOps/blob/master/exam/pics/3/Proof%203.16.JPG?raw=true)
 
-## Creating the pipeline
-1. Inside the cloned repo folder, create docker-compose.yml file with the following content:
+## Docker Machine setup
+1. Inside the cloned repo folder, create docker-compose.yml file and copy-paste the contents of the provided docker-compose.yml:
 ``` yml
 ```
 
-2. Create Jenkisfile with the following content:
+2. Create Jenkisfile with and copy-paste the content of the provided Jenkinsfile:
 ``` groovy
-...
 ```
 
-3. Create folder deploy and inside it create another docker-compose.yml file with the following content:
+3. Create folder deploy and inside it create another docker-compose.yml file with content of the docker-compose.yml file inside the deploy folder of the provided scripts:
 ``` yml
 ```
 
