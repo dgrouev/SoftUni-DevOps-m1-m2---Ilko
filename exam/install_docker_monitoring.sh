@@ -13,7 +13,7 @@ echo "* Add Jenkins and adjust the group membership"
 sudo usermod -aG docker vagrant
 
 echo "* Copying prometheus.yml to /tmp/"
-sudo cp /vagrant/prometheus.yml /tmp/prometheus.yml
+sudo cp /vagrant/prom/prometheus.yml /tmp/prometheus.yml
 
 echo "* Starting Prometheus"
 cd /vagrant/prom
