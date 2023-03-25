@@ -12,6 +12,13 @@ systemctl enable --now docker
 echo "* Add Jenkins and adjust the group membership"
 sudo usermod -aG docker vagrant
 
+echo "* Copying prometheus.yml to /tmp/"
+sudo cp /vagrant/prometheus.yml /tmp/prometheus.yml
+
+echo "* Starting Prometheus"
+cd /vagrant/prom
+docker compose up -d
+
 echo "* Adjust the firewall"
 firewall-cmd --permanent --add-port=3000/tcp
 firewall-cmd --permanent --add-port=9090/tcp
