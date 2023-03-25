@@ -1,0 +1,45 @@
+pipeline 
+{
+    agent 
+    {
+        label 'docker-node'
+    }
+    stages 
+    {
+        stage('Clone') 
+        {
+            steps 
+            {
+                git branch: 'main', url: 'http://192.168.99.102:3000/ilia/exam'
+            }
+        }
+        stage('Prepare')
+        {
+            steps
+            {
+                sh 'docker network ls | grep app-net || docker network create app-net'
+            }
+        }
+        stage('Build')
+        {
+            steps
+            {
+                sh 'cd /home/vagrant/workspace/Exam/Exam/consumer && docker image build -t img-cons .'
+                sh 'cd /home/vagrant/workspace/Exam/Exam/producer && docker image build -t img-prod .'
+                sh 'cd /home/vagrant/workspace/Exam/Exam/storage && docker image build -t img-stor .'
+            }
+        }
+         stage('Deploy')
+        {
+            steps
+            {
+                sh 'docker container rm -f dob-storage || true'
+                sh 'docker container run -d --name dob-storage -e MYSQL_ROOT_PASSWORD=Exam-2021 --net app-net img-stor'
+                sh 'docker container rm -f dob-producer || true'
+                sh 'docker container run -d --name dob-producer --net app-net img-prod'
+                sh 'docker container rm -f dob-consumer || true'
+                sh 'docker container run -d --name dob-consumer --net app-net -p 8080:5000 img-cons'
+            }
+        }
+    }
+}
