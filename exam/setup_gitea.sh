@@ -22,8 +22,8 @@ docker container exec -u 1000 gitea gitea admin user create --username vagrant -
 git clone https://github.com/shekeriev/dob-2021-04-exam-re /tmp/exam
 
 # Modify the repository
-cp /vagrant/docker-compose-build.yaml /tmp/exam/
-cp /vagrant/docker-compose-deploy.yaml /tmp/exam/
+cp /vagrant/docker-compose-build.yml /tmp/exam/
+cp /vagrant/docker-compose-deploy.yml /tmp/exam/
 cd /tmp/exam && git add . && git commit -m "Modified on $(date '+%Y-%m-%d %H:%M:%S')"
 
 # Add it to Gitea (but as public repository)
