@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.7"
 
 networks:
   gitea:
@@ -12,23 +12,17 @@ volumes:
 
 services:
   server:
-    image: gitea/gitea:1.17.3
+    image: gitea/gitea:1.18.5
     container_name: gitea
     environment:
       - USER_UID=1000
       - USER_GID=1000
-      - GITEA__server__DOMAIN=192.168.99.102
-      - GITEA__server__ROOT_URL=http://192.168.99.102:3000
       - GITEA__database__DB_TYPE=mysql
       - GITEA__database__HOST=db:3306
       - GITEA__database__NAME=gitea
       - GITEA__database__USER=gitea
       - GITEA__database__PASSWD=gitea
-      - GITEA__webhook__ALLOWED_HOST_LIST = 192.168.99.0/24
-      - GITEA__security__INSTALL_LOCK=true
-      - GITEA__repository__ENABLE_PUSH_CREATE_USER=true
-      - GITEA__repository__ENABLE_PUSH_CREATE_ORG=true
-      - GITEA__repository__ONLY_ALLOW_PUSH_IF_GITEA_ENVIRONMENT_SET=false
+      - GITEA__webhook__ALLOWED_HOST_LIST=192.168.99.0/24
     restart: always
     networks:
       - gitea
