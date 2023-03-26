@@ -59,7 +59,7 @@ pipeline
         {
             steps
             {
-                sh 'docker container rm -f pipeline-exam-generator-1 pipeline-exam-storage-1 pipeline-exam-client-1 || true'
+                sh 'docker container rm -f exam-generator-1 exam-storage-1 exam-client-1 || true'
             }
         }
         stage('Login')
