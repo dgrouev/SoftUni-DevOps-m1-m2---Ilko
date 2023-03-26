@@ -1,8 +1,8 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <flow-definition plugin="workflow-job@1284.v2fe8ed4573d4">
   <actions>
-    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2123.va_31cb_3b_80ef8"/>
-    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2123.va_31cb_3b_80ef8">
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2125.vddb_a_44a_d605e"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2125.vddb_a_44a_d605e">
       <jobProperties/>
       <triggers/>
       <parameters/>
@@ -29,47 +29,99 @@
     </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@3641.vf58904a_b_b_5d8">
-    <script>pipeline 
+    <script>pipeline
 {
-    agent 
+    agent
     {
         label &apos;docker-node&apos;
     }
-    stages 
+    environment
     {
-        stage(&apos;Clone&apos;) 
+        DOCKERHUB_CREDENTIALS=credentials(&apos;docker-hub&apos;)
+    }
+    stages
+    {
+        stage(&apos;Clone&apos;)
         {
-            steps 
+            steps
             {
                 git branch: &apos;main&apos;, url: &apos;http://192.168.99.202:3000/exam/exam&apos;
-            }
+            }  
         }
-        stage(&apos;Prepare&apos;)
+        stage(&apos;Create a network&apos;)
         {
             steps
             {
-                sh &apos;docker network ls | grep exam-net || docker network create exam-net&apos;
+                sh &apos;&apos;&apos;
+                docker network rm exam-net || true
+                docker network ls | grep exam-net || docker network create exam-net
+                &apos;&apos;&apos;
             }
         }
-        stage(&apos;Build&apos;)
+        stage(&apos;Build the Images&apos;)
         {
             steps
             {
-                sh &apos;cd /home/vagrant/workspace/Exam/client &amp;&amp; docker image build -t img-cons .&apos;
-                sh &apos;cd /home/vagrant/workspace/Exam/generator &amp;&amp; docker image build -t img-prod .&apos;
-                sh &apos;cd /home/vagrant/workspace/Exam/storage &amp;&amp; docker image build -t img-stor .&apos;
+                sh &apos;docker image rm -f pipeline-con-generator pipeline-con-storage pipeline-con-client || true&apos;
+                sh &apos;docker compose -f docker-compose-run.yml build&apos;
             }
         }
-         stage(&apos;Deploy&apos;)
+        stage(&apos;Run the Containers&apos;)
         {
             steps
             {
-                sh &apos;docker container rm -f con-storage || true&apos;
-                sh &apos;docker container run -d --name con-storage -e MYSQL_ROOT_PASSWORD=Exam-2021 --net exam-net img-stor&apos;
-                sh &apos;docker container rm -f con-generator || true&apos;
-                sh &apos;docker container run -d --name con-generator --net exam-net img-prod&apos;
-                sh &apos;docker container rm -f con-client || true&apos;
-                sh &apos;docker container run -d --name con-client --net exam-net -p 8080:5000 img-cons&apos;
+                sh &apos;docker container rm -f con-generator con-storage con-client || true&apos;
+                sh &apos;docker container rm -f pipeline-exam-generator-1 pipeline-exam-storage-1 pipeline-exam-client-1  || true&apos;
+                sh &apos;docker compose -f docker-compose-run.yml up -d&apos;
+            }
+        }
+        stage(&apos;Test&apos;)
+        {
+            steps
+            {
+                script
+                {
+                    echo &apos;Test #1 - Reachability&apos;
+                    sh &apos;echo $(curl --write-out &quot;%{http_code}&quot; --silent --output /dev/null http://localhost:8080) | grep 200 || true&apos;
+
+                    echo &apos;Test #2 - Check if Fun Facts Appears&apos;
+                    sh &quot;curl --silent http://localhost:8080 | grep Fun Facts || true&quot;  
+                }
+            }
+        }
+        stage(&apos;CleanUp&apos;)
+        {
+            steps
+            {
+                sh &apos;docker container rm -f pipeline-exam-generator-1 pipeline-exam-storage-1 pipeline-exam-client-1 || true&apos;
+            }
+        }
+        stage(&apos;Login&apos;)
+        {
+            steps
+            {
+                sh &apos;echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin&apos;
+            }
+        }
+        stage(&apos;Push&apos;)
+        {
+            steps
+            {
+                sh &apos;docker image rm ilkothetiger/exam-generator ilkothetiger/exam-storage ilkothetiger/exam-client || true&apos;
+                sh &apos;docker image tag exam-generator ilkothetiger/exam-generator&apos;
+                sh &apos;docker image tag exam-storage ilkothetiger/exam-storage&apos;
+                sh &apos;docker image tag exam-client ilkothetiger/exam-client&apos;
+                sh &apos;docker push ilkothetiger/exam-generator&apos;
+                sh &apos;docker push ilkothetiger/exam-storage&apos;
+                sh &apos;docker push ilkothetiger/exam-client&apos;
+            }
+        }
+        stage(&apos;Deploy&apos;)
+        {
+            steps
+            {
+                sh &apos;docker image rm -f exam-generator-1 exam-storage-1 exam-client-1 || true&apos;
+                sh &apos;docker compose -f docker-compose-deploy.yml up -d&apos;
             }
         }
     }

@@ -14,7 +14,7 @@ pipeline
         {
             steps
             {
-                git branch: 'main', url: 'http://192.168.99.102:3000/exam/exam'
+                git branch: 'main', url: 'http://192.168.99.202:3000/exam/exam'
             }  
         }
         stage('Create a network')
@@ -22,8 +22,8 @@ pipeline
             steps
             {
                 sh '''
-                docker network rm app-net || true
-                docker network ls | grep app-net || docker network create app-net
+                docker network rm exam-net || true
+                docker network ls | grep exam-net || docker network create exam-net
                 '''
             }
         }
@@ -31,7 +31,7 @@ pipeline
         {
             steps
             {
-                sh 'docker image rm -f pipeline-dob-producer pipeline-dob-storage pipeline-dob-consumer || true'
+                sh 'docker image rm -f pipeline-con-generator pipeline-con-storage pipeline-con-client || true'
                 sh 'docker compose -f docker-compose-run.yml build'
             }
         }
@@ -39,16 +39,30 @@ pipeline
         {
             steps
             {
-                sh 'docker container rm -f dob-producer dob-storage dob-consumer || true'
-                sh 'docker container rm -f pipeline-exam-producer-1 pipeline-exam-storage-1 pipeline-exam-consumer-1  || true'
+                sh 'docker container rm -f con-generator con-storage con-client || true'
+                sh 'docker container rm -f pipeline-exam-generator-1 pipeline-exam-storage-1 pipeline-exam-client-1  || true'
                 sh 'docker compose -f docker-compose-run.yml up -d'
+            }
+        }
+        stage('Test')
+        {
+            steps
+            {
+                script
+                {
+                    echo 'Test #1 - Reachability'
+                    sh 'echo $(curl --write-out "%{http_code}" --silent --output /dev/null http://localhost:8080) | grep 200 || true'
+
+                    echo 'Test #2 - Check if Fun Facts Appears'
+                    sh "curl --silent http://localhost:8080 | grep Fun Facts || true"  
+                }
             }
         }
         stage('CleanUp')
         {
             steps
             {
-                sh 'docker container rm -f pipeline-exam-producer-1 pipeline-exam-storage-1 pipeline-exam-consumer-1 || true'
+                sh 'docker container rm -f pipeline-exam-generator-1 pipeline-exam-storage-1 pipeline-exam-client-1 || true'
             }
         }
         stage('Login')
@@ -62,20 +76,20 @@ pipeline
         {
             steps
             {
-                sh 'docker image rm ilkothetiger/exam-producer ilkothetiger/exam-storage ilkothetiger/exam-consumer || true'
-                sh 'docker image tag docker-producer ilkothetiger/exam-producer'
-                sh 'docker image tag docker-storage ilkothetiger/exam-storage'
-                sh 'docker image tag docker-consumer ilkothetiger/exam-consumer'
-                sh 'docker push ilkothetiger/exam-producer'
+                sh 'docker image rm ilkothetiger/exam-generator ilkothetiger/exam-storage ilkothetiger/exam-client || true'
+                sh 'docker image tag exam-generator ilkothetiger/exam-generator'
+                sh 'docker image tag exam-storage ilkothetiger/exam-storage'
+                sh 'docker image tag exam-client ilkothetiger/exam-client'
+                sh 'docker push ilkothetiger/exam-generator'
                 sh 'docker push ilkothetiger/exam-storage'
-                sh 'docker push ilkothetiger/exam-consumer'
+                sh 'docker push ilkothetiger/exam-client'
             }
         }
         stage('Deploy')
         {
             steps
             {
-                sh 'docker image rm -f docker-producer-1 docker-storage-1 docker-consumer-1 || true'
+                sh 'docker image rm -f exam-generator-1 exam-storage-1 exam-client-1 || true'
                 sh 'docker compose -f docker-compose-deploy.yml up -d'
             }
         }

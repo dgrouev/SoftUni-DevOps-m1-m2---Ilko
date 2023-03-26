@@ -22,7 +22,7 @@ docker container exec -u 1000 gitea gitea admin user create --username exam --pa
 git clone https://github.com/shekeriev/fun-facts /tmp/exam
 
 # Modify the repository
-cp /vagrant/docker-compose-build.yml /tmp/exam/
+cp /vagrant/docker-compose-run.yml /tmp/exam/
 cp /vagrant/docker-compose-deploy.yml /tmp/exam/
 cd /tmp/exam && git add . && git commit -m "Modified on $(date '+%Y-%m-%d %H:%M:%S')"
 
