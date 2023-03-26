@@ -22,7 +22,7 @@ pipeline
             steps
             {
                 sh '''
-                docker network rm exam-net exam_exam-net || true
+                docker network rm exam-net || true
                 docker network ls | grep exam-net || docker network create exam-net
                 '''
             }
@@ -40,7 +40,6 @@ pipeline
             steps
             {
                 sh 'docker container rm -f con-generator con-storage con-client || true'
-                sh 'docker container rm -f exam-generator-1 exam-storage-1 pipeline-exam-client-1  || true'
                 sh 'docker compose -f docker-compose-run.yml up -d'
             }
         }
@@ -52,6 +51,9 @@ pipeline
                 {
                     echo 'Test #1 - Reachability'
                     sh 'sleep 5s && echo $(curl --write-out "%{http_code}" --silent --output /dev/null http://localhost:8080) | grep 200'
+
+                    echo 'Test #2 - Check if Fun Facts Appears'
+                    sh "curl --silent http://localhost:8080 | grep 'Fun Facts'"  
                 }
             }
         }
@@ -59,7 +61,7 @@ pipeline
         {
             steps
             {
-                sh 'docker container rm -f exam-generator-1 exam-storage-1 exam-client-1 || true'
+                sh 'docker compose -f docker-compose-run.yml down'
             }
         }
         stage('Login')

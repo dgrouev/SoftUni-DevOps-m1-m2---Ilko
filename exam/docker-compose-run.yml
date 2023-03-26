@@ -3,16 +3,18 @@ services:
         build:
             context: ./client
             dockerfile: Dockerfile
-        ports:
-            - 8080:5000
+        container_name: con-client
         networks:
             - exam-net
+        ports:
+            - 8080:5000
         depends_on:
             - storage
      storage:
         build:
             context: ./storage
             dockerfile: Dockerfile
+        container_name: con-storage
         networks:
             - exam-net
         environment:
@@ -23,7 +25,10 @@ services:
         build:
             context: ./generator
             dockerfile: Dockerfile
+        container_name: con-generator
         networks:
             - exam-net
 networks:
     exam-net:
+        external: true
+        name: exam-net

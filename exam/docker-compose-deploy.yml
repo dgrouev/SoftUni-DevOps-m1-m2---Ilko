@@ -20,3 +20,5 @@ services:
             - exam-net
 networks:
     exam-net:
+        external: true
+        name: exam-net
