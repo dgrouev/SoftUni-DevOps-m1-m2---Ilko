@@ -45,7 +45,7 @@
         {
             steps
             {
-                git branch: &apos;main&apos;, url: &apos;http://192.168.99.102:3000/exam/exam&apos;
+                git branch: &apos;main&apos;, url: &apos;http://192.168.99.202:3000/exam/exam&apos;
             }  
         }
         stage(&apos;Create a network&apos;)
@@ -53,8 +53,8 @@
             steps
             {
                 sh &apos;&apos;&apos;
-                docker network rm app-net || true
-                docker network ls | grep app-net || docker network create app-net
+                docker network rm exam-net || true
+                docker network ls | grep exam-net || docker network create exam-net
                 &apos;&apos;&apos;
             }
         }
@@ -62,7 +62,7 @@
         {
             steps
             {
-                sh &apos;docker image rm -f pipeline-dob-producer pipeline-dob-storage pipeline-dob-consumer || true&apos;
+                sh &apos;docker image rm -f pipeline-con-generator pipeline-con-storage pipeline-con-client || true&apos;
                 sh &apos;docker compose -f docker-compose-run.yml build&apos;
             }
         }
@@ -70,8 +70,8 @@
         {
             steps
             {
-                sh &apos;docker container rm -f dob-producer dob-storage dob-consumer || true&apos;
-                sh &apos;docker container rm -f pipeline-exam-producer-1 pipeline-exam-storage-1 pipeline-exam-consumer-1  || true&apos;
+                sh &apos;docker container rm -f con-generator con-storage con-client || true&apos;
+                sh &apos;docker container rm -f pipeline-exam-generator-1 pipeline-exam-storage-1 pipeline-exam-client-1  || true&apos;
                 sh &apos;docker compose -f docker-compose-run.yml up -d&apos;
             }
         }
@@ -79,7 +79,7 @@
         {
             steps
             {
-                sh &apos;docker container rm -f pipeline-exam-producer-1 pipeline-exam-storage-1 pipeline-exam-consumer-1 || true&apos;
+                sh &apos;docker container rm -f pipeline-exam-generator-1 pipeline-exam-storage-1 pipeline-exam-client-1 || true&apos;
             }
         }
         stage(&apos;Login&apos;)
@@ -93,20 +93,20 @@
         {
             steps
             {
-                sh &apos;docker image rm ilkothetiger/exam-producer ilkothetiger/exam-storage ilkothetiger/exam-consumer || true&apos;
-                sh &apos;docker image tag docker-producer ilkothetiger/exam-producer&apos;
-                sh &apos;docker image tag docker-storage ilkothetiger/exam-storage&apos;
-                sh &apos;docker image tag docker-consumer ilkothetiger/exam-consumer&apos;
-                sh &apos;docker push ilkothetiger/exam-producer&apos;
+                sh &apos;docker image rm ilkothetiger/exam-generator ilkothetiger/exam-storage ilkothetiger/exam-client || true&apos;
+                sh &apos;docker image tag exam-generator ilkothetiger/exam-generator&apos;
+                sh &apos;docker image tag exam-storage ilkothetiger/exam-storage&apos;
+                sh &apos;docker image tag exam-client ilkothetiger/exam-client&apos;
+                sh &apos;docker push ilkothetiger/exam-generator&apos;
                 sh &apos;docker push ilkothetiger/exam-storage&apos;
-                sh &apos;docker push ilkothetiger/exam-consumer&apos;
+                sh &apos;docker push ilkothetiger/exam-client&apos;
             }
         }
         stage(&apos;Deploy&apos;)
         {
             steps
             {
-                sh &apos;docker image rm -f docker-producer-1 docker-storage-1 docker-consumer-1 || true&apos;
+                sh &apos;docker image rm -f exam-generator-1 exam-storage-1 exam-client-1 || true&apos;
                 sh &apos;docker compose -f docker-compose-deploy.yml up -d&apos;
             }
         }

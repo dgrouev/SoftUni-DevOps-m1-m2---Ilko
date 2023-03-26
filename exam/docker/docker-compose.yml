@@ -17,8 +17,8 @@ services:
     environment:
       - USER_UID=1000
       - USER_GID=1000
-      - GITEA__server__DOMAIN=192.168.99.102
-      - GITEA__server__ROOT_URL=http://192.168.99.102:3000
+      - GITEA__server__DOMAIN=192.168.99.202
+      - GITEA__server__ROOT_URL=http://192.168.99.202:3000
       - GITEA__database__DB_TYPE=mysql
       - GITEA__database__HOST=db:3306
       - GITEA__database__NAME=gitea

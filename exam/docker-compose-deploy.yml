@@ -1,22 +1,22 @@
 services:
-    producer:
-        image: ilkothetiger/exam-producer
-        container_name: dob-producer
+    generator:
+        image: ilkothetiger/exam-generator
+        container_name: con-generator
         networks:
-            - appnet
+            - exam-net
     storage:
         image: ilkothetiger/exam-storage
-        container_name: dob-storage
+        container_name: con-storage
         networks:
-            - appnet
+            - exam-net
         environment:
-            MYSQL_ROOT_PASSWORD: "Exam-2021"
-    consumer:
-        image: ilkothetiger/exam-consumer
-        container_name: dob-consumer
+            MYSQL_ROOT_PASSWORD: "ExamPa$$w0rd"
+    client:
+        image: ilkothetiger/exam-client
+        container_name: con-client
         ports:
-            - 8080:5000
+            - 80:5000
         networks:
-            - appnet
+            - exam-net
 networks:
-    appnet:
+    exam-net:

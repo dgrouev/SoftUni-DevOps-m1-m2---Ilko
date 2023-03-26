@@ -41,22 +41,22 @@
         {
             steps 
             {
-                git branch: &apos;main&apos;, url: &apos;http://192.168.99.102:3000/exam/exam&apos;
+                git branch: &apos;main&apos;, url: &apos;http://192.168.99.202:3000/exam/exam&apos;
             }
         }
         stage(&apos;Prepare&apos;)
         {
             steps
             {
-                sh &apos;docker network ls | grep app-net || docker network create app-net&apos;
+                sh &apos;docker network ls | grep exam-net || docker network create exam-net&apos;
             }
         }
         stage(&apos;Build&apos;)
         {
             steps
             {
-                sh &apos;cd /home/vagrant/workspace/Exam/consumer &amp;&amp; docker image build -t img-cons .&apos;
-                sh &apos;cd /home/vagrant/workspace/Exam/producer &amp;&amp; docker image build -t img-prod .&apos;
+                sh &apos;cd /home/vagrant/workspace/Exam/client &amp;&amp; docker image build -t img-cons .&apos;
+                sh &apos;cd /home/vagrant/workspace/Exam/generator &amp;&amp; docker image build -t img-prod .&apos;
                 sh &apos;cd /home/vagrant/workspace/Exam/storage &amp;&amp; docker image build -t img-stor .&apos;
             }
         }
@@ -64,12 +64,12 @@
         {
             steps
             {
-                sh &apos;docker container rm -f dob-storage || true&apos;
-                sh &apos;docker container run -d --name dob-storage -e MYSQL_ROOT_PASSWORD=Exam-2021 --net app-net img-stor&apos;
-                sh &apos;docker container rm -f dob-producer || true&apos;
-                sh &apos;docker container run -d --name dob-producer --net app-net img-prod&apos;
-                sh &apos;docker container rm -f dob-consumer || true&apos;
-                sh &apos;docker container run -d --name dob-consumer --net app-net -p 8080:5000 img-cons&apos;
+                sh &apos;docker container rm -f con-storage || true&apos;
+                sh &apos;docker container run -d --name con-storage -e MYSQL_ROOT_PASSWORD=Exam-2021 --net exam-net img-stor&apos;
+                sh &apos;docker container rm -f con-generator || true&apos;
+                sh &apos;docker container run -d --name con-generator --net exam-net img-prod&apos;
+                sh &apos;docker container rm -f con-client || true&apos;
+                sh &apos;docker container run -d --name con-client --net exam-net -p 8080:5000 img-cons&apos;
             }
         }
     }

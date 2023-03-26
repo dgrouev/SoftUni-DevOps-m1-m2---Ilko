@@ -1,12 +1,12 @@
 services:
-     consumer:
+     client:
         build:
-            context: ./consumer
+            context: ./client
             dockerfile: Dockerfile
         ports:
             - 8080:5000
         networks:
-            - appnet
+            - exam-net
         depends_on:
             - storage
      storage:
@@ -14,16 +14,16 @@ services:
             context: ./storage
             dockerfile: Dockerfile
         networks:
-            - appnet
+            - exam-net
         environment:
-            MYSQL_ROOT_PASSWORD: "Exam-2021"
+            MYSQL_ROOT_PASSWORD: "ExamPa$$w0rd"
         depends_on:
-            - producer
-     producer:
+            - generator
+     generator:
         build:
-            context: ./producer
+            context: ./generator
             dockerfile: Dockerfile
         networks:
-            - appnet
+            - exam-net
 networks:
-    appnet:
+    exam-net:
