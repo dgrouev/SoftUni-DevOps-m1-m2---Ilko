@@ -1,0 +1,23 @@
+services:
+    generator:
+        image: ilkothetiger/exam-generator
+        container_name: con-generator
+        networks:
+            - exam-net
+    storage:
+        image: ilkothetiger/exam-storage
+        container_name: con-storage
+        networks:
+            - exam-net
+        environment:
+            MYSQL_ROOT_PASSWORD: "ExamPa$$w0rd"
+    client:
+        image: ilkothetiger/exam-client
+        container_name: con-client
+        ports:
+            - 80:5000
+        networks:
+            - exam-net
+networks:
+    exam-net:
+        external: true

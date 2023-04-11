@@ -1,0 +1,45 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+    
+  config.ssh.insert_key = false
+
+  config.vm.define "jenkins" do |jenkins|
+    jenkins.vm.box="shekeriev/centos-stream-9"
+    jenkins.vm.hostname = "pipelines.do1.exam"
+    jenkins.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "3072"]
+    end
+    jenkins.vm.network "private_network", ip: "192.168.99.201"
+    jenkins.vm.network "forwarded_port", guest: 8080, host: 8080
+    jenkins.vm.provision "shell", path: "add_hosts.sh"
+	  jenkins.vm.provision "shell", path: "install_jenkins.sh"
+  end
+  
+  config.vm.define "docker" do |docker|
+    docker.vm.box = "shekeriev/centos-stream-9"
+    docker.vm.hostname = "containers.do1.exam"
+    docker.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "3072"]
+    end
+    docker.vm.network "private_network", ip: "192.168.99.202"
+    docker.vm.network "forwarded_port", guest: 8080, host: 8081
+    docker.vm.provision "shell", path: "add_hosts.sh"
+	  docker.vm.provision "shell", path: "install_docker.sh"
+    docker.vm.provision "shell", path: "setup_gitea.sh"
+  end
+  
+  config.vm.define "monitoring" do |monitoring|
+    monitoring.vm.box = "shekeriev/centos-stream-9"
+    monitoring.vm.hostname = "monitoring.do1.exam"
+    monitoring.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "3072"]
+    end
+    monitoring.vm.network "private_network", ip: "192.168.99.203"
+    monitoring.vm.network "forwarded_port", guest: 3000, host: 8082
+    monitoring.vm.provision "shell", path: "add_hosts.sh"
+    monitoring.vm.provision "shell", path: "install_docker_monitoring.sh"
+  end
+
+end

@@ -1,0 +1,29 @@
+services:
+     client:
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        ports:
+            - 8080:5000
+        networks:
+            - exam-net
+        depends_on:
+            - storage
+     storage:
+        build:
+            context: ./storage
+            dockerfile: Dockerfile
+        networks:
+            - exam-net
+        environment:
+            MYSQL_ROOT_PASSWORD: "ExamPa$$w0rd"
+        depends_on:
+            - generator
+     generator:
+        build:
+            context: ./generator
+            dockerfile: Dockerfile
+        networks:
+            - exam-net
+networks:
+    exam-net:
