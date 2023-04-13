@@ -1,0 +1,50 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.ssh.insert_key = false
+
+  config.vm.define "docker" do |docker|
+    docker.vm.box="shekeriev/centos-stream-8"
+    docker.vm.hostname = "docker"
+    docker.vm.network "private_network", ip: "192.168.99.100"
+    docker.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
+    docker.vm.provider :virtualbox do |vb|
+        vb.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+    docker.vm.provision "shell", inline: <<EOS
+echo "* Add hosts ..."
+echo "192.168.99.100 docker" >> /etc/hosts
+
+echo "* Add Docker repository ..."
+dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+echo "* Install Docker ..."
+dnf install -y docker-ce docker-ce-cli git
+
+echo "* Adjust Docker configuration ..."
+mkdir -p /etc/docker
+echo '{ "hosts": ["tcp://0.0.0.0:2375", "unix:///var/run/docker.sock"] }' | tee /etc/docker/daemon.json
+mkdir -p /etc/systemd/system/docker.service.d/
+echo [Service] | tee /etc/systemd/system/docker.service.d/docker.conf
+echo ExecStart= | tee -a /etc/systemd/system/docker.service.d/docker.conf
+echo ExecStart=/usr/bin/dockerd | tee -a /etc/systemd/system/docker.service.d/docker.conf
+
+echo "* Enable and start Docker ..."
+systemctl enable docker
+systemctl start docker
+
+echo "* Firewall - open port 80 and 2375 ..."
+firewall-cmd --add-port=80/tcp --permanent
+firewall-cmd --add-port=2375/tcp --permanent
+
+echo "* Firewall - reload rules ..."
+firewall-cmd --reload
+
+echo "* Add vagrant user to docker group ..."
+usermod -aG docker vagrant
+EOS
+  end
+
+end
