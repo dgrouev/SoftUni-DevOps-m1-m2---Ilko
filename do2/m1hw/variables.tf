@@ -5,7 +5,7 @@ variable "v_image_web" {
 }
 variable "v_con_name_web" {
   description = "Container name"
-  default = "web"
+  default = "con-web"
 }
 variable "v_int_port_web" {
   description = "Internal port"
@@ -23,7 +23,7 @@ variable "v_image_db" {
 }
 variable "v_con_name_db" {
   description = "Container name"
-  default = "db"
+  default = "con-db"
 }
 variable "v_int_port_db" {
   description = "Internal port"

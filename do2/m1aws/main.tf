@@ -1,7 +1,7 @@
 # Configure the provider. This can be omitted if matches the configuration made with "aws configure"
 provider "aws" {
-  access_key = "AKIA3MME3HK3QA5XHXTE"
-  secret_key = "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"
+  access_key = "<secret-key>"
+  secret_key = "<access-key>"
   region     = "eu-central-1"
 }
 
@@ -57,5 +57,5 @@ module "ec2" {
   subnet_id                   = tolist(data.aws_subnets.all.ids)[0]
   vpc_security_group_ids      = [module.security_group.security_group_id]
   associate_public_ip_address = true
-  user_data                   = file("./nginx.sh")
+  user_data                   = file("./web.sh")
 }

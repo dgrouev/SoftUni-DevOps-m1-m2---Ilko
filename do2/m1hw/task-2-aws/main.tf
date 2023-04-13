@@ -1,6 +1,6 @@
 provider "aws" {
-  access_key = "<ACCESS-KEY>"
-  secret_key = "<SECRET-KEY>"
+  access_key = "AKIA3MME3HK3QA5XHXTE"
+  secret_key = "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"
   region     = "eu-central-1"
 }
 
@@ -132,7 +132,7 @@ resource "aws_instance" "hw-web" {
 resource "aws_instance" "hw-db" {
   ami           = "ami-0dcc0ebde7b2e00db"
   instance_type = "t2.micro"
-  key_name      = "terraform"
+  key_name      = "terraform-aws"
 
   network_interface {
     network_interface_id = aws_network_interface.hw-db-net.id
