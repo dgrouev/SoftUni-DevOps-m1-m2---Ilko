@@ -1,0 +1,32 @@
+---
+  - import_tasks: redhat.yml
+    when: ansible_os_family|lower == 'redhat'
+  - import_tasks: debian.yml
+    when: ansible_os_family|lower == 'debian'
+[vagrant@ans ~]$ cat redhat.yml
+---
+- hosts: webserver
+  become: true
+
+  tasks:
+  - name: “Installing HTTPD Software”
+    package:
+       name: httpd
+       state: present
+
+  - name: “Copy Files”
+    copy:
+       dest: /var/www/html/
+       src: html/
+       directory_mode: true
+    notify: “web_restart”
+
+  - name: “Starting Web Server”
+    service:
+       name: httpd
+       state: started
+  handlers:
+  - name: “web_restart”
+    service:
+       name: httpd
+       state: restarted

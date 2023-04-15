@@ -1,0 +1,34 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+    
+  config.ssh.insert_key = false
+
+  config.vm.define "ans" do |ans|
+    ans.vm.box = "shekeriev/centos-stream-9"
+    ans.vm.hostname = "ans.do2.lab"
+    ans.vm.network "private_network", ip: "192.168.99.99"
+    ans.vm.synced_folder "vagrant/", "/vagrant"
+    ans.vm.provision "shell", inline: <<EOS
+dnf install -y ansible-core
+ansible-galaxy collection install -p /usr/share/ansible/collections ansible.posix
+EOS
+  end
+
+  config.vm.define "web" do |web|
+    web.vm.box = "shekeriev/centos-stream-9"
+    web.vm.hostname = "web.do2.lab"
+    web.vm.network "private_network", ip: "192.168.99.100"
+    web.vm.synced_folder "vagrant/web/", "/vagrant"
+    web.vm.network "forwarded_port", guest: 80, host: 8080
+  end
+
+  config.vm.define "db" do |db|
+    db.vm.box = "shekeriev/debian-11"
+    db.vm.hostname = "db.do2.lab"
+    db.vm.network "private_network", ip: "192.168.99.101"
+    db.vm.synced_folder "vagrant/db/", "/vagrant"
+  end
+ 
+end

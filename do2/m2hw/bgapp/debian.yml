@@ -1,0 +1,20 @@
+---
+- hosts: dbserver
+  become: true
+
+  tasks:
+  - name: “Install MariaDB Server”
+    apt:
+      name: mariadb-server
+      state: present
+
+  - name: "Copy Database setup"
+    copy:
+      src=db/db_setup.sql
+      dest=/home/vagrant/
+
+  - name: “Starting Web Server”
+    service:
+       name: mariadb
+       enabled: true
+       state: started
