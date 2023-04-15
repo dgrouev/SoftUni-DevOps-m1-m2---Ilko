@@ -1,0 +1,8 @@
+web1 ansible_host=192.168.99.100
+
+[webservers]
+web1
+
+[webservers:vars]
+ansible_user=vagrant
+ansible_ssh_pass=vagrant
