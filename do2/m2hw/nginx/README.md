@@ -1,6 +1,6 @@
 ## Execute
 ``` shell
-vagrant up ans web1
+vagrant up
 ```
 
 Enter the Ansible machine with
@@ -13,7 +13,12 @@ Install the Docker module with:
 ansible-galaxy collection install community.docker
 ```
 
-Create the files with the following contents:
+Copy the files on the VM with the following comman:
+```
+cp -r /vagrant /home
+```
+
+Or create the files with the following contents:
 1. inventory
 ```
 web1 ansible_host=192.168.99.100

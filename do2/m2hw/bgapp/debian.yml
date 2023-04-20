@@ -3,18 +3,28 @@
   become: true
 
   tasks:
-  - name: “Install MariaDB Server”
-    apt:
-      name: mariadb-server
-      state: present
 
-  - name: "Copy Database setup"
+  - name: Install Utility software
+    apt: name={{item}} state=latest update_cache=yes
+    with_items:
+      - software-properties-common
+      - mariadb-server
+
+  - name: “Copy Files”
     copy:
-      src=db/db_setup.sql
-      dest=/home/vagrant/
+       dest: /home/vagrant/db/
+       src: db/
+       directory_mode: true
+    notify: “db_restart”
 
-  - name: “Starting Web Server”
+  - name: Open external ports
+    shell: sed -i.bak s/127.0.0.1/0.0.0.0/g /etc/mysql/mariadb.conf.d/50-server.cnf
+
+  - name: Create and Load Database
+    shell: mysql -u root < /home/vagrant/db/db_setup.sql || true
+
+  handlers:
+  - name: “db_restart”
     service:
        name: mariadb
-       enabled: true
-       state: started
+       state: restarted

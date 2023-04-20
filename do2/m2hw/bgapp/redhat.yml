@@ -1,10 +1,4 @@
 ---
-  - import_tasks: redhat.yml
-    when: ansible_os_family|lower == 'redhat'
-  - import_tasks: debian.yml
-    when: ansible_os_family|lower == 'debian'
-[vagrant@ans ~]$ cat redhat.yml
----
 - hosts: webserver
   become: true
 
@@ -13,6 +7,15 @@
     package:
        name: httpd
        state: present
+  - name: "Install PHP"
+    package:
+      name: php
+      state: present
+
+  - name: "Install MySQL"
+    package:
+      name: php-mysqlnd
+      state: present
 
   - name: “Copy Files”
     copy:
@@ -21,10 +24,20 @@
        directory_mode: true
     notify: “web_restart”
 
+  - name: "Add HTTP as exclusion in SELinux"
+    shell: setsebool -P httpd_can_network_connect=1
+
   - name: “Starting Web Server”
     service:
        name: httpd
        state: started
+  - name: "Open HTTP Port"
+    firewalld:
+      service: http
+      state: enabled
+      permanent: yes
+      immediate: yes
+
   handlers:
   - name: “web_restart”
     service:
