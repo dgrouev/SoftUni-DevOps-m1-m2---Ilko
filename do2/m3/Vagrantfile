@@ -1,0 +1,82 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.ssh.insert_key = false
+
+  # Salt Server - CentOS 9.x
+  config.vm.define "server" do |server|
+    server.vm.box = "shekeriev/centos-stream-9"
+    server.vm.hostname = "server"
+    server.vm.network "private_network", ip: "192.168.99.100"
+    server.vm.provision "shell", path: "add_hosts.sh"
+	server.vm.provision "shell", path: "add_packages_centos.sh"
+
+    server.vm.provider "virtualbox" do |v|
+      v.gui = false
+      v.memory = 2048
+      v.cpus = 1
+    end
+  end
+  
+  # Salt Client #1 - CentOS 9.x
+  config.vm.define "web1" do |web1|
+    web1.vm.box = "shekeriev/centos-stream-9"
+    web1.vm.hostname = "client-web-1"
+    web1.vm.network "private_network", ip: "192.168.99.101"
+    web1.vm.provision "shell", path: "add_hosts.sh"
+	web1.vm.provision "shell", path: "add_packages_centos.sh"
+
+    web1.vm.provider "virtualbox" do |v|
+      v.gui = false
+      v.memory = 512
+      v.cpus = 1
+    end
+  end
+
+  # Salt Client #2 - Debian 11
+  config.vm.define "web2" do |web2|
+    web2.vm.box = "shekeriev/debian-11"
+    web2.vm.hostname = "client-web-2"
+    web2.vm.network "private_network", ip: "192.168.99.102"
+    web2.vm.provision "shell", path: "add_hosts.sh"
+	web2.vm.provision "shell", path: "add_packages_debian.sh"
+
+    web2.vm.provider "virtualbox" do |v|
+      v.gui = false
+      v.memory = 512
+      v.cpus = 1
+    end
+  end
+  
+  # Salt Client #3 - CentOS 9.x
+  config.vm.define "db1" do |db1|
+    db1.vm.box = "shekeriev/centos-stream-9"
+    db1.vm.hostname = "client-db-1"
+    db1.vm.network "private_network", ip: "192.168.99.103"
+    db1.vm.provision "shell", path: "add_hosts.sh"
+	db1.vm.provision "shell", path: "add_packages_centos.sh"
+
+    db1.vm.provider "virtualbox" do |v|
+      v.gui = false
+      v.memory = 512
+      v.cpus = 1
+    end
+  end
+
+  # Salt Client #4 - Debian 11
+  config.vm.define "db2" do |db2|
+    db2.vm.box = "shekeriev/debian-11"
+    db2.vm.hostname = "client-db-2"
+    db2.vm.network "private_network", ip: "192.168.99.104"
+    db2.vm.provision "shell", path: "add_hosts.sh"
+	db2.vm.provision "shell", path: "add_packages_debian.sh"
+
+    db2.vm.provider "virtualbox" do |v|
+      v.gui = false
+      v.memory = 512
+      v.cpus = 1
+    end
+  end
+  
+end
