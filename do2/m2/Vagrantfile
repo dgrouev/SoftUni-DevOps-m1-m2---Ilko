@@ -16,30 +16,19 @@ ansible-galaxy collection install -p /usr/share/ansible/collections ansible.posi
 EOS
   end
 
-  config.vm.define "web1" do |web1|
-    web1.vm.box = "shekeriev/centos-stream-9"
-    web1.vm.hostname = "web1.do2.lab"
-    web1.vm.network "private_network", ip: "192.168.99.100"
-    web1.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.define "web" do |web|
+    web.vm.box = "shekeriev/centos-stream-9"
+    web.vm.hostname = "web.do2.lab"
+    web.vm.network "private_network", ip: "192.168.99.100"
+    web.vm.synced_folder "vagrant/web/", "/vagrant"
+    web.vm.network "forwarded_port", guest: 80, host: 8080
   end
 
-  config.vm.define "web2" do |web2|
-    web2.vm.box = "shekeriev/debian-11"
-    web2.vm.hostname = "web2.do2.lab"
-    web2.vm.network "private_network", ip: "192.168.99.105"
-    web2.vm.network "forwarded_port", guest: 80, host: 8081
-  end
-  
   config.vm.define "db" do |db|
-    db.vm.box = "shekeriev/centos-stream-9"
+    db.vm.box = "shekeriev/debian-11"
     db.vm.hostname = "db.do2.lab"
     db.vm.network "private_network", ip: "192.168.99.101"
-  end
-
-  config.vm.define "clnt" do |clnt|
-    clnt.vm.box = "shekeriev/centos-stream-9"
-    clnt.vm.hostname = "clnt.do2.lab"
-    clnt.vm.network "private_network", ip: "192.168.99.102"
+    db.vm.synced_folder "vagrant/db/", "/vagrant"
   end
  
 end
