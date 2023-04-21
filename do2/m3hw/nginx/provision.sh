@@ -15,3 +15,7 @@ sudo sh bootstrap-salt.sh -M -N -X
 echo "* Opening ports and reloading firewalld ..."
 sudo firewall-cmd --permanent --add-port=4505-4506/tcp
 sudo firewall-cmd --reload 
+
+echo "* Starting Salt ..."
+sudo systemctl enable salt-master
+sudo systemctl start salt-master
