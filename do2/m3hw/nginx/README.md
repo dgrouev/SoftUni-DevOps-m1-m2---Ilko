@@ -37,8 +37,27 @@ sudo systemctl enable salt-master
 sudo systemctl start salt-master
 ```
 
-8. Create roster file:
-```
+8. Install salt-ssh with **sudo dnf install salt-ssh**
+
+9. Create roster file:
+``` shell
 sudo vi /etc/salt/roster
 ```
 it should have the following content
+```
+web:
+ host: 192.168.99.100
+ user: vagrant
+ passwd: vagrant
+ sudo: True
+```
+
+10. Add Docker Repo with:
+``` shell
+sudo salt-ssh -i 'web' cmd.run 'dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo'
+```
+
+11. Install Docker-ce, docker-cli and containerd.io with:
+``` shell
+sudo salt-ssh -i 'web' cmd.run 'dnf install -y docker-ce docker-ce-cli containerd.io'
+```
