@@ -61,3 +61,13 @@ sudo salt-ssh -i 'web' cmd.run 'dnf config-manager --add-repo https://download.d
 ``` shell
 sudo salt-ssh -i 'web' cmd.run 'dnf install -y docker-ce docker-ce-cli containerd.io'
 ```
+
+12. Enable docker with:
+``` shell
+sudo salt-ssh -i 'web' cmd.run 'systemctl enable --now docker'
+```
+
+13. Start NGINX container:
+``` shell
+sudo salt-ssh -i 'web' cmd.run 'docker run --name mynginx1 -p 80:80 -d nginx'
+```
