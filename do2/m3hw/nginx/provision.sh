@@ -7,7 +7,7 @@ echo "* Add SaltStack repository ..."
 curl -fsSL https://repo.saltproject.io/salt/py3/redhat/9/x86_64/latest.repo | sudo tee /etc/yum.repos.d/salt.repo
 
 echo "* Downloading Bootstrap Script ..."
-wget -O bootstrap-salt.sh https://bootstrap.saltstack.com
+sudo wget -O bootstrap-salt.sh https://bootstrap.saltstack.com
 
 echo "* Installing latest available version of Salt ..."
 sudo sh bootstrap-salt.sh -M -N -X
