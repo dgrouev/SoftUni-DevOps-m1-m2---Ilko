@@ -40,4 +40,16 @@ sudo nano /etc/salt/minion
 sudo systemctl restart salt-minion
 ```
 
-8. Switch back to the Web machine session to register the minion
+8. Switch back to the Web machine session to register the minion with the following command:
+``` shell
+sudo salt-key -A
+```
+
+9. When prompted for confirmation type Y and press enter
+
+10. Check to make sure the minion was accepted:
+``` shell
+sudo salt-key -L
+```
+
+11. 
