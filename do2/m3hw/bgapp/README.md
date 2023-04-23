@@ -70,3 +70,27 @@ sudo salt-key -A
 ```
 
 16. Type y and press enter when prompted for confirmation
+
+17. Open master configuration file and uncomment lines 698-700:
+``` shell
+sudo vi /etc/salt/master
+```
+
+18. Thos are the lines to uncomment:
+```
+file_roots:
+  base:
+    - /srv/salt
+```
+
+19. Restart the salt master service with:
+``` shell
+sudo systemctl restart salt-master
+```
+
+20. Create the srv/salt folder with:
+``` shell
+sudo mkdir /srv/salt
+```
+
+21. 
