@@ -7,7 +7,7 @@ wget -O bootstrap-salt.sh https://bootstrap.saltstack.com
 
 2. Install Salt Master with:
 ``` shell
-sudo sh bootstrap-salt.sh -M -N -X stable 3006.0
+sudo sh bootstrap-salt.sh -M -X stable 3006.0
 ```
 
 3. Open firewall ports and enable Salt Master:
@@ -52,4 +52,21 @@ sudo salt-key -A
 sudo salt-key -L
 ```
 
-11. 
+11. Do the same for the web machine:
+``` shell
+sudo vi /etc/salt/minion
+```
+
+12. Uncomment line #16 and type **master: web**
+
+13. Restart the salt-minion service on the web machine:
+``` shell
+sudo systemctl restart salt-minion
+```
+
+15. Accept the web machine as minion:
+``` shell
+sudo salt-key -A
+```
+
+16. Type y and press enter when prompted for confirmation
