@@ -3,6 +3,7 @@ install.web.packages:
     - pkgs:
       - php
       - php-mysqlnd
+      - mysql
 
 install.apache.redhat:
   pkg:
