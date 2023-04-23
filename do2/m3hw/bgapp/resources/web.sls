@@ -13,7 +13,7 @@ install.apache.redhat:
 copy_web_files:
   file.recurse:
     - name: /var/www/html
-    - source: salt://var/www/html
+    - source: salt://html
 
 publicc:
   firewalld.present:
