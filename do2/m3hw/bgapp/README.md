@@ -101,3 +101,11 @@ base:
   'db.do2.lab':
     - db
 ```
+
+22. Create salt source for web and db files with the following commands:
+``` shell
+sudo mkdir /srv/salt/var
+sudo mkdir /srv/salt/var/www
+sudo cp -R /vagrant/html /srv/salt/var/www
+sudo cp -R /vagrant/db /srv/salt
+```
