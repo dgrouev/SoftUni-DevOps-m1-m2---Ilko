@@ -93,4 +93,11 @@ sudo systemctl restart salt-master
 sudo mkdir /srv/salt
 ```
 
-21. 
+21. Create /srv/salt/top.sls file with the following content:
+``` shell
+base:
+  'web.do2.lab':
+    - web
+  'db.do2.lab':
+    - db
+```
