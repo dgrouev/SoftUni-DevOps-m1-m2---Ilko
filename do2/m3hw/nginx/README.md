@@ -22,7 +22,7 @@ wget -O bootstrap-salt.sh https://bootstrap.saltstack.com
 
 5. Install latest available version of Salt
 ``` shell
-sudo sh bootstrap-salt.sh -M -N -X
+sudo sh bootstrap-salt.sh -P -M -N -X stable 3006.0
 ```
 
 6. Open ports and reloading firewalld
@@ -37,103 +37,8 @@ sudo systemctl enable salt-master
 sudo systemctl start salt-master
 ```
 
-8. Exit the server machine
-
-## Switch to the Web machine
-1. Enter ssh Session
-``` shell
-vagrant ssh web
+8. Create roster file:
 ```
-
-2. Download Bootstrap Script
-``` shell
-wget -O bootstrap-salt.sh https://bootstrap.saltstack.com
+sudo vi /etc/salt/roster
 ```
-3. Install latest available version of Salt on the minion
-``` shell
-sudo sh bootstrap-salt.sh
-```
-
-4. Point the minion to the master
-``` shell
-sudo vi /etc/salt/minion
-```
-
-5. Edit row 16 by uncommenting the line and pointing the server machine:
-```
-master: server
-```
-
-6. Make sure the server machine is inside the hosts file:
-```
-sudo vi /etc/hosts
-```
-there should be a line:
-```
-192.168.99.99 server.do2.lab server
-```
-if not add it manually then save and quit
-
-
-7. Restart Salt
-``` shell
-sudo systemctl restart salt-minion
-```
-
-8. Exit Web Machine
-
-## Switch back to Server machine
-1. Enter ssh session
-``` shell
-vagrant ssh server
-```
-
-2. Accept the minion key:
-``` shell
-sudo salt-key -A
-```
-
-3. Type "y" and press enter
-
-4. Initialize the Salt State Tree by uncommenting lines 698-700:
-``` shell
-sudo vi /etc/salt/master
-```
-
-5. Restart Salt Master:
-``` shell
-sudo systemctl restart salt-master
-```
-
-6. Make the root folder:
-``` shell
-sudo mkdir /srv/salt
-```
-
-7. Create the top.sls in /srv/salt with the following contents - sudo vi /srv/salt/top.sls:
-```
-base:
-  '*':
-    - nginx
-```
-
-8. Create the nginx state with the following contents - sudo vi /srv/salt/nginx.sls:
-```
-install.common.packages:
-  pkg.installed:
-    - pkgs:
-      - containerd.io
-      - docker-ce
-      - docker-ce
-      - vim
-```
-
-9. Add the Docker Repo on Minion Machine:
-``` shell
-sudo salt '*' cmd.run 'dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo'
-```
-
-10. Start the NGINX Container
-``` shell
-salt-call --local dockerng.sls_build test base=nginx mods=vim
-```
+it should have the following content
