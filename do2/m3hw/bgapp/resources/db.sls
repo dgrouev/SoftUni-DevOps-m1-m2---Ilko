@@ -23,6 +23,8 @@ open_external_ports:
 create_db:
   cmd.run:
     - name: mysql -u root < /home/vagrant/db_setup.sql || true
+    - env:
+      - LC_ALL: bg_BG.UTF-8
 
 restart_db:
   cmd.run:
