@@ -2,7 +2,7 @@
 1. Execute vagrant up and enter the server machine:
 ``` shell
 vagrant up
-vagrant ssh server
+vagrant ssh web
 ```
 
 2. Add SaltStack repository key
@@ -22,7 +22,7 @@ wget -O bootstrap-salt.sh https://bootstrap.saltstack.com
 
 5. Install latest available version of Salt
 ``` shell
-sudo sh bootstrap-salt.sh -P -M -N -X stable 3006.0
+sudo sh bootstrap-salt.sh -P -M -X stable 3006.0
 ```
 
 6. Open ports and reloading firewalld
@@ -37,37 +37,95 @@ sudo systemctl enable salt-master
 sudo systemctl start salt-master
 ```
 
-8. Install salt-ssh with **sudo dnf install salt-ssh**
-
-9. Create roster file:
+8. Open the salt-master config file with **sudo vi /etc/salt/minion** and uncomment line #16 to say: **master: web** then restart the salt-minion with:
 ``` shell
-sudo vi /etc/salt/roster
-```
-it should have the following content
-```
-web:
- host: 192.168.99.100
- user: vagrant
- passwd: vagrant
- sudo: True
+sudo systemctl restart salt-minion
 ```
 
-10. Add Docker Repo with:
+9. Register the minion with the following command, type **y** and press enter when prompted for confimation:
 ``` shell
-sudo salt-ssh -i 'web' cmd.run 'dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo'
+sudo salt-key -A
 ```
 
-11. Install Docker-ce, docker-cli and containerd.io with:
+10. Open master configuration file and uncomment lines 698-700:
 ``` shell
-sudo salt-ssh -i 'web' cmd.run 'dnf install -y docker-ce docker-ce-cli containerd.io'
+sudo vi /etc/salt/master
 ```
 
-12. Enable docker with:
-``` shell
-sudo salt-ssh -i 'web' cmd.run 'systemctl enable --now docker'
+11. These are the lines to uncomment:
+```
+file_roots:
+  base:
+    - /srv/salt
 ```
 
-13. Start NGINX container:
+12. Restart the salt master service with:
 ``` shell
-sudo salt-ssh -i 'web' cmd.run 'docker run --name mynginx1 -p 80:80 -d nginx'
+sudo systemctl restart salt-master
+```
+
+13. Create the srv/salt folder with:
+``` shell
+sudo mkdir /srv/salt
+```
+
+14. Get the state files and the resources with:
+``` shell
+sudo cp -R /vagrant/resources/* /srv/salt/
+```
+
+15. The top state file at /srv/salt/top.sls should be with the following content:
+``` shell
+base:
+  'web.do2.lab':
+    - nginx
+```
+
+16. The web state file at /srv/salt/web.sls should be with following content:
+``` yaml
+install.common.packages:
+  pkg.installed:
+    - pkgs:
+      - ca-certificates
+      - curl
+  pip.installed:
+    - pkgs:
+      - docker
+
+docker-repo:
+  pkgrepo.managed:
+    - humanname: Docker Officia
+    - name: docker-ce-stable
+    - baseurl: https://download.docker.com/linux/centos/{{ grains['osmajorrelease'] }}/x86_64/stable
+    - gpgkey: https://download.docker.com/linux/centos/gpg
+    - gpgcheck: 1
+    - enabled: 1
+
+docker:
+  pkg.installed:
+    - refresh: True
+    - pkgs:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    - aggregate: False
+
+run.docker:
+  service.running:
+    - name: docker
+    - enable: True
+    - require:
+      - pkg: docker
+
+nginx_container:
+  docker_container.running:
+    - image: nginx
+    - name: mynginx
+    - skip_translate: port_bindings
+    - port_bindings: {80: 80}
+```
+
+17. Apply the states with:
+``` shell
+sudo salt '*' state.apply
 ```

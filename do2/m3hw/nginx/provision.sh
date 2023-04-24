@@ -10,7 +10,7 @@ echo "* Downloading Bootstrap Script ..."
 sudo wget -O bootstrap-salt.sh https://bootstrap.saltstack.com
 
 echo "* Installing latest available version of Salt ..."
-sudo sh bootstrap-salt.sh -M -N -X
+sudo sh bootstrap-salt.sh -P -M -X stable 3006.0
 
 echo "* Opening ports and reloading firewalld ..."
 sudo firewall-cmd --permanent --add-port=4505-4506/tcp
