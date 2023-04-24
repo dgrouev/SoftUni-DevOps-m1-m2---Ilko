@@ -168,9 +168,7 @@ open_external_ports:
 
 create_db:
   cmd.run:
-    - name: mysql -u root < /home/vagrant/db_setup.sql || true
-    - env:
-      - LC_ALL: bg_BG.UTF-8
+    - name: mysql --default-character-set=utf8 -u root < /home/vagrant/db_setup.sql || true
 
 restart_db:
   cmd.run:
