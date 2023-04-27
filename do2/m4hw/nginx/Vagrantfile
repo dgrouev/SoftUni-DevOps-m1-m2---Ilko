@@ -1,0 +1,63 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.ssh.insert_key = false
+
+  # Chef Server - CentOS Stream 9
+  config.vm.define "server" do |server|
+    server.vm.box = "shekeriev/centos-stream-9"
+    server.vm.hostname = "chef-server"
+    server.vm.network "private_network", ip: "192.168.99.101"
+    server.vm.provision "shell", path: "add_hosts.sh"
+
+    server.vm.provider "virtualbox" do |v|
+      v.gui = false
+      v.memory = 4096
+      v.cpus = 1
+    end
+  end
+  
+  # Chef Client #1 - CentOS Stream 9
+  config.vm.define "client1" do |client1|
+    client1.vm.box = "shekeriev/centos-stream-9"
+    client1.vm.hostname = "chef-client-1"
+    client1.vm.network "private_network", ip: "192.168.99.102"
+    client1.vm.provision "shell", path: "add_hosts.sh"
+
+    client1.vm.provider "virtualbox" do |v|
+      v.gui = false
+      v.memory = 512
+      v.cpus = 1
+    end
+  end
+
+  # Chef Client #2 - Debian 11
+  config.vm.define "client2" do |client2|
+    client2.vm.box = "shekeriev/debian-11"
+    client2.vm.hostname = "chef-client-2"
+    client2.vm.network "private_network", ip: "192.168.99.103"
+    client2.vm.provision "shell", path: "add_hosts.sh"
+
+    client2.vm.provider "virtualbox" do |v|
+      v.gui = false
+      v.memory = 512
+      v.cpus = 1
+    end
+  end
+  
+  # Chef Workstation - CentOS Stream 9
+  config.vm.define "workstation" do |workstation|
+    workstation.vm.box = "shekeriev/centos-stream-9"
+    workstation.vm.hostname = "chef-wrkstn"
+    workstation.vm.network "private_network", ip: "192.168.99.104"
+    workstation.vm.provision "shell", path: "add_hosts.sh"
+
+    workstation.vm.provider "virtualbox" do |v|
+      v.gui = false
+      v.memory = 2048
+      v.cpus = 1
+    end
+  end
+  
+end
