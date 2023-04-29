@@ -136,5 +136,5 @@ end
 
 8. Start the container with:
 ``` shell
-chef-run localhost nginx/recipes/default.rb --user vagrant --password vagrant
+chef-run localhost container/recipes/default.rb --user vagrant --password vagrant
 ```
