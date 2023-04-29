@@ -99,4 +99,8 @@ Uploaded 1 cookbook.
 knife node run_list add client-1 "recipe[starter]"
 ```
 
-4. Execute **sudo chef-client** on the web client machine
+4. Successful adding to the run-list should print this in your console:
+client-1:
+  run_list: recipe[starter]
+
+5. Execute **sudo chef-client** on the web client machine
