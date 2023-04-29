@@ -96,7 +96,7 @@ Uploaded 1 cookbook.
 
 3. Add the cookbooc to the run list of the web client with:
 ``` shell
-knife node run_list add client-1 "recipe[starter]"
+knife node run_list add web "recipe[starter]"
 ```
 
 4. Successful adding to the run-list should print this in your console:
@@ -104,3 +104,76 @@ client-1:
   run_list: recipe[starter]
 
 5. Execute **sudo chef-client** on the web client machine
+
+## DB Setup
+
+1. Move the db_setup.sql to workstation machine with from the host machine being in the db parent folder:
+``` shell
+scp db/db_setup.sql vagrant@192.168.99.104:/home/vagrant/chef-repo/cookbooks/starter/files/default/db/db_setup.sql
+```
+
+2. recipes/default.rb contents:
+``` ruby
+execute "Update package indexes" do
+  command "apt-get update"
+  user "root"
+end
+
+ package "mariadb-server"
+
+ service "mariadb" do
+   action [:enable, :start]
+ end
+
+ remote_directory "db" do
+   source 'db'
+   files_owner 'vagrant'
+   files_group 'vagrant'
+   files_mode '0644'
+   action :create
+   recursive true
+   overwrite true
+ end
+
+execute "Allow external connection to DB" do
+  command "sed -i.bak s/127.0.0.1/0.0.0.0/g /etc/mysql/mariadb.conf.d/50-server.cnf"
+  user "root"
+end
+
+execute "Create database reading db_setup.sql" do
+  command "mysql --default-character-set=utf8 -u root < /home/vagrant/db_setup.sql || true"
+  user "root"
+end
+
+execute "Restart MariaDB" do
+  command "sudo systemctl restart mariadb"
+  user "root"
+end
+```
+
+tree
+.
+├── cookbooks
+│   ├── chefignore
+│   ├── db
+│   │   ├── CHANGELOG.md
+│   │   ├── chefignore
+│   │   ├── compliance
+│   │   │   ├── inputs
+│   │   │   ├── profiles
+│   │   │   ├── README.md
+│   │   │   └── waivers
+│   │   ├── files
+│   │   │   └── db
+│   │   │       └── db_setup.sql
+│   │   ├── kitchen.yml
+│   │   ├── LICENSE
+│   │   ├── metadata.rb
+│   │   ├── Policyfile.rb
+│   │   ├── README.md
+│   │   ├── recipes
+│   │   │   └── default.rb
+│   │   └── test
+│   │       └── integration
+│   │           └── default
+│   │               └── default_test.rb
