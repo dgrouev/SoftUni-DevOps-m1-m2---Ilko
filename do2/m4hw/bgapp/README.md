@@ -81,3 +81,22 @@ tree
 ├── README.md
 └── roles
     └── starter.rb
+
+## Install on Client
+1. Upload the cookbook with:
+``` shell
+knife cookbook upload starter
+```
+
+2. Successful upload should print this in your console:
+```
+Uploading starter      [1.0.0]
+Uploaded 1 cookbook.
+```
+
+3. Add the cookbooc to the run list of the web client with:
+``` shell
+knife node run_list add client-1 "recipe[starter]"
+```
+
+4. Execute **sudo chef-client** on the web client machine
