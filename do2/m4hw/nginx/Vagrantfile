@@ -10,6 +10,7 @@ Vagrant.configure("2") do |config|
     workstation.vm.hostname = "chef-wrkstn"
     workstation.vm.network "private_network", ip: "192.168.99.101"
     workstation.vm.provision "shell", path: "add_hosts.sh"
+    workstation.vm.provision "shell", path: "install_workstation.sh"
 
     workstation.vm.provider "virtualbox" do |v|
       v.gui = false
