@@ -64,8 +64,8 @@ sudo sysctl -w vm.dirty_expire_centisecs=20000
 ## Workstation installation
 3. Use version chef-workstation-21.10.640-1.el8.x86_64.rpm to avoid issue with versions and start another session to workstation machine and install Chef-Workstation and Git by executing the following commands:
 ``` shell
-wget -P /tmp https://packages.chef.io/files/stable/chef-workstation/23.4.1032/el/8/version chef-workstation-21.10.640-1.el8.x86_64.rpm
-sudo rpm -Uvh /tmp/chef-workstation-23.4.1032-1.el8.x86_64.rpm
+wget -P /tmp wget https://packages.chef.io/files/stable/chef-workstation/21.10.640/el/8/chef-workstation-21.10.640-1.el8.x86_64.rpm
+sudo rpm -Uvh /tmp/chef-workstation-21.10.640-1.el8.x86_64.rpm
 sudo dnf install -y git
 ```
 
