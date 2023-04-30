@@ -77,8 +77,8 @@ knife ssl fetch
 
 8. Add Web and Db nodes to Chef-Server with:
 ``` shell
-knife bootstrap 192.168.99.101 -N web -U vagrant -P vagrant --sudo
-knife bootstrap 192.168.99.102 -N db -U vagrant -P vagrant --sudo
+knife bootstrap 192.168.99.102 -N web -U vagrant -P vagrant --sudo
+knife bootstrap 192.168.99.103 -N db -U vagrant -P vagrant --sudo
 ```
 
 ## Web machine cookbook
@@ -104,7 +104,7 @@ action :create do
   end
 
   remote_directory "/var/www" do
-    source 'var/www'
+    source 'default/var/www'
     files_owner 'vagrant'
     files_group 'vagrant'
     files_mode '0644'
@@ -122,7 +122,13 @@ action :create do
     command "setsebool -P httpd_can_network_connect=1"
     user "root"
   end
+
+  execute "restart httpd service" do
+    command "sudo systemctl restart httpd"
+    user "root"
+  end
 end
+
 ```
 
 4. vi recipes/default.rb:
@@ -134,7 +140,7 @@ end
 
 5. Copy the resources to the files/default folder with:
 ``` shell
-cp -R /vagrant/resources/* files/default/
+cp -R /vagrant/resources/var files/default/
 ```
 
 6. Upload the recipe on the server with:
@@ -152,66 +158,23 @@ knife node run_list add web "recipe[starter]"
 sudo chef-client
 ```
 
-tree
-.
-├── cookbooks
-│   ├── chefignore
-│   └── starter
-│       ├── attributes
-│       │   └── default.rb
-│       ├── files
-│       │   └── default
-│       │       ├── sample.txt
-│       │       ├── var
-│       │       │   └── www
-│       │       │       └── html
-│       │       │           ├── bulgaria-map.png
-│       │       │           └── index.php
-│       │       └── web
-│       ├── metadata.rb
-│       ├── recipes
-│       │   └── default.rb
-│       ├── resources
-│       │   └── site.rb
-│       └── templates
-│           └── default
-│               └── sample.erb
-├── nodes [error opening dir]
-├── README.md
-└── roles
-    └── starter.rb
-
-## Install on Client
-1. Upload the cookbook with:
+## Db machine cookbook
+1. Go back to cookbooks folder with:
 ``` shell
-knife cookbook upload starter
+cd ~/chef-repo/cookbooks/starter/
 ```
 
-2. Successful upload should print this in your console:
-```
-Uploading starter      [1.0.0]
-Uploaded 1 cookbook.
-```
-
-3. Add the cookbooc to the run list of the web client with:
+2. Generate DB cookbook with:
 ``` shell
-knife node run_list add web "recipe[starter]"
+chef generate cookbook db
 ```
 
-4. Successful adding to the run-list should print this in your console:
-client-1:
-  run_list: recipe[starter]
-
-5. Execute **sudo chef-client** on the web client machine
-
-## DB Setup
-
-1. Move the db_setup.sql to workstation machine with from the host machine being in the db parent folder:
+3. Copy the resources to the DB cookbook with:
 ``` shell
-scp db/db_setup.sql vagrant@192.168.99.104:/home/vagrant/chef-repo/cookbooks/starter/files/default/db/db_setup.sql
+cp -R ~/chef-repo/cookbooks/starter/files/* ~/chef-repo/cookbooks/db/files
 ```
 
-2. recipes/default.rb contents:
+4. Paste the following contents inside recipes/default.rb of the Db cookbook:
 ``` ruby
 execute "Update package indexes" do
   command "apt-get update"
@@ -224,7 +187,7 @@ end
    action [:enable, :start]
  end
 
- remote_directory "db" do
+ remote_directory "/home/vagrant/db" do
    source 'db'
    files_owner 'vagrant'
    files_group 'vagrant'
@@ -240,7 +203,7 @@ execute "Allow external connection to DB" do
 end
 
 execute "Create database reading db_setup.sql" do
-  command "mysql --default-character-set=utf8 -u root < /home/vagrant/db_setup.sql || true"
+  command "mysql --default-character-set=utf8 -u root < /home/vagrant/db/db_setup.sql || true"
   user "root"
 end
 
@@ -250,29 +213,18 @@ execute "Restart MariaDB" do
 end
 ```
 
-tree
-.
-├── cookbooks
-│   ├── chefignore
-│   ├── db
-│   │   ├── CHANGELOG.md
-│   │   ├── chefignore
-│   │   ├── compliance
-│   │   │   ├── inputs
-│   │   │   ├── profiles
-│   │   │   ├── README.md
-│   │   │   └── waivers
-│   │   ├── files
-│   │   │   └── db
-│   │   │       └── db_setup.sql
-│   │   ├── kitchen.yml
-│   │   ├── LICENSE
-│   │   ├── metadata.rb
-│   │   ├── Policyfile.rb
-│   │   ├── README.md
-│   │   ├── recipes
-│   │   │   └── default.rb
-│   │   └── test
-│   │       └── integration
-│   │           └── default
-│   │               └── default_test.rb
+
+5. Add the cookbook to the run list of the db client with:
+``` shell
+knife node run_list add db "recipe[db]"
+```
+
+6. Start an SSH session to the db machine and execute:
+``` shell
+sudo chef-client
+```
+
+
+7. The BGApp should be successfully deployed on http://192.168.99.102
+
+
