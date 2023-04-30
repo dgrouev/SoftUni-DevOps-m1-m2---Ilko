@@ -12,32 +12,32 @@ sudo sed -i 's\=enforcing\=permissive\g' /etc/sysconfig/selinux
 ```
 
 ## Workstation installation
-3. Use version chef-workstation-21.10.640-1.el8.x86_64.rpm to avoid issue with versions and start another session to workstation machine and install Chef-Workstation and Git by executing the following commands:
+1. Use version chef-workstation-21.10.640-1.el8.x86_64.rpm to avoid issue with versions and start another session to workstation machine and install Chef-Workstation and Git by executing the following commands:
 ``` shell
 wget -P /tmp wget https://packages.chef.io/files/stable/chef-workstation/21.10.640/el/8/chef-workstation-21.10.640-1.el8.x86_64.rpm
 sudo rpm -Uvh /tmp/chef-workstation-21.10.640-1.el8.x86_64.rpm
 sudo dnf install -y git
 ```
 
-4. Configure Git Client With:
+2. Configure Git Client With:
 ``` shell
 git config --global user.email "ilkothetiger@gmail.com"
 git config --global user.name "Ilia Dimchev"
 ```
 
-5. Configure the Ruby provided by Chef:
+3. Configure the Ruby provided by Chef:
 ``` shell
 echo 'eval "$(chef shell-init bash)"' >> ~/.bash_profile
 echo 'export PATH="/opt/chef-workstation/embedded/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
 ```
 
-6. Create cookbooks folder and enter it to create test coobook with:
+4. Create cookbooks folder and enter it to create test coobook with:
 ``` shell
 mkdir cookbooks && cd cookbooks
 chef generate cookbook test
 ```
 
-7. Edit the default recipe with **vi test/recipes/default.rb** should have the following contents:
+5. Edit the default recipe with **vi test/recipes/default.rb** should have the following contents:
 ``` ruby
 docker_service 'default' do
   action [:create, :start]
@@ -59,36 +59,36 @@ docker_container 'my_nginx' do
 end
 ```
 
-8. Create **solo.rb** file with the following contents:
+6. Create **solo.rb** file with the following contents:
 ``` shell
 file_cache_path "/home/vagrant/cache"
 cookbook_path "/home/vagrant/cookbooks"
 ```
 
-9. Create **solo.json** file with the following contents:
+7. Create **solo.json** file with the following contents:
 ``` json
 {
  "run_list": [ "recipe[test]" ]
 }
 ```
 
-10. Download **Docker Cookbook** and unpack it with:
+8. Download **Docker Cookbook** and unpack it with:
 ``` shell
 knife supermarket download docker
 tar xzvf docker-10.4.8.tar.gz
 ```
 
-11. Add Docker Cookbook as dependency in **metadata.rb** by adding the following line:
+9. Add Docker Cookbook as dependency in **metadata.rb** by adding the following line:
 ``` ruby
 depends 'docker', '~> 10.4.8'
 ```
 
-12. Execute the recipe with:
+10. Execute the recipe with:
 ``` shell
 sudo chef-solo -c solo.rb -j solo.json
 ```
 
-13. If the recipe fails due to permission denied, try the following and repeat step 12:
-```
+11. If the recipe fails due to permission denied, try the following and repeat step 12:
+``` shell
 sudo systemctl enable --now docker
 ```
