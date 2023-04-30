@@ -19,16 +19,16 @@ sudo rpm -Uvh /tmp/chef-workstation-21.10.640-1.el8.x86_64.rpm
 sudo dnf install -y git
 ```
 
-4. Configure the Ruby provided by Chef:
-``` shell
-echo 'eval "$(chef shell-init bash)"' >> ~/.bash_profile
-echo 'export PATH="/opt/chef-workstation/embedded/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
-```
-
-5. Configure Git Client With:
+4. Configure Git Client With:
 ``` shell
 git config --global user.email "ilkothetiger@gmail.com"
 git config --global user.name "Ilia Dimchev"
+```
+
+5. Configure the Ruby provided by Chef:
+``` shell
+echo 'eval "$(chef shell-init bash)"' >> ~/.bash_profile
+echo 'export PATH="/opt/chef-workstation/embedded/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
 ```
 
 6. Create cookbooks folder and enter it to create test coobook with:
@@ -74,16 +74,21 @@ cookbook_path "/home/vagrant/cookbooks"
 
 10. Download **Docker Cookbook** and unpack it with:
 ``` shell
-knife supermarket install docker
+knife supermarket download docker
 tar xzvf docker-10.4.8.tar.gz
 ```
 
 11. Add Docker Cookbook as dependency in **metadata.rb** by adding the following line:
 ``` ruby
-depends 'docker', '~> 2.0'
+depends 'docker', '~> 10.4.8'
 ```
 
 12. Execute the recipe with:
 ``` shell
 sudo chef-solo -c solo.rb -j solo.json
+```
+
+13. If the recipe fails due to permission denied, try the following and repeat step 12:
+```
+sudo systemctl enable --now docker
 ```
