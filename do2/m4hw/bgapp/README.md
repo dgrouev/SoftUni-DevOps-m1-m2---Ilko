@@ -31,8 +31,8 @@ sudo firewall-cmd --reload
 2. Install Chef-Manage by executing the following:
 ``` shell
 sudo chef-server-ctl install chef-manage
-sudo chef-server-ctl reconfigure
-sudo chef-manage-ctl reconfigure
+sudo chef-server-ctl reconfigure --chef-license accept
+sudo chef-manage-ctl reconfigure --chef-license accept
 ```
 
 3. Open the browser and navigate to http://192.168.99.101
@@ -161,7 +161,7 @@ sudo chef-client
 ## Db machine cookbook
 1. Go back to cookbooks folder with:
 ``` shell
-cd ~/chef-repo/cookbooks/starter/
+cd ~/chef-repo/cookbooks/
 ```
 
 2. Generate DB cookbook with:
@@ -171,7 +171,7 @@ chef generate cookbook db
 
 3. Copy the resources to the DB cookbook with:
 ``` shell
-cp -R ~/chef-repo/cookbooks/starter/files/* ~/chef-repo/cookbooks/db/files
+cp -R /vagrant/resources/db  ~/chef-repo/cookbooks/db/files
 ```
 
 4. Paste the following contents inside recipes/default.rb of the Db cookbook:
@@ -213,18 +213,22 @@ execute "Restart MariaDB" do
 end
 ```
 
+5. Upload the recipe on the server with:
+``` shell
+knife cookbook upload db
+```
 
-5. Add the cookbook to the run list of the db client with:
+6. Add the cookbook to the run list of the db client with:
 ``` shell
 knife node run_list add db "recipe[db]"
 ```
 
-6. Start an SSH session to the db machine and execute:
+7. Start an SSH session to the db machine and execute:
 ``` shell
 sudo chef-client
 ```
 
 
-7. The BGApp should be successfully deployed on http://192.168.99.102
+8. The BGApp should be successfully deployed on http://192.168.99.102
 
 
