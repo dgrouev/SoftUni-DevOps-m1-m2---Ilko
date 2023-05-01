@@ -37,7 +37,7 @@ sudo chef-manage-ctl reconfigure --chef-license accept
 
 **NOTE: Start executing the steps from here**
 
-3. Open the browser and navigate to http://192.168.99.101
+3. Open the browser and navigate to http://192.168.99.101, if you happen to be prompted to create Organization, create one and use the Starter kit provided by it, as it may happen that the automated Organization can't be accessed.
 
 4. Login with user **chefadmin** and password **Password1**
 
