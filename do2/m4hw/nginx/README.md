@@ -19,6 +19,8 @@ sudo rpm -Uvh /tmp/chef-workstation-21.10.640-1.el8.x86_64.rpm
 sudo dnf install -y git
 ```
 
+NOTE: Start executing the commands from here
+
 2. Configure Git Client With:
 ``` shell
 git config --global user.email "ilkothetiger@gmail.com"
