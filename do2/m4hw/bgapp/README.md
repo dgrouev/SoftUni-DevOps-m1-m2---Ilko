@@ -35,6 +35,8 @@ sudo chef-server-ctl reconfigure --chef-license accept
 sudo chef-manage-ctl reconfigure --chef-license accept
 ```
 
+**NOTE: Start executing the steps from here**
+
 3. Open the browser and navigate to http://192.168.99.101
 
 4. Login with user **chefadmin** and password **Password1**
@@ -52,6 +54,8 @@ wget -P /tmp https://packages.chef.io/files/stable/chef-workstation/23.4.1032/el
 sudo rpm -Uvh /tmp/chef-workstation-23.4.1032-1.el8.x86_64.rpm
 sudo dnf install -y git
 ```
+
+**NOTE: Start executing the steps from here**
 
 4. Use the Ruby provided by Chef by executing:
 ``` shell
@@ -227,7 +231,6 @@ knife node run_list add db "recipe[db]"
 ``` shell
 sudo chef-client
 ```
-
 
 8. The BGApp should be successfully deployed on http://192.168.99.102
 
