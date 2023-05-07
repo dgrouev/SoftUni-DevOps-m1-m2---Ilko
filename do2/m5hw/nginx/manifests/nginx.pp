@@ -1,15 +1,9 @@
-$packages = [ 'httpd', 'php', 'php-mysqlnd' ]
-
-package { $packages: }
-
-service { httpd:
-  ensure => running,
-  enable => true,
-}
-
-file { '/var/www/html/index.php':
-  ensure => present,
-  source => "/vagrant/app/index.php",
+docker::run { 'nginx':
+  image            => 'latest',
+  detach           => true,
+  ports            => ['80', '80'],
+  expose           => ['80', '80'],
+  extra_parameters => [ '--restart=always' ],
 }
 
 class { 'firewall': }
