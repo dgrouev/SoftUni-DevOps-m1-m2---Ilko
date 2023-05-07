@@ -12,7 +12,7 @@ mysql::db { 'sentences':
   password    => '12345',
   dbname      => 'sentences',
   host        => '%',
-  sql         => ['/vagrant/app/db.sql'],
+  sql         => ['/vagrant/app/db/db_setup.sql'],
   enforce_sql => true,
 }
 
