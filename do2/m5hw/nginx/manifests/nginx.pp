@@ -1,9 +1,9 @@
+class { 'docker': }
+
 docker::run { 'nginx':
-  image            => 'latest',
-  detach           => true,
-  ports            => ['80', '80'],
-  expose           => ['80', '80'],
-  extra_parameters => [ '--restart=always' ],
+  image            => 'nginx:latest',
+  detach           => false,
+  ports            => '80',
 }
 
 class { 'firewall': }
