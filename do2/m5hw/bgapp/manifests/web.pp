@@ -7,9 +7,10 @@ service { httpd:
   enable => true,
 }
 
-file { '/var/www/html/index.php':
-  ensure => present,
-  source => "/vagrant/app/index.php",
+file { '/var/www/html/':
+  ensure => directory,
+  recurse => true,
+  source => "/vagrant/app/web",
 }
 
 class { 'firewall': }
