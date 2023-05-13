@@ -9,7 +9,14 @@ print('Producer started. Press Ctrl+C to stop. Working on topic=' + str(tpk))
 try:
 	producer = KafkaProducer(bootstrap_servers=['kafka-1:9092','kafka-2:9092','kafka3:9092'])
 	while True:
-		st = 'My number is ' + str(idx)
+		if str(idx)[-1] == "1":
+			st = 'This is the ' + str(idx) + 'st message!'
+		elif str(idx)[-1] == "2":
+			st = 'This is the ' + str(idx) + 'nd message!'
+		elif str(idx)[-1] == "3":
+			st = 'This is the ' + str(idx) + 'rd message!'
+		else:
+			st = 'This is the ' + str(idx) + 'th message!'
 		print('message: ' + st)
 		for t in tpk:
 			producer.send(t, bytes(st, encoding='utf-8'))
