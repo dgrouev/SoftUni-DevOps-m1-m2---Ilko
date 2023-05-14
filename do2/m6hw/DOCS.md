@@ -42,4 +42,7 @@ bin/zookeeper-server-start.sh config/zookeeper.properties
 cd kafka && bin/kafka-server-start.sh config/server.properties
 ```
 
-10. 
+11. Start yet another session to the Kafka machine and execute:
+``` shell
+cd kafka && bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3 --topic homework
+```
