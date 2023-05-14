@@ -2,12 +2,12 @@ from kafka import KafkaProducer
 from time import sleep
 from random import randrange
 
-tpk = ['demo2', 'demo3']
+tpk = ['homework']
 idx = 1
 print('Producer started. Press Ctrl+C to stop. Working on topic=' + str(tpk))
 
 try:
-	producer = KafkaProducer(bootstrap_servers=['kafka-1:9092','kafka-2:9092','kafka3:9092'])
+	producer = KafkaProducer(bootstrap_servers=['kafka:9092'])
 	while True:
 		if str(idx)[-1] == "1":
 			st = 'This is the ' + str(idx) + 'st message!'

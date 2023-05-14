@@ -51,3 +51,13 @@ cd kafka && bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --rep
 ``` shell
 sudo dnf -y install python3 python3-pip
 ```
+
+13. Install Kafka-Python module:
+``` shell
+sudo pip3 install kafka-python
+```
+
+14. Start the producer:
+``` shell
+python3 /vagrant/code/producer.py
+```
