@@ -34,5 +34,10 @@ echo "* Starting Python Producer and Consumer"
 python3 /vagrant/code/producer.py &> /tmp/python-producer.log &
 python3 /vagrant/code/consumer-subscribe.py &> /tmp/python-consumer.log &
 
+echo "* Reenabling FirewallD and opening port 9308 for Kafka Exporter"
+sudo systemctl enable --now firewalld
+sudo firewall-cmd --permanent --add-port=9308/tcp
+sudo firewall-cmd --reload
+
 echo "* Running Kafka Exporter as a Container"
 docker run -d --rm -p 9308:9308 danielqsj/kafka-exporter --kafka.server=192.168.99.101:9092
