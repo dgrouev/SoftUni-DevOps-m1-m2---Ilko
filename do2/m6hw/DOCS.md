@@ -67,4 +67,17 @@ python3 /vagrant/code/producer.py
 python3 /vagrant/code/consumer-subscribe.py
 ```
 
-16.
+16. Install Docker on the Kafka Machine:
+``` shell
+sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo dnf install -y docker-ce docker-ce-cli containerd.io
+sudo systemctl enable --now docker
+sudo usermod -aG docker vagrant
+```
+
+17. Exit and re-enter the ssh session to the kafka machine
+
+18. Start Kafka Exporter as a Container:
+``` shell
+docker run -ti --rm -p 9308:9308 danielqsj/kafka-exporter --kafka.server=192.168.99.101:9092
+```
