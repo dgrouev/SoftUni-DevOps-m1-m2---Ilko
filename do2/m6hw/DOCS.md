@@ -37,3 +37,9 @@ cd kafka
 bin/zookeeper-server-start.sh config/zookeeper.properties
 ```
 
+9. Start a new session to the Kafka machine and execute:
+``` shell
+cd kafka && bin/kafka-server-start.sh config/server.properties
+```
+
+10. 
