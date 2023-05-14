@@ -16,7 +16,7 @@ echo "* Adding Vagrant to Docker Group"
 sudo usermod -aG docker vagrant
 
 echo "* Disabling Firewalld"
-systemctl disable --now firewalld
+sudo systemctl disable --now firewalld
 
 echo "* Downloading and Unpacking Apache Kafka"
 wget https://archive.apache.org/dist/kafka/3.3.1/kafka_2.13-3.3.1.tgz
@@ -35,4 +35,4 @@ python3 /vagrant/code/producer.py &> /tmp/python-producer.log &
 python3 /vagrant/code/consumer-subscribe.py &> /tmp/python-consumer.log &
 
 echo "* Running Kafka Exporter as a Container"
-docker run -ti --rm -p 9308:9308 danielqsj/kafka-exporter --kafka.server=192.168.99.101:9092
+docker run -d --rm -p 9308:9308 danielqsj/kafka-exporter --kafka.server=192.168.99.101:9092
