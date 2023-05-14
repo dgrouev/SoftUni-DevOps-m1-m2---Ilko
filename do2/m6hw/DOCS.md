@@ -61,3 +61,10 @@ sudo pip3 install kafka-python
 ``` shell
 python3 /vagrant/code/producer.py
 ```
+
+15. Start another ssh session to the Kafka machine and execute:
+``` shell
+python3 /vagrant/code/consumer-subscribe.py
+```
+
+16.
