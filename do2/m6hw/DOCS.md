@@ -81,3 +81,5 @@ sudo usermod -aG docker vagrant
 ``` shell
 docker run -ti --rm -p 9308:9308 danielqsj/kafka-exporter --kafka.server=192.168.99.101:9092
 ```
+
+19. Start SSH session on the **Monitoring Machine** and install Docker:
