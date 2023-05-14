@@ -46,3 +46,8 @@ cd kafka && bin/kafka-server-start.sh config/server.properties
 ``` shell
 cd kafka && bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3 --topic homework
 ```
+
+12. Install Python:
+``` shell
+sudo dnf -y install python3 python3-pip
+```
