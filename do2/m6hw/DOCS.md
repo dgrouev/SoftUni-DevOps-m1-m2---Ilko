@@ -75,11 +75,11 @@ sudo systemctl enable --now docker
 sudo usermod -aG docker vagrant
 ```
 
-17. Exit and re-enter the ssh session to the kafka machine
+17. Exit and re-enter the ssh session to the kafka machine or execute the next command with **sudo**
 
 18. Start Kafka Exporter as a Container:
 ``` shell
-docker run -ti --rm -p 9308:9308 danielqsj/kafka-exporter --kafka.server=192.168.99.101:9092
+docker run -d -p 9308:9308 danielqsj/kafka-exporter --kafka.server=192.168.99.101:9092 --zookeeper.server=192.168.99.101:2181 --web.telemetry-path=/metrics
 ```
 
 19. Monitoring machine should detect the Kafka Exporter in a bit, navigate to 192.168.99.102:9090 to check within the Prometheus interface if the target is active, and 192.168.99.102:300 where you can login with user **admin** with password **admin** and check out the dashboard.
