@@ -15,16 +15,11 @@ systemctl enable --now docker
 echo "* Adding Vagrant to Docker Group"
 sudo usermod -aG docker vagrant
 
-echo "* Restarting FirewallD and Opening port 9308 for Kafka Exporter"
-sudo systemctl enable --now firewalld
-sudo firewall-cmd --permanent --add-port=9308/tcp
-sudo firewall-cmd --reload
-
-echo "* Running Kafka Exporter as a Container"
-docker run -d -p 9308:9308 danielqsj/kafka-exporter --kafka.server=192.168.99.101:9092 --zookeeper.server=192.168.99.101:2181 --web.telemetry-path=/metrics
-
 echo "* Disabling Firewalld"
 sudo systemctl disable --now firewalld
+
+echo "* Restarting Docker Service"
+sudo service docker restart
 
 echo "* Downloading and Unpacking Apache Kafka"
 wget https://archive.apache.org/dist/kafka/3.3.1/kafka_2.13-3.3.1.tgz
@@ -41,3 +36,7 @@ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-fac
 echo "* Starting Python Producer and Consumer"
 python3 /vagrant/code/producer.py &> /tmp/python-producer.log &
 python3 /vagrant/code/consumer-subscribe.py &> /tmp/python-consumer.log &
+
+echo "* Running Kafka Exporter as a Container"
+docker run -d -p 9308:9308 danielqsj/kafka-exporter --kafka.server=192.168.99.101:9092 --zookeeper.server=192.168.99.101:2181 --web.telemetry-path=/metrics
+
