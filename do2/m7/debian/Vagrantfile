@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.ssh.insert_key = false
+
+  config.vm.box = "shekeriev/debian-11"
+
+  config.vm.provider "virtualbox" do |v|
+    v.gui = false
+    v.memory = 2048
+    v.cpus = 1
+  end
+
+  # Docker Machine - Debian 11
+  config.vm.define "docker" do |docker|
+    docker.vm.hostname = "docker"
+    docker.vm.network "private_network", ip: "192.168.98.100"
+    docker.vm.provision "shell", path: "add_hosts.sh"
+    docker.vm.provision "shell", path: "install_docker.sh"
+  end
+
+  # RabbitMQ Machines - Debian 11
+  (1..3).each do |i|
+    config.vm.define "rabbit-#{i}" do |rabbit|
+      rabbit.vm.hostname = "rabbit-#{i}"
+      rabbit.vm.network "private_network", ip: "192.168.98.10#{i}"
+      rabbit.vm.provision "shell", path: "add_hosts.sh"
+    end
+  end
+
+end
