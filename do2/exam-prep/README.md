@@ -38,13 +38,13 @@ o for RabbitMQ – https://hub.docker.com/repository/docker/shekeriev/rabbit-con
 * (T106, 3 pts) Spin up a Prometheus instance and set it to collect data from the single-node cluster
 * (T107, 3 pts) Spin up a Grafana instance and set it to use the Prometheus instance as a data source
 The number and structure of the configurations to spin up the above is up to you to determine
-Configuration Management (27 pts)
+## Configuration Management (27 pts)
 You are expected to demonstrate knowledge working with two of the studied configuration management solutions.
 It is up to you to select which two
-Configuration Management #1 (4 pts)
+### Configuration Management #1 (4 pts)
 * (T201, 3 pts) Do a basic (installed and running) installation of Docker on VM1
 * (T202, 1 pts) The user in use (vagrant or another one) must be a member of the docker group
-Configuration Management #2 (23 pts)
+### Configuration Management #2 (23 pts)
 * (T203, 4 pts) Do a basic (installed and running) installation of Apache (+PHP +libraries) on VM2
 * (T204, 3 pts) Add two virtual hosts by port – 8081 (for app1) and 8082 (for app2)
 * (T205, 4 pts) Deploy both applications (app1 and app2) files to the corresponding folders of the virtual hosts
@@ -54,7 +54,7 @@ Configuration Management #2 (23 pts)
 * (T209, 2 pts) Make sure that VM2 and VM3 can reach each other by name
 Applications (app1 and app2) can be found here: https://github.com/shekeriev/do2-app-pack
 Deploy them not as containers but following the classical approach
-Monitoring (3 pts)
+## Monitoring (3 pts)
 You are expected to demonstrate basic knowledge working with both Prometheus and Grafana
 * (T301, 3 pts) Create a simple visualization of a metric of the selected middleware
 Applications (11 pts)
@@ -65,7 +65,7 @@ This means that there should be a working flow of messages/events between them
 This means that there should be connection to the DB and results displayed on the screen
 * (T403, 3 pts) Working web application #2
 This means that there should be connection to the DB and results displayed on the screen
-Proof
+## Proof
 Prepare a compressed archive with the files of your solution and any supporting files and upload it on the site
 Make sure that you include at least all configuration files, a brief description of the workflow and pictures of
 important moments/achievements (at least the state of the applications). If there are any manual steps, you must
