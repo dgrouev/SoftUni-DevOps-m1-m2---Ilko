@@ -20,21 +20,21 @@ there are tasks that depend on the successful completion of one or more other ta
 
 ### Infrastructure as Code (19 pts)
 You are expected to demonstrate knowledge working with Terraform, Vagrant and VirtualBox
-#### Level #1 (3 pts)
+### Level #1 (3 pts)
 Depending on the platform you use you are expected to create the following:
 * (T101, 3 pts) Create a set of three machines (the distribution is up to you). Most of the provisioning is
 expected to be done with the help of configuration management tools (there is a separate set of tasks)
-Level #2 (16 pts)
+### Level #2 (16 pts)
 Using Terraform (either on the host or inside the Containers machine) you are expected to implement the following:
 * (T102, 4 pts) Spin up an Apache Kafka or RabbitMQ (it is up to you to decide) single-node cluster
 * (T103, 2 pts) Enable the monitoring of the single-node cluster (either by enabling a plugin or by running
 additional container)
 * (T104, 2 pts) Spin up a producer container for the prep topic/exchange by using the appropriate repository
-o for Apache Kafka – https://hub.docker.com/repository/docker/shekeriev/kafka-prod
-o for RabbitMQ – https://hub.docker.com/repository/docker/shekeriev/rabbit-prod
+    * for Apache Kafka – https://hub.docker.com/repository/docker/shekeriev/kafka-prod
+    * for RabbitMQ – https://hub.docker.com/repository/docker/shekeriev/rabbit-prod
 * (T105, 2 pts) Spin up a consumer container for the prep topic/exchange by using the appropriate repository
-o for Apache Kafka – https://hub.docker.com/repository/docker/shekeriev/kafka-cons
-o for RabbitMQ – https://hub.docker.com/repository/docker/shekeriev/rabbit-cons
+    * for Apache Kafka – https://hub.docker.com/repository/docker/shekeriev/kafka-cons
+    * for RabbitMQ – https://hub.docker.com/repository/docker/shekeriev/rabbit-cons
 * (T106, 3 pts) Spin up a Prometheus instance and set it to collect data from the single-node cluster
 * (T107, 3 pts) Spin up a Grafana instance and set it to use the Prometheus instance as a data source
 The number and structure of the configurations to spin up the above is up to you to determine
