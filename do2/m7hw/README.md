@@ -41,3 +41,55 @@ docker container exec -it rabbitmq-1 rabbitmq-plugins enable rabbitmq_federation
 docker container exec -it rabbitmq-2 rabbitmq-plugins enable rabbitmq_federation
 docker container exec -it rabbitmq-3 rabbitmq-plugins enable rabbitmq_federation
 ```
+
+
+## Setup RabbitMQ admin:
+
+1. Install RabiitMQadmin with:
+``` shell
+curl http://$(hostname -s):8081/cli/rabbitmqadmin > rabbitmqadmin
+```
+
+2. Move it to system PATH:
+``` shell
+sudo mv rabbitmqadmin /usr/local/bin/
+```
+
+3. Make it executable:
+``` shell
+sudo chmod +x /usr/local/bin/rabbitmqadmin
+```
+
+
+## Creating High-Availability Policy
+
+1. Navigate to **http://192.168.99.100:8081/#/policies**
+
+2. Click on Add / Update operator policy and add the following:
+    * Name: ha-fed
+    * Patterns: .*
+    * Apply to: Queues
+    * Priority: 1
+    * Definition:
+        * ha-mode: exactly (String)
+        * ha-params: 2 (Number)
+        * ha-sync-mode:	automatic (String)
+
+3. Add the policy
+
+## Working with the Cluster
+
+1. Start a session to rabbitmq-1 container:
+``` shell
+docker container exec -it rabbitmq-1 bash
+```
+
+2. Creating policy thah makes all queues highly available:
+``` shell
+sudo rabbitmqctl set_policy ha-fed ".*" '{"federation-upstream-set":"all", "ha-syncmode":"automatic", "ha-mode":"nodes", "ha-params":["rabbit@rabbit-1","rabbit@rabbit2","rabbit@rabbit-3"]}' --priority 1 --apply-to queues
+```
+
+3. Declare exchange with:
+``` shell
+rabbitmqadmin declare exchange name=ha-exchange type=fanout
+```
