@@ -11,3 +11,6 @@ systemctl enable --now docker
 
 echo "# Add vagrant user to the docker group"
 usermod -aG docker vagrant
+
+echo "# Stop firewalld"
+systemctl disable --now firewalld
