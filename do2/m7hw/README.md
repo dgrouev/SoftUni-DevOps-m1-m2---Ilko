@@ -177,3 +177,10 @@ python3 recv.py "ram.*"
 ## Monitoring Setup
 
 1. Start a fresh session on the Docker machine
+
+2. Enable the Prometheus plugin in each of the nodes with:
+``` shell
+docker container exec -it rabbitmq-1 rabbitmq-plugins enable rabbitmq_prometheus
+docker container exec -it rabbitmq-2 rabbitmq-plugins enable rabbitmq_prometheus
+docker container exec -it rabbitmq-3 rabbitmq-plugins enable rabbitmq_prometheus
+```
