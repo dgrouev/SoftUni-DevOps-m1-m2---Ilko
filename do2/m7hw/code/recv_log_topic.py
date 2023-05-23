@@ -7,7 +7,7 @@ if not binding_keys:
     sys.stderr.write("Usage: %s [binding_key]...\n" % sys.argv[0])
     sys.exit(1)
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port='8081'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 channel = connection.channel()
 
 channel.exchange_declare(exchange='topic_logs', exchange_type='topic')
