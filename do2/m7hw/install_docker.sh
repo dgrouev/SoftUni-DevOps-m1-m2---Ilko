@@ -14,3 +14,6 @@ usermod -aG docker vagrant
 
 echo "# Stop firewalld"
 systemctl disable --now firewalld
+
+echo "# Restart Docker Service"
+service docker restart
