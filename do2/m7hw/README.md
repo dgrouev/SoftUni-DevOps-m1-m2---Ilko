@@ -173,28 +173,7 @@ cd /home/code
 python3 recv.py "ram.*"
 ```
 
-## Install Python3 and Python3-Pip:
 
-1. Install packages:
-``` shell
-sudo dnf install python3 python3-pip
-```
+## Monitoring Setup
 
-2. Update alternatives:
-``` shell
-sudo update-alternatives --config python
-```
-
-3. Install Pika:
-``` shell
-sudo python -m pip install pika --upgrade 
-```
-
-## Working with the Cluster
-
-1. Navigate to the **/vagrant/code** folder:
-``` shell
-cd /vagrant/code
-```
-
-2. 
+1. Start a fresh session on the Docker machine
