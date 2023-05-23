@@ -63,22 +63,6 @@ sudo chmod +x /usr/local/bin/rabbitmqadmin
 
 ## Creating High-Availability Policy
 
-1. Navigate to **http://192.168.99.100:8081/#/policies**
-
-2. Click on Add / Update operator policy and add the following:
-    * Name: ha-fed
-    * Patterns: .*
-    * Apply to: Queues
-    * Priority: 1
-    * Definition:
-        * ha-mode: exactly (String)
-        * ha-params: 2 (Number)
-        * ha-sync-mode:	automatic (String)
-
-3. Add the policy
-
-## Working with the Cluster
-
 1. Start a session to rabbitmq-1 container:
 ``` shell
 docker container exec -it rabbitmq-1 bash
@@ -89,7 +73,33 @@ docker container exec -it rabbitmq-1 bash
 sudo rabbitmqctl set_policy ha-fed ".*" '{"federation-upstream-set":"all", "ha-syncmode":"automatic", "ha-mode":"nodes", "ha-params":["rabbit@rabbit-1","rabbit@rabbit2","rabbit@rabbit-3"]}' --priority 1 --apply-to queues
 ```
 
-3. Declare exchange with:
+3. Exit the Container session:
 ``` shell
-rabbitmqadmin declare exchange name=ha-exchange type=fanout
+exit
+``` 
+
+## Install Python3 and Python3-Pip:
+
+1. Install packages:
+``` shell
+sudo dnf install python3 python3-pip
 ```
+
+2. Update alternatives:
+``` shell
+sudo update-alternatives --config python
+```
+
+3. Install Pika:
+``` shell
+sudo python -m pip install pika --upgrade 
+```
+
+## Working with the Cluster
+
+1. Navigate to the **/vagrant/code** folder:
+``` shell
+cd /vagrant/code
+```
+
+2. 
