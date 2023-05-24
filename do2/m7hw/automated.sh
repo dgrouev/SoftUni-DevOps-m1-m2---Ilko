@@ -17,14 +17,6 @@ docker run -d --rm --name rabbitmq-1 --hostname rabbitmq-1 --net rabbitmq-net -p
 docker run -d --rm --name rabbitmq-2 --hostname rabbitmq-2 --net rabbitmq-net -p 8082:15672 -p 9102:15692 -v ${PWD}/rabbitmq/node-2/:/config/ -e RABBITMQ_CONFIG_FILE=/config/rabbitmq -e RABBITMQ_ERLANG_COOKIE=ABCDEFFGHIJKLMOP rabbitmq:3.11-management
 docker run -d --rm --name rabbitmq-3 --hostname rabbitmq-3 --net rabbitmq-net -p 8083:15672 -p 9103:15692 -v ${PWD}/rabbitmq/node-3/:/config/ -e RABBITMQ_CONFIG_FILE=/config/rabbitmq -e RABBITMQ_ERLANG_COOKIE=ABCDEFFGHIJKLMOP rabbitmq:3.11-management
 
-echo "# Enabling Federation and Prometheus plugins"
-docker container exec -it rabbitmq-1 rabbitmq-plugins enable rabbitmq_federation rabbitmq_prometheus
-docker container exec -it rabbitmq-2 rabbitmq-plugins enable rabbitmq_federation rabbitmq_prometheus
-docker container exec -it rabbitmq-3 rabbitmq-plugins enable rabbitmq_federation rabbitmq_prometheus
-
-echo "# Creating High-Availability policy"
-docker container exec -it rabbitmq-1 rabbitmqctl set_policy ha-fed ".*" '{"federation-upstream-set":"all", "ha-sync-mode":"automatic", "ha-mode":"nodes", "ha-params":["rabbit@docker:8081","rabbit@docker:8082","rabbit@docker:8083"]}' --priority 1 --apply-to queues
-
 echo "# Installing Python and Pip"
 sudo dnf install -y python3 python3-pip
 
@@ -33,4 +25,3 @@ sudo update-alternatives --config python
 
 echo "* Installing Pika"
 python -m pip install pika --upgrade
-

@@ -1,6 +1,7 @@
 # Module 7 Assignment
 
-## Cluster Setup
+
+## Cluster Setup (Automate)
 
 1. Start an SSH session to the Docker Machine
 2. Create common network for the cluster with:
@@ -35,33 +36,8 @@ docker run -d --rm --name rabbitmq-2 --hostname rabbitmq-2 --net rabbitmq-net -p
 docker run -d --rm --name rabbitmq-3 --hostname rabbitmq-3 --net rabbitmq-net -p 8083:15672 -p 9103:15692 -v ${PWD}/rabbitmq/node-3/:/config/ -e RABBITMQ_CONFIG_FILE=/config/rabbitmq -e RABBITMQ_ERLANG_COOKIE=ABCDEFFGHIJKLMOP rabbitmq:3.11-management
 ```
 
-8. Enable the Federation plugin in each of the nodes with:
-``` shell
-docker container exec -it rabbitmq-1 rabbitmq-plugins enable rabbitmq_federation rabbitmq_prometheus
-docker container exec -it rabbitmq-2 rabbitmq-plugins enable rabbitmq_federation rabbitmq_prometheus
-docker container exec -it rabbitmq-3 rabbitmq-plugins enable rabbitmq_federation rabbitmq_prometheus
-```
 
-
-## Setup RabbitMQ admin:
-
-1. Install RabiitMQadmin with:
-``` shell
-curl http://$(hostname -s):8081/cli/rabbitmqadmin > rabbitmqadmin
-```
-
-2. Move it to system PATH:
-``` shell
-sudo mv rabbitmqadmin /usr/local/bin/
-```
-
-3. Make it executable:
-``` shell
-sudo chmod +x /usr/local/bin/rabbitmqadmin
-```
-
-
-## Environment setup
+## Environment setup (Automated)
 
 1. Start a session to rabbitmq-1 container:
 ``` shell
@@ -88,9 +64,31 @@ sudo update-alternatives --config python
 python -m pip install pika --upgrade 
 ```
 
+## Manual Steps
+
+1. Start a SSH session to the Docker Machine and execute the following commands one by one:
+``` shell
+docker container exec -it rabbitmq-1 rabbitmq-plugins enable rabbitmq_federation
+docker container exec -it rabbitmq-2 rabbitmq-plugins enable rabbitmq_federation
+docker container exec -it rabbitmq-3 rabbitmq-plugins enable rabbitmq_federation
+```
+
+2. Create High-Availability policy with
+``` shell
+echo "# Creating High-Availability policy"
+docker container exec -it rabbitmq-1 rabbitmqctl set_policy ha-fed ".*" '{"federation-upstream-set":"all", "ha-sync-mode":"automatic", "ha-mode":"nodes", "ha-params":["rabbit@docker:8081","rabbit@docker:8082","rabbit@docker:8083"]}' --priority 1 --apply-to queues
+```
+
+2. Enable the Prometheus plugin in each of the nodes with:
+``` shell
+docker container exec -it rabbitmq-1 rabbitmq-plugins enable rabbitmq_prometheus
+docker container exec -it rabbitmq-2 rabbitmq-plugins enable rabbitmq_prometheus
+docker container exec -it rabbitmq-3 rabbitmq-plugins enable rabbitmq_prometheus
+```
+
 ## Startint the Scripts:
 
-6. Start a session to the Docker and then the Emitter with:
+6. Start the Emitter with:
 ``` shell
 python3 /vagrant/code/emit_log_topic.py
 ```
@@ -104,15 +102,3 @@ python3 /vagrant/code/recv_log_topic.py "*.warn" "*.crit"
 ``` shell
 python3 /vagrant/code/recv_log_topic.py "ram.*"
 ```
-
-## Monitoring Setup
-
-1. Should be fully automated but if it doesn't export metrics start a fresh session on the Docker machine
-
-2. Enable the Prometheus plugin in each of the nodes with:
-``` shell
-docker container exec -it rabbitmq-1 rabbitmq-plugins enable rabbitmq_prometheus
-docker container exec -it rabbitmq-2 rabbitmq-plugins enable rabbitmq_prometheus
-docker container exec -it rabbitmq-3 rabbitmq-plugins enable rabbitmq_prometheus
-```
-
