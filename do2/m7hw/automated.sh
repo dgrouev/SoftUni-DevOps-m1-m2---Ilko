@@ -23,7 +23,7 @@ docker container exec -it rabbitmq-2 rabbitmq-plugins enable rabbitmq_federation
 docker container exec -it rabbitmq-3 rabbitmq-plugins enable rabbitmq_federation rabbitmq_prometheus
 
 echo "# Creating High-Availability policy"
-docker container exec -it rabbitmq-1 rabbitmqctl set_policy ha-fed ".*" '{"federation-upstream-set":"all", "ha-sync-mode":"automatic", "ha-mode":"nodes", "ha-params":["rabbit@rabbit-1","rabbit@rabbit2","rabbit@rabbit-3"]}' --priority 1 --apply-to queues
+docker container exec -it rabbitmq-1 rabbitmqctl set_policy ha-fed ".*" '{"federation-upstream-set":"all", "ha-sync-mode":"automatic", "ha-mode":"nodes", "ha-params":["rabbit@docker:8081","rabbit@docker:8082","rabbit@docker:8083"]}' --priority 1 --apply-to queues
 
 echo "# Installing Python and Pip"
 sudo dnf install python3 python3-pip
@@ -31,5 +31,11 @@ sudo dnf install python3 python3-pip
 echo "* Updating Python alternatives to point to Python3"
 sudo update-alternatives --config python
 
+echo "* Installing Pika"
+python -m pip install pika --upgrade
+
+
 echo "* Starting Prometheus"
-python -m pip install pika --upgrade 
+python3 /vagrant/code/emit_log_topic.py &> /tmp/emit_log_topic.log &
+python3 /vagrant/code/recv_log_topic.py "ram.*" &> /tmp/recv_log_ram.log &
+python3 /vagrant/code/recv_log_topic.py "*.warn" "*.crit" &> /tmp/recv_log_crit_warn.log &
