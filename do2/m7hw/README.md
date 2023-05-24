@@ -70,7 +70,7 @@ docker container exec -it rabbitmq-1 bash
 
 2. Creating policy thah makes all queues highly available:
 ``` shell
-rabbitmqctl set_policy ha-fed ".*" '{"federation-upstream-set":"all", "ha-sync-mode":"automatic", "ha-mode":"nodes", "ha-params":["rabbit@rabbit-1","rabbit@rabbit2","rabbit@rabbit-3"]}' --priority 1 --apply-to queues
+rabbitmqctl set_policy ha-fed ".*" '{"federation-upstream-set":"all", "ha-sync-mode":"automatic", "ha-mode":"nodes", "ha-params":["rabbit@rabbit-1","rabbit@rabbit-2","rabbit@rabbit-3"]}' --priority 1 --apply-to queues
 ```
 
 3. Install needed prerequisites with:
@@ -78,7 +78,7 @@ rabbitmqctl set_policy ha-fed ".*" '{"federation-upstream-set":"all", "ha-sync-m
 sudo dnf install python3 python3-pip
 ```
 
-4. Upgrade python alternatives to point to python3:
+4. Update python alternatives to point to python3:
 ``` shell
 sudo update-alternatives --config python
 ```
