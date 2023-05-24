@@ -17,3 +17,10 @@ systemctl disable --now firewalld
 
 echo "# Restart Docker Service"
 service docker restart
+
+echo "* Copying prometheus.yml to /tmp/"
+sudo cp /vagrant/prom/prometheus.yml /tmp/prometheus.yml
+
+echo "* Starting Prometheus"
+cd /vagrant/prom
+docker compose up -d
