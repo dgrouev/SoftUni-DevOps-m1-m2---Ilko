@@ -26,7 +26,7 @@ echo "# Creating High-Availability policy"
 docker container exec -it rabbitmq-1 rabbitmqctl set_policy ha-fed ".*" '{"federation-upstream-set":"all", "ha-sync-mode":"automatic", "ha-mode":"nodes", "ha-params":["rabbit@docker:8081","rabbit@docker:8082","rabbit@docker:8083"]}' --priority 1 --apply-to queues
 
 echo "# Installing Python and Pip"
-sudo dnf install python3 python3-pip
+sudo dnf install -y python3 python3-pip
 
 echo "* Updating Python alternatives to point to Python3"
 sudo update-alternatives --config python
