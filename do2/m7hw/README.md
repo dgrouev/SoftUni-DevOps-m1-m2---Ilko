@@ -90,8 +90,7 @@ python -m pip install pika --upgrade
 
 6. Start Emitter with:
 ``` shell
-cd /vagrant/code
-python3 emit_log_topic.py
+python3 /vagrant/code/emit_log_topic.py
 ```
 
 7. Start another session to the Docker machine and start receiver to listen for all Warn and Crit Messages:
@@ -101,114 +100,12 @@ python3 /vagrant/code/recv_log_topic.py "*.warn" "*.crit"
 
 7. Start another session to the Docker machine and start receiver to listen for all Ram Messages:
 ``` shell
-python3 /vagrant/code/python3 recv.py "ram.*"
+python3 /vagrant/code/recv_log_topic.py "ram.*"
 ```
-
-
-3. While inside the container execute the following commands:
-``` shell
-apt update
-apt install -y python3-pip nano
-python3 -m pip install pika
-mkdir /home/code
-cd /home/code
-```
-
-4. Create new file called **emit.py** with nano that has the following content:
-``` python
-#!/usr/bin/env python
-import pika
-from time import sleep
-from random import randrange
-
-print(' [*] Logs topics emitter started. Press Ctrl+C to stop.')
-
-try:
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
-    channel = connection.channel()
-
-    channel.exchange_declare(exchange='topic_logs', exchange_type='topic')
-
-    while True:
-        # determine resource type
-        res = randrange(0,100)
-        rtype = 'cpu'
-        if res % 2 == 0:
-            rtype = 'ram'
-        # determine resource load
-        res = randrange(0,100)
-        ltype = 'info'
-        if res > 50:
-            ltype = 'warn'
-        if res > 80:
-            ltype = 'crit'
-        msg = ltype + ': ' + rtype + ' load is ' + str(res)
-        routing_key = rtype + '.' + ltype
-        channel.basic_publish(exchange='topic_logs', routing_key=routing_key, body=msg)
-        print(" [x] Sent %r" % msg)
-        slp = randrange(5,20)
-        print(' [x] Sleep for ' + str(slp) + ' second(s).')
-        sleep(slp)
-except Exception as ex:
-    print(str(ex))
-except KeyboardInterrupt:
-    pass
-finally:
-    if connection is not None:
-        connection.close()
-```
-
-5. Create new file called **emit.py** with nano that has the following content:
-``` python
-#!/usr/bin/env python
-import pika
-import sys
-
-binding_keys = sys.argv[1:]
-if not binding_keys:
-    sys.stderr.write("Usage: %s [binding_key]...\n" % sys.argv[0])
-    sys.exit(1)
-
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
-channel = connection.channel()
-
-channel.exchange_declare(exchange='topic_logs', exchange_type='topic')
-
-result = channel.queue_declare('', exclusive=True)
-queue_name = result.method.queue
-
-for binding_key in binding_keys:
-    channel.queue_bind(exchange='topic_logs', queue=queue_name, routing_key=binding_key)
-
-print(' [*] Waiting for logs ' + str(binding_keys) + '. To exit press CTRL+C')
-
-def callback(ch, method, properties, body):
-    print(" [x] %r:%r" % (method.routing_key, body))
-
-channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
-
-channel.start_consuming()
-```
-
-
-6. Start another session to the docker machine and enter inside the rabbitmq-1 container again:
-``` shell
-docker container exec -it rabbitmq-1 bash
-cd /home/code
-python3 recv.py "*.warn" "*.crit"
-```
-
-7. Repeat the previous step and execute the following commands:
-``` shell
-docker container exec -it rabbitmq-1 bash
-cd /home/code
-python3 recv.py "ram.*"
-```
-
 
 ## Monitoring Setup
 
-1. Start a fresh session on the Docker machine
+1. Should be fully automated but if it doesn't export metrics start a fresh session on the Docker machine
 
 2. Enable the Prometheus plugin in each of the nodes with:
 ``` shell
