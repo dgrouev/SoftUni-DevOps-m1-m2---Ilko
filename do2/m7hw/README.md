@@ -88,7 +88,9 @@ sudo update-alternatives --config python
 python -m pip install pika --upgrade 
 ```
 
-6. Start Emitter with:
+## Startint the Scripts:
+
+6. Start a session to the Docker and then the Emitter with:
 ``` shell
 python3 /vagrant/code/emit_log_topic.py
 ```

@@ -34,8 +34,3 @@ sudo update-alternatives --config python
 echo "* Installing Pika"
 python -m pip install pika --upgrade
 
-
-echo "* Starting Prometheus"
-python3 /vagrant/code/emit_log_topic.py &> /tmp/emit_log_topic.log &
-python3 /vagrant/code/recv_log_topic.py "ram.*" &> /tmp/recv_log_ram.log &
-python3 /vagrant/code/recv_log_topic.py "*.warn" "*.crit" &> /tmp/recv_log_crit_warn.log &
