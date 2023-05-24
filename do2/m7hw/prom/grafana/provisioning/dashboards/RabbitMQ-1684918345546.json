@@ -56,7 +56,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "Prometheus"
       },
       "description": "This is a visualization for all the messages published by the emit script running on the host",
       "fieldConfig": {
@@ -134,7 +134,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "Prometheus"
           },
           "editorMode": "builder",
           "expr": "rabbitmq_channel_messages_published_total",
