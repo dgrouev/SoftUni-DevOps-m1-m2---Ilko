@@ -23,7 +23,7 @@ EOS
       ansible.become = true
       ansible.install_mode = :default
       ansible.playbook = "playbboks/docker.yml"
-      ansible.galaxy_role_file = "playbboks/docker-req.yml"
+      ansible.galaxy_role_file = "playbooks/docker-req.yml"
       ansible.galaxy_roles_path = "/etc/ansible/roles"
       ansible.galaxy_command = "sudo ansible_galaxy install --role-file=%(role_file) --roles-path=%(roles_path) --force"
     end
