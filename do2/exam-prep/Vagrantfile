@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
    config.ssh.insert_key = false
 
    config.vm.define "docker" do |docker|
-     docker.vm.box = "shekeriev/centos-stream-8"
+     docker.vm.box = "shekeriev/centos-stream-9"
      docker.vm.hostname = "docker"
      docker.vm.network "private_network", ip: "192.168.99.100"
 
