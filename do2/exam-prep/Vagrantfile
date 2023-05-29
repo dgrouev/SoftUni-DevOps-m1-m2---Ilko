@@ -19,5 +19,13 @@ dmf install -y python3 python3-pip
 echo " Installing Python Docker module ..."
 pip install docker
 EOS
+    docker.vm.provision "ansible_local" do |ansible|
+      ansible.become = true
+      ansible.install_mode = :default
+      ansible.playbook = "playbboks/docker.yml"
+      ansible.galaxy_role_file = "playbboks/docker-req.yml"
+      ansible.galaxy_roles_path = "/etc/ansible/roles"
+      ansible.galaxy_command = "sudo ansible_galaxy install --role-file-%(role_file) --roles-path-%(roles_path) --force"
+    end
    end
 end
