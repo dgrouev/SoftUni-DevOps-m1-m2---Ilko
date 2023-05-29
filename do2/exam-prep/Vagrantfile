@@ -2,21 +2,22 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.ssh.insert_key = false
+   config.ssh.insert_key = false
 
-  config.vm.box = "shekeriev/centos-stream-8"
+   config.vm.define "docker" do |docker|
+     config.vm.box = "shekeriev/centos-stream-8"
+     docker.vm.hostname = "docker"
+     docker.vm.network "private_network", ip: "192.168.99.100"
 
-  config.vm.provider "virtualbox" do |v|
-    v.gui = false
-    v.memory = 2048
-    v.cpus = 1
-  end
+     docker.vm.provision "shell", inline: <<EOS
+echo " Adding EPEL repository ..."
+dnf install -y epel release
 
-  # Docker Machine - CentOS Stream 9
-  config.vm.define "docker" do |docker|
-    docker.vm.hostname = "docker"
-    docker.vm.network "private_network", ip: "192.168.99.100"
-    docker.vm.provision "shell", path: "add_hosts.sh"
-  end
+echo " Installing Python3 ..."
+dmf install -y python3 python3-pip
 
+echo " Installing Python Docker module ..."
+pip install docker
+EOS
+   end
 end
