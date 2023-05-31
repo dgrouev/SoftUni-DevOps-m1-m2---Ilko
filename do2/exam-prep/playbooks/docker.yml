@@ -1,7 +1,7 @@
 ---
 - hosts: all
   roles:
-    - geerlinguy.docker
+    - geerlingguy.docker
   
   tasks:
     - name: Add vagrant user to docker group
