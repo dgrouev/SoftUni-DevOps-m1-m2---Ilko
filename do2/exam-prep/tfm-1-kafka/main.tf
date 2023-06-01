@@ -41,7 +41,7 @@ resource "docker_container" "kafka" {
     name = "exam-net"
   }
   depends_on = [ 
-    docker_image.img-zookeeper,
+    docker_container.zookeeper,
    ]
 }
 
