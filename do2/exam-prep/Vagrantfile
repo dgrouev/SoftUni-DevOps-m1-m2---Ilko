@@ -33,6 +33,8 @@ wget https://releases.hashicorp.com/terraform/1.4.6/terraform_1.4.6_linux_amd64.
 unzip terraform_1.4.6_linux_amd64.zip
 
 mv terraform /usr/local/bin
+
+systemctl disable --now firewalld
 EOS
 
     docker.vm.provision "ansible_local" do |ansible|
