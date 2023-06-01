@@ -19,6 +19,6 @@ resource "docker_container" "exporter" {
     external = 9308
   }
   networks_advanced {
-    namex = "exam-net"
+    name = "exam-net"
   }
 }

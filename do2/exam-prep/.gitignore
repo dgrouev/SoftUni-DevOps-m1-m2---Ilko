@@ -1,3 +1,6 @@
 .vagrant
 /tfm-1-kafka/.*
 /tfm-1-kafka/terraform.tfstate
+
+/tfm-2-exporter/.*
+/tfm-2-exporter/terraform.tfstate
