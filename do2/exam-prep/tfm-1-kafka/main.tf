@@ -45,6 +45,9 @@ resource "docker_container" "kafka" {
    ]
 }
 
-data "docker_network" "exam-net" {
+resource "docker_network" "exam-net" {
   name = "exam-net"
+  attachable = true
+  check_duplicate = true
+  driver = "bridge"
 }
