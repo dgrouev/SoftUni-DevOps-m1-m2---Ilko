@@ -22,7 +22,7 @@ resource "docker_container" "zookeeper" {
     internal = 2181
     external = 2181
   }
-  network_advanced {
+  networks_advanced {
     name = "exam-net"
   }
 }
@@ -37,7 +37,7 @@ resource "docker_container" "kafka" {
     internal = 9092
     external = 9092
   }
-  network_advanced {
+  networks_advanced {
     name = "exam-net"
   }
   depends_on = [ 
