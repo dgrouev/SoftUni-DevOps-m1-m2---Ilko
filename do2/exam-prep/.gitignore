@@ -1,2 +1,3 @@
 .vagrant
 /tfm-1-kafka/.*
+/tfm-1-kafka/terraform.tfstate
