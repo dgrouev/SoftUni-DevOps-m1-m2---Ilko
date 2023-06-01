@@ -4,3 +4,6 @@
 
 /tfm-2-exporter/.*
 /tfm-2-exporter/terraform.tfstate
+
+/tfm-3-app/.*
+/tfm-3-app/terraform.tfstate
