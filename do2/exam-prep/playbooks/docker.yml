@@ -9,3 +9,7 @@
         name: 'vagrant'
         group: docker
         append: yes
+
+    - name: Create a network
+      docker_network:
+        name: exam-net
