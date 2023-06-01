@@ -35,6 +35,8 @@ unzip terraform_1.4.6_linux_amd64.zip
 mv terraform /usr/local/bin
 
 systemctl disable --now firewalld
+
+service docker restart
 EOS
 
     docker.vm.provision "ansible_local" do |ansible|

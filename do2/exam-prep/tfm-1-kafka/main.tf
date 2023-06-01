@@ -15,7 +15,7 @@ resource "docker_image" "img-kafka" {
 }
 
 resource "docker_container" "zookeeper" {
-  name = "zookeper"
+  name = "zookeeper"
   image = docker_image.img-zookeeper.image_id
   env = ["ALLOW_ANONYMOUS_LOGIN=yes"]
   ports {
