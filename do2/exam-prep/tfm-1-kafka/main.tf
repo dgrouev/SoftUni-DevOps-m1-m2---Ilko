@@ -44,3 +44,7 @@ resource "docker_container" "kafka" {
     docker_image.img-zookeeper,
    ]
 }
+
+data "docker_network" "exam-net" {
+  name = "exam-net"
+}
