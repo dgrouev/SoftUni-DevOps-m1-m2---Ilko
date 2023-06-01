@@ -25,6 +25,16 @@ dnf install -y python3 python3-pip
 echo " Installing Python Docker module ..."
 pip3 install docker
 EOS
+
+     docker.vm.provision "shell", inline: <<EOS
+echo " Installing Terraform ..."
+wget https://releases.hashicorp.com/terraform/1.4.6/terraform_1.4.6_linux_amd64.zip 
+
+unzip terraform_1.4.6_linux_amd64.zip
+
+mv terraform /usr/local/bin
+EOS
+
     docker.vm.provision "ansible_local" do |ansible|
       ansible.become = true
       ansible.install_mode = :default
