@@ -62,16 +62,16 @@ PUPPETRPM
 MODULESWEB
 
     config.vm.define "web" do |web|
-     web.vm.box = "shekeriev/centos-stream-8"
-     web.vm.hostname = "web.do2.lab"
-     web.vm.network = "private_network", ip: "192.168.99.101"
-     web.vm.provision "shell", inline: $puppetrpm, privileged: false
-     web.vm.provision "shell", inline: $modulesweb, privileged: false
-
-     web.vm.provision "puppet" do |puppet|
+      web.vm.box = "shekeriev/centos-stream-8"
+      web.vm.hostname = "web.do2.lab"
+      web.vm.network "private_network", ip: "192.168.99.100"
+      web.vm.provision "shell", inline: $puppetrpm, privileged: false
+      web.vm.provision "shell", inline: $modulesweb, privileged: false
+      
+      web.vm.provision "puppet" do |puppet|
       puppet.manifests_path = "manifests"
       puppet.manifests_file = "web.pp"
       puppet.options = "--verbose --debug"
-     end
     end
+   end
 end
