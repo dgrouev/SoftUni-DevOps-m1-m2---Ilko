@@ -49,7 +49,7 @@ EOS
     end
    end
 
-   $puppet = <<PUPPETRPM
+   $puppetrpm = <<PUPPETRPM
    sudo dnf install -y https://yum.puppet.com/puppet7-release-el-8.noarch.rpm
    sudo dnf install -y puppet
 PUPPETRPM
