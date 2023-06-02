@@ -76,7 +76,7 @@ MODULESWEB
    $modulesdb = <<MODULESDB
    puppet module install puppetlabs-vcsrepo
    puppet module install puppetlabs/mysql
-   puppet module install puppet-selinux
+   puppet module install puppetlabs-firewall
    sudo cp -vR ~/.puppetlabs/etc/code/modules/ /etc/puppetlabs/code/
 MODULESDB
 

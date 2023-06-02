@@ -1,6 +1,4 @@
-$packages = [ 'git' ]
-
-package { $packages: }
+package { git: }
 
 vcsrepo { '/code':
   ensure => present,
@@ -45,4 +43,12 @@ file_line { 'hosts-db':
   path => '/etc/hosts',
   line => '192.168.99.102  db.do2.lab  db',
   match => '^192.168.99.102',
+}
+
+class { 'firewall': }
+
+firewall { '000 accept 3306/tcp':
+  action => 'accept',
+  dport => 3306,
+  proto => 'tcp',
 }
