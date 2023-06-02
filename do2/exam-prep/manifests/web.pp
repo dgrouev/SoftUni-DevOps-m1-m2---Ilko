@@ -33,7 +33,7 @@ file { '/etc/httpd//conf.d/vhost-app1.conf':
 file { '/etc/httpd/conf.d/vhost-app2.conf':
   ensure => present,
   context => 'Listen 8082
-<VirtualHost *.8082>
+<VirtualHost *:8082>
     DocumentRoot "/var/www/app2"
 </VirtualHost>',
 }
