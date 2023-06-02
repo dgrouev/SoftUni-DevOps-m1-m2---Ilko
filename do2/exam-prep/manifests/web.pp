@@ -12,14 +12,14 @@ file_line { 'hosts-web':
   ensure => present,
   path => '/etc/hosts',
   line => '192.168.99.101 web.do2.lab web'
-  match => '192.168.99.101',
+  match => '^192.168.99.101',
 }
 
 file_line { 'hosts-db':
   ensure => present,
   path => '/etc/hosts',
   line => '192.168.99.102 db.do2.lab db'
-  match => '192.168.99.102',
+  match => '^192.168.99.102',
 }
 
 file { '/etc/httpd//conf.d/vhost-app1.conf':
