@@ -22,7 +22,7 @@ file_line { 'hosts-db':
   match => '^192.168.99.102',
 }
 
-file { '/etc/httpd//conf.d/vhost-app1.conf':
+file { '/etc/httpd/conf.d/vhost-app1.conf':
   ensure => present,
   content => 'Listen 8081
 <VirtualHost *:8081>
@@ -32,7 +32,7 @@ file { '/etc/httpd//conf.d/vhost-app1.conf':
 
 file { '/etc/httpd/conf.d/vhost-app2.conf':
   ensure => present,
-  context => 'Listen 8082
+  content => 'Listen 8082
 <VirtualHost *:8082>
     DocumentRoot "/var/www/app2"
 </VirtualHost>',
