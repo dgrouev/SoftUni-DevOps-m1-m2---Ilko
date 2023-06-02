@@ -10,8 +10,8 @@ class { '::mysql::server':
   root_password => '12345',
   remove_default_accounts => true,
   restart => true,
-  override_options => {
-    mysqld = { bind-address => '0.0.0.0'},
+  override-option => {
+    mysqld => { bind-address => '0.0.0.0'}
   },
 }
 
