@@ -11,7 +11,7 @@ class { '::mysql::server':
   remove_default_accounts => true,
   restart => true,
   override_options => {
-    mysqld = { bind-address => '0.0.0.0'}
+    mysqld = { bind-address => '0.0.0.0'},
   },
 }
 
