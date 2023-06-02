@@ -46,4 +46,10 @@ resource "docker_container" "grafana" {
     container_path = "/etc/grafana/provisioning/datasources/datasource.yml"
     read_only = true
   }
+
+    volumes {
+    host_path = "/vagrant/tfm-4-mon/dashboards"
+    container_path = "/etc/grafana/provisioning/dashboards"
+    read_only = true
+  }
 }
