@@ -72,4 +72,25 @@ MODULESWEB
         puppet.options = "--verbose --debug"
     end
    end
+
+   $modulesdb = <<MODULESDB
+   puppet module install puppetlabs-vcsrepo
+   puppet module install puppetlabs/mysql
+   puppet module install puppet-selinux
+   sudo cp -vR ~/.puppetlabs/etc/code/modules/ /etc/puppetlabs/code/
+MODULESDB
+
+   config.vm.define "db" do |db|
+    db.vm.box = "shekeriev/centos-stream-8"
+    db.vm.hostname = "db.do2.lab"
+    db.vm.network "private_network", ip: "192.168.99.102"
+    db.vm.provision "shell", inline: $puppetrpm, privileged: false
+    db.vm.provision "shell", inline: $modulesdb, privileged: false
+    
+    db.vm.provision "puppet" do |puppet|
+      puppet.manifests_path = "manifests"
+      puppet.manifest_file = "db.pp"
+      puppet.options = "--verbose --debug"
+  end
+ end
 end
