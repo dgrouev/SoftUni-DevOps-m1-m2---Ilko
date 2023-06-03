@@ -35,6 +35,22 @@ unzip terraform_1.4.6_linux_amd64.zip
 mv terraform /usr/local/bin
 
 systemctl disable --now firewalld
+
+cd /vagrant/tfm-1-kafka/
+terraform init
+terraform apply --auto-approve
+
+cd /vagrant/tfm-2-exporter/
+terraform init
+terraform apply --auto-approve
+
+cd /vagrant/tfm-3-app/
+terraform init
+terraform apply --auto-approve
+
+cd /vagrant/tfm-4-mon/
+terraform init
+terraform apply --auto-approve
 EOS
 
     docker.vm.provision "ansible_local" do |ansible|
@@ -45,7 +61,6 @@ EOS
       ansible.galaxy_roles_path = "/etc/ansible/roles"
       ansible.galaxy_command = "sudo ansible-galaxy install --role-file=%{role_file} --roles-path=%{roles_path} --force"
     end
-    docker.vm.provision "shell", path: "terraform.sh"
    end
 
    $puppetrpm = <<PUPPETRPM
