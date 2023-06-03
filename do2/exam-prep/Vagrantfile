@@ -32,25 +32,10 @@ wget https://releases.hashicorp.com/terraform/1.4.6/terraform_1.4.6_linux_amd64.
 
 unzip terraform_1.4.6_linux_amd64.zip
 
-mv terraform /usr/local/bin
+mv terraform /bin
 
 systemctl disable --now firewalld
 
-cd /vagrant/tfm-1-kafka/
-terraform init
-terraform apply --auto-approve
-
-cd /vagrant/tfm-2-exporter/
-terraform init
-terraform apply --auto-approve
-
-cd /vagrant/tfm-3-app/
-terraform init
-terraform apply --auto-approve
-
-cd /vagrant/tfm-4-mon/
-terraform init
-terraform apply --auto-approve
 EOS
 
     docker.vm.provision "ansible_local" do |ansible|
@@ -87,6 +72,7 @@ MODULESWEB
         puppet.manifest_file = "web.pp"
         puppet.options = "--verbose --debug"
     end
+    docker.vm.provision "shell", path: "terraform.sh"
    end
 
    $modulesdb = <<MODULESDB
