@@ -46,6 +46,7 @@ EOS
       ansible.galaxy_roles_path = "/etc/ansible/roles"
       ansible.galaxy_command = "sudo ansible-galaxy install --role-file=%{role_file} --roles-path=%{roles_path} --force"
     end
+    docker.vm.provision "shell", path: "terraform.sh"
    end
 
    $puppetrpm = <<PUPPETRPM
@@ -62,7 +63,7 @@ MODULESWEB
 
     config.vm.define "web" do |web|
       web.vm.box = "shekeriev/centos-stream-8"
-      web.vm.hostname = "Web Server"
+      web.vm.hostname = "WebServer"
       web.vm.network "private_network", ip: "192.168.99.101"
       web.vm.provision "shell", inline: $puppetrpm, privileged: false
       web.vm.provision "shell", inline: $modulesweb, privileged: false
@@ -83,7 +84,7 @@ MODULESDB
 
    config.vm.define "db" do |db|
     db.vm.box = "shekeriev/centos-stream-8"
-    db.vm.hostname = "DB Server"
+    db.vm.hostname = "DBServer"
     db.vm.network "private_network", ip: "192.168.99.102"
     db.vm.provision "shell", inline: $puppetrpm, privileged: false
     db.vm.provision "shell", inline: $modulesdb, privileged: false

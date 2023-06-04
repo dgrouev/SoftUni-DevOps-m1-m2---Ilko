@@ -19,7 +19,7 @@ mysql::db { 'db1':
   user => 'root',
   password => '12345',
   host => '%',
-  sql => ['/code/app3/db/db_setup.sql'],
+  sql => ['/code/app2/db/db_setup.sql'],
   enforce_sql => true,
 }
 
@@ -34,14 +34,14 @@ mysql::db { 'db12':
 file_line { 'hosts-web':
   ensure => present,
   path => '/etc/hosts',
-  line => '192.168.99.101  web.do2.lab  web',
+  line => '192.168.99.101  WebServer  web',
   match => '^192.168.99.101',
 }
 
 file_line { 'hosts-db':
   ensure => present,
   path => '/etc/hosts',
-  line => '192.168.99.102  db.do2.lab  db',
+  line => '192.168.99.102  DBServer  db',
   match => '^192.168.99.102',
 }
 

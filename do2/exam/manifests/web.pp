@@ -11,37 +11,37 @@ vcsrepo { '/code':
 file_line { 'hosts-web':
   ensure => present,
   path => '/etc/hosts',
-  line => '192.168.99.101  web.do2.lab  web',
+  line => '192.168.99.101  WebServer  web',
   match => '^192.168.99.101',
 }
 
 file_line { 'hosts-db':
   ensure => present,
   path => '/etc/hosts',
-  line => '192.168.99.102  db.do2.lab  db',
+  line => '192.168.99.102  DBServer  db',
   match => '^192.168.99.102',
 }
 
-file { '/etc/httpd/conf.d/vhost-app3.conf':
+file { '/etc/httpd/conf.d/vhost-app2.conf':
   ensure => present,
-  content => 'Listen 8081
-<VirtualHost *:8081>
-    DocumentRoot "/var/www/app3"
+  content => 'Listen 8001
+<VirtualHost *:8001>
+    DocumentRoot "/var/www/app2"
 </VirtualHost>',
 }
 
 file { '/etc/httpd/conf.d/vhost-app4.conf':
   ensure => present,
-  content => 'Listen 8082
-<VirtualHost *:8082>
+  content => 'Listen 8002
+<VirtualHost *:8002>
     DocumentRoot "/var/www/app4"
 </VirtualHost>',
 }
 
-file { '/var/www/app3':
+file { '/var/www/app2':
   ensure => 'directory',
   recurse => true,
-  source => '/code/app3/web',
+  source => '/code/app2/web',
 }
 
 file { '/var/www/app4':
@@ -52,15 +52,15 @@ file { '/var/www/app4':
 
 class {'firewall':}
 
-firewall { '000 accept 8081/tcp':
+firewall { '000 accept 8001/tcp':
   action => 'accept',
-  dport => 8081,
+  dport => 8001,
   proto => 'tcp',
 }
 
-firewall { '001 accept 8082/tcp':
+firewall { '001 accept 8002/tcp':
   action => 'accept',
-  dport => 8082,
+  dport => 8002,
   proto => 'tcp',
 }
 
