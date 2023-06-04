@@ -22,32 +22,32 @@ file_line { 'hosts-db':
   match => '^192.168.99.102',
 }
 
-file { '/etc/httpd/conf.d/vhost-app1.conf':
+file { '/etc/httpd/conf.d/vhost-app3.conf':
   ensure => present,
   content => 'Listen 8081
 <VirtualHost *:8081>
-    DocumentRoot "/var/www/app1"
+    DocumentRoot "/var/www/app3"
 </VirtualHost>',
 }
 
-file { '/etc/httpd/conf.d/vhost-app2.conf':
+file { '/etc/httpd/conf.d/vhost-app4.conf':
   ensure => present,
   content => 'Listen 8082
 <VirtualHost *:8082>
-    DocumentRoot "/var/www/app2"
+    DocumentRoot "/var/www/app4"
 </VirtualHost>',
 }
 
-file { '/var/www/app1':
+file { '/var/www/app3':
   ensure => 'directory',
   recurse => true,
-  source => '/code/app1/web',
+  source => '/code/app3/web',
 }
 
-file { '/var/www/app2':
+file { '/var/www/app4':
   ensure => 'directory',
   recurse => true,
-  source => '/code/app2/web',
+  source => '/code/app4/web',
 }
 
 class {'firewall':}
